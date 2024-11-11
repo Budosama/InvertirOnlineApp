@@ -1,0 +1,44 @@
+﻿@page
+@model InvertirOnlineApp.Pages.VariablesEconomicasModel 
+@using System.Text.Json
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="~/js/tablas.js"></script>
+
+<h2>Variables Economicas</h2>
+
+@if (Model.VariablesEconomicas != null && Model.VariablesEconomicas.Count > 0)
+{
+    var variablesEconomicasOrdenado = Model.VariablesEconomicas
+        .OrderByDescending(item => item.descripcion)
+        .ToList();
+
+   <table class="table dark-mode">
+        <thead>
+            <tr>
+                <th>Id</th>  
+                <th>Descripción</th>    
+                <th>Fecha</th> 
+                <th>Valor</th>          
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in variablesEconomicasOrdenado)
+            {
+                <tr>
+                    <td>@item.idVariable</td> 
+                    <td>@item.descripcion</td>      
+                    <td>@item.fecha?.ToString("dd-MM-yyyy")</td>
+                    <td>@item.valor?.ToString("F2")</td>    
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <p>No se encontraron datos en el banco.</p>
+}

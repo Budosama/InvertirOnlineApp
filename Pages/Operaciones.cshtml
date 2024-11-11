@@ -1,0 +1,97 @@
+﻿@page
+@model InvertirOnlineApp.Pages.OperacionesModel
+
+<link rel="stylesheet" href="~/css/color.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="~/js/tablas.js"></script>
+<script src="~/js/operaciones.js"></script>
+
+<h2>Operaciones</h2>
+
+<div class="card mb-2">
+    <div class="card-body">
+        <form method="get" class="form-inline">
+            <div class="form-group mb-2">
+                <label for="filtroEstado" class="mr-2">Estado:</label>
+                <select id="filtroEstado" name="filtroEstado" class="form-control">
+                    <option value="todas">Todas</option>
+                    <option value="pendientes">Pendientes</option>
+                    <option value="terminadas">Terminadas</option>
+                    <option value="canceladas">Canceladas</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-2 ml-3">
+                <label for="filtroTipo" class="mr-2">Tipo:</label>
+                <select id="filtroTipo" name="filtroTipo" class="form-control">
+                    <option value="todas">Todas</option>
+                    <option value="Compra">Compra</option>
+                    <option value="Venta">Venta</option>
+                    <option value="Pago de Amortización">Pago de Amortización</option>
+                    <option value="Pago de Dividendos">Pago de Dividendos</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-2 ml-3">
+                <label for="filtroFechaDesde" class="mr-2">Fecha Desde:</label>
+                <input type="date" id="filtroFechaDesde" name="filtroFechaDesde" 
+                    value="@DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd")" class="form-control" />
+            </div>
+
+            <div class="form-group mb-2 ml-3">
+                <label for="filtroFechaHasta" class="mr-2">Fecha Hasta:</label>
+                <input type="date" id="filtroFechaHasta" name="filtroFechaHasta" 
+                    value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-2 ml-3">Filtrar</button>
+        </form>
+
+        <div class="form-group mt-3 mr-4 mb-0 d-flex justify-content-end">
+            <input type="text" id="filtroGenerico" class="form-control" placeholder="Buscar..." style="width: 200px;">
+        </div>
+    </div>
+</div>
+
+@if (Model.Operaciones != null && Model.Operaciones.Count > 0)
+{
+    // Ordenar el modelo por algún criterio, como 'montoOperado', si es necesario
+    var operacionesOrdenadas = Model.Operaciones
+        .OrderByDescending(op => op.montoOperado)
+        .ToList();
+
+    <table class="table dark-mode" id="tablaOperaciones">
+        <thead>
+            <tr>
+                <th>Fecha Orden</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Símbolo</th>
+                <th>Cantidad Operada</th>
+                <th>Precio Operado</th>
+                <th>Monto Operado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var operacion in operacionesOrdenadas)
+            {
+                 <tr>
+                    <td>@(operacion.fechaOrden.HasValue ? operacion.fechaOrden.Value.ToString("dd-MM-yyyy") : "-")</td>
+                    <td>@(operacion.tipo ?? "-")</td>
+                    <td>@(operacion.estado ?? "-")</td>
+                    <td>@(operacion.simbolo ?? "-")</td>
+                    <td>@(operacion.cantidadOperada.HasValue ? operacion.cantidadOperada.Value.ToString("F0") : "-")</td>
+                    <td>@(operacion.precioOperado.HasValue ? operacion.precioOperado.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR")) : "-")</td>
+                    <td>@(operacion.montoOperado.HasValue ? operacion.montoOperado.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR")) : "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No se encontraron datos en las operaciones.</p>
+}

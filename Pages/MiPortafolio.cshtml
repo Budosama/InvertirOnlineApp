@@ -1,0 +1,372 @@
+﻿@page
+@model InvertirOnlineApp.Pages.MiPortafolioModel 
+@using System.Text.Json
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="~/css/color.css" />
+<link rel="stylesheet" href="~/css/dona.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="~/js/tablas.js"></script>
+<script src="~/js/graficos.js"></script>
+<script src="~/js/mainPage.js"></script>
+<script src="~/js/operaciones.js"></script>
+
+<script>
+    var valorizadoPorTipo = @Html.Raw(JsonSerializer.Serialize(
+        Model.PortafolioItems
+            .GroupBy(item => item.titulo?.tipo)
+            .Select(grupo => new { Tipo = grupo.Key, ValorizadoTotal = grupo.Sum(item => item.valorizado) })
+            .ToList()
+    ));
+</script>
+
+<h2>Mi Portafolio</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+       <form method="post">
+            <div class="form-group mb-2 d-flex align-items-end justify-content-between">
+                <div class="d-flex flex-column flex-grow-1 mr-2">
+                    <label for="banco" class="mr-2">Banco:</label>
+                    <select id="banco" class="form-control" style="width: 100%;">
+                        @foreach (var banco in Model.Bancos)
+                        {
+                            <option value="@banco.tnaClientes">@banco.entidad</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="d-flex flex-column flex-grow-1 mx-2">
+                    <label for="tna" class="mr-2">TNA Plazo Fijo (%):</label>
+                    <input type="number" id="tna" name="Tna" asp-for="Tna" class="form-control" style="width: 100%;" step="0.01" min="0" />
+                </div>
+
+                <div class="d-flex align-items-end" style="height: 100%; margin-bottom: 0;">
+                    <button type="submit" class="btn btn-primary">Calcular</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="mt-3 d-flex justify-content-start gap-3">        
+            <div><strong>TNA:</strong> @Model.Tna?.ToString("F2") %</div>
+            <div><strong>TNA mensual:</strong> @Model.TnaPorMesResult?.ToString("F2") %</div>
+            <div><strong>TNA diario:</strong> @Model.TnaPorDiaResult?.ToString("F2") %</div>
+        </div>
+
+        <div class="mt-3 d-flex justify-content-start gap-3">        
+            <div><strong>Inflación mensual:</strong> @Model.InflacionMensual?.ToString("F2") %</div>
+            <div><strong>Inflación anual:</strong> @Model.InflacionAnual?.ToString("F2") %</div>
+            <div><strong>Inflación anual esperada:</strong> @Model.InflacionAnualEsperada?.ToString("F2") %</div>
+        </div>
+
+        <div class="mt-3 d-flex justify-content-start gap-3">        
+            <div><strong>BTC:</strong> @Model.Btc?.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))</div>
+            <div><strong>USDT:</strong> @Model.Usd?.ToString("C")</div>
+        </div>
+
+        <div class="mt-3 d-flex justify-content-around">
+            <div class="text-danger"><strong>Rojo: Pérdida :'(</strong></div>
+            <div class="text-warning"><strong>Amarillo: Ganancia menor al PF :(</strong></div>
+            <div class="text-success"><strong>Verde: Ganancia mayor al PF :)</strong></div>
+            <div class="text-info"><strong>Azul: ¡Ganancia doblando al PF! :D</strong></div>
+        </div>
+    </div>
+</div>
+
+@if (Model.PortafolioItems != null && Model.PortafolioItems.Count > 0)
+{
+    var portafolioOrdenado = Model.PortafolioItems
+        .OrderByDescending(item => item.gananciaPorcentaje)
+        .ToList();
+
+    decimal? sumatoriaGanancia = portafolioOrdenado.Sum(item => item.gananciaDinero);
+    decimal? sumatoriaValorizado = portafolioOrdenado.Sum(item => item.valorizado);
+    decimal? totalInvertido = 0;
+
+   <table class="table dark-mode">
+        <thead>
+            <tr>
+                <th>Simbolo</th>
+                <th>P. Compra</th>
+                <th>Dias</th> 
+                <th>Gan. PF(%)</th>              
+                <th>Tipo</th>
+                <th>Cantidad</th>
+                <th>PPC</th>     
+                @*<th>Monto Inv.</th>*@
+                <th>Último Precio</th>
+                <th>Var. Diaria (%)</th>
+                <th>Gan. (%)</th>
+                <th>Gan. ($)</th>
+                <th>Valorizado</th>
+                <th>Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in portafolioOrdenado)
+            {
+                decimal? gananciaPF = Model.CalcularPorcentajePlazoFijoCompuesto(item.DiasDesdePrimerCompra());
+                decimal? montoInvertido = item.cantidad * item.ppc;
+                totalInvertido += montoInvertido;
+
+                <tr>
+                    <td>@item.titulo?.simbolo</td>
+                    <td>@item.fechaPrimerCompra?.ToString("dd-MM-yyyy")</td>
+                    <td>@item.DiasDesdePrimerCompra()</td>
+                    <td>@gananciaPF?.ToString("F2") %</td>
+                    <td>@item.titulo?.tipo</td>
+                    <td>@item.cantidad.ToString("F0")</td>
+                    <td>@item.ppc.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>  
+                    @*<td>@montoInvertido?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>*@
+                    <td>@item.ultimoPrecio.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td class="@(item.variacionDiaria < 0 ? "text-danger" : (item.variacionDiaria > 0 ? "text-success" : ""))">
+                        @item.variacionDiaria %
+                    </td>
+                    <td class="@(item.gananciaPorcentaje < 0 ? "text-danger" : (item.gananciaPorcentaje > gananciaPF * 2 ? "text-info" : (item.gananciaPorcentaje > gananciaPF ? "text-success" : "text-warning")))">
+                        @item.gananciaPorcentaje.ToString("F2") %
+                    </td>
+                    <td class="@(item.gananciaDinero < 0 ? "text-danger" : (item.gananciaPorcentaje > gananciaPF * 2 ? "text-info" : (item.gananciaPorcentaje > gananciaPF ? "text-success" : "text-warning")))">
+                        @item.gananciaDinero.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
+                    </td>                   
+                    <td>@item.valorizado.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td>
+                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#detalleModal"
+                                data-operaciones='@Html.Raw(Json.Serialize(Model.Operaciones))'
+                                onclick="enviarSimbolo('@item.titulo?.simbolo', this.dataset.operaciones)">
+                            <i class="fas fa-list"></i>  <!-- Icono del primer botón -->
+                        </button>
+                        
+                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#calculadoraModal"
+                                onclick="abrirCalculadora('@item.titulo?.simbolo', '@item.cantidad', '@item.ppc', '@item.ultimoPrecio')">
+                            <i class="fas fa-calculator"></i> <!-- Ícono de calculadora para el segundo botón -->
+                        </button>
+
+                        @if (item.titulo?.tipo == "ACCIONES" || item.titulo?.tipo == "CEDEARS")
+                        {
+                            <a href="https://www.tradingview.com/chart/JT6qEyhm/?symbol=@item.titulo?.simbolo" target="_blank" class="btn btn-link">
+                                <i class="fas fa-chart-line"></i>
+                            </a>
+                        }
+                        else if (item.titulo?.tipo == "BONOS")
+                        {
+                            <a href="https://www.rava.com/perfil/@item.titulo?.simbolo" target="_blank" class="btn btn-link">
+                                <i class="fas fa-chart-line"></i>
+                            </a>
+                        }
+                        else if (item.titulo?.tipo == "LEACAPS")
+                        {
+                            <a href="https://iol.invertironline.com/titulo/cotizacion/BCBA/@item.titulo?.simbolo/@Model.ObtenerFechaVencimiento(item.titulo?.simbolo)/graficador" target="_blank" class="btn btn-link">
+                                <i class="fas fa-chart-line"></i>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    decimal? gananciaPromedio = sumatoriaGanancia / totalInvertido * 100 ;
+    decimal? valorizadoPrevio = Model.CalcularValorizadoPrevio();
+    decimal? gananciaNetaPrevia = Model.CalcularGananciaNetaPrevia(totalInvertido, valorizadoPrevio);
+    decimal? gananciaNetaPreviaEnPesos = Model.CalcularGananciaNetaPreviaEnPesos(totalInvertido, valorizadoPrevio);
+    decimal? diferenciaPorcentaje = gananciaPromedio - gananciaNetaPrevia;
+    decimal? diferenciaPesos = sumatoriaGanancia - gananciaNetaPreviaEnPesos;
+
+    <div class="card mb-4 mt-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col text-center mb-2">
+                    <strong>Total Invertido:</strong> @totalInvertido?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-center mb-2">
+                    <strong>Ganancia Neta Ayer (%):</strong> @gananciaNetaPrevia?.ToString("F2") %
+                </div>
+                <div class="col text-center mb-2">
+                    <strong>Ganancia Neta Ayer ($):</strong> @gananciaNetaPreviaEnPesos?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
+                </div>
+                <div class="col text-center mb-2">
+                    <strong>Saldo Total Ayer:</strong> @valorizadoPrevio?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-center mb-2">
+                    <strong>Ganancia Neta (%):</strong> @gananciaPromedio?.ToString("F2") %
+                    <span class="@(diferenciaPorcentaje < 0 ? "text-danger" : "text-success")">
+                        (@diferenciaPorcentaje?.ToString("F2") %)
+                    </span>
+                </div>
+                <div class="col text-center mb-2">
+                    <strong>Ganancia Neta ($):</strong> @sumatoriaGanancia?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
+                    <span class="@(diferenciaPesos < 0 ? "text-danger" : "text-success")">
+                        (@diferenciaPesos?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR")))
+                    </span>
+                </div>
+                <div class="col text-center mb-2">
+                    <strong>Saldo Total:</strong> @sumatoriaValorizado?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <h3 class="text-center">Informe Agrupado por Tipo de Activo</h3>
+        <table class="table dark-mode">
+            <thead>
+                <tr>
+                    <th>Tipo de Activo</th>
+                    <th>Ganancia Total ($)</th>
+                    <th>Ganancia Total (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.PortafolioItems != null && Model.PortafolioItems.Count > 0)
+                {
+                    var informePorTipo = Model.PortafolioItems
+                        .GroupBy(item => item.titulo?.tipo)
+                        .Select(grupo => new
+                        {
+                            Tipo = grupo.Key,
+                            GananciaTotalDolares = grupo.Sum(item => item.gananciaDinero),
+                            TotalInvertido = grupo.Sum(item => item.valorizado - item.gananciaDinero),
+                            GananciaTotalPorcentaje = (grupo.Sum(item => item.gananciaDinero) / (grupo.Sum(item => item.valorizado - item.gananciaDinero) + 1)) * 100 // Evitar división por cero
+                        })
+                        .ToList();
+
+                    foreach (var item in informePorTipo)
+                    {
+                        <tr>
+                            <td>@item.Tipo</td>
+                            <td class="@(item.GananciaTotalDolares >= 0 ? "text-success" : "text-danger")">
+                                @item.GananciaTotalDolares.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
+                            </td>
+                            <td class="@(item.GananciaTotalPorcentaje >= 0 ? "text-success" : "text-danger")">
+                                @item.GananciaTotalPorcentaje.ToString("F2") %
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" class="text-center">No se encontraron datos para mostrar.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="graficoDonaMainPage" width="800" height="600"></canvas>
+    </div>
+}
+else
+{
+    <p>No se encontraron datos en el portafolio.</p>
+}
+
+<div class="modal fade" id="detalleModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content dark-mode">
+            <div class="modal-header dark-mode">
+                <h5 class="modal-title" id="detalleModalLabel">Detalle de operaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mt-3 mr-4 mb-0 d-flex justify-content-end">
+                    <input type="text" id="filtroGenerico" class="form-control" placeholder="Buscar..." style="width: 200px;">
+                </div>
+                <input type="hidden" id="simboloSeleccionado" />
+                <table class="table dark-mode" id="tablaOperaciones">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Símbolo</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Monto Inv.</th>
+                            <th>Monto Op.</th>
+                            <th>Comisión</th>
+                        </tr>
+                    </thead>
+                    <tbody id="operacionesTableBody">
+                        <!-- Las filas de operaciones se llenarán aquí -->
+                    </tbody>
+                </table>
+                <div class="mt-3 text-end">
+                    <strong>Total Invertido: </strong><span id="totalInvertido">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="calculadoraModal" tabindex="-1" aria-labelledby="calculadoraModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content dark-mode">
+            <div class="modal-header dark-mode">
+                <h5 class="modal-title" id="calculadoraModalLabel">Calculadora de Ganancia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">    
+                <input type="hidden" id="simboloSeleccionado" />            
+                <input type="hidden" id="cantidadActual" />
+                <input type="hidden" id="ppc" />
+                <input type="hidden" id="ultimoPrecio" />
+
+                <!-- Visualización de datos -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Símbolo:</strong> <span id="verSimbolo"></span></p>
+                        <p><strong>Cantidad Actual:</strong> <span id="verCantidadActual"></span></p>
+                    </div>
+                     <div class="col-md-6">
+                        <p><strong>PPC:</strong> <span id="verPPC"></span></p>
+                        <p><strong>Último Precio:</strong> <span id="verUltimoPrecio"></span></p>
+                    </div>
+                </div>
+
+                <!-- Input para la ganancia deseada y botón de cálculo en la misma fila -->
+                <div class="row align-items-center mt-4">
+                    <div class="col-auto">
+                        <label for="gananciaDeseada" class="form-label mb-0"><strong>Ganancia Deseada (%)</strong></label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" id="gananciaDeseada" class="form-control" placeholder="%" style="width: 100px;" />
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-primary" onclick="calcularAccionesAdicionales()">Calcular</button>
+                    </div>
+                </div>
+
+                <!-- Resultado, inicialmente oculto -->
+                <div class="mt-4 text-center d-none" id="resultadoCalculo">
+                    <p><strong>Para alcanzar la ganancia deseada, debe comprar:</strong></p>
+                    <h5>
+                        <span id="accionesAComprar">0</span>
+                        <span id="verSimboloSeleccionado"></span> a un precio de 
+                        <span id="verUltimoPrecioAComprar">0</span>
+                    </h5>
+                    <p>
+                        <strong>Total a Invertir:</strong> 
+                        <span class="text-primary fw-bold" id="totalAInvertir">0</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.iconoVerContainer').forEach(container => {
+        container.innerHTML = iconoVer;
+    });
+</script>

@@ -1,0 +1,72 @@
+/* Estilos para login en modo claro */
+.login-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f7fc;  /* Fondo claro */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: #4c2a85; /* Violeta oscuro */
+}
+
+.login-form .form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c2b8d9;
+  border-radius: 5px;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #4c2a85;
+  box-shadow: 0 0 5px rgba(76, 42, 133, 0.3);
+}
+
+.btn-submit {
+  background-color: #4c2a85;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+  background-color: #3a2165;
+}
+
+/* Estilos para login en modo oscuro */
+.dark-mode .login-container {
+  background-color: #444 !important;  /* Fondo oscuro */
+  color: white !important;  /* Texto blanco */
+}
+
+.dark-mode .login-container .form-control {
+  background-color: #555 !important;  /* Fondo oscuro en campos de entrada */
+  color: white !important;  /* Texto blanco en los campos */
+  border-color: #777 !important;  /* Bordes oscuros */
+}
+
+.dark-mode .login-container .btn-submit {
+  background-color: #4c2a85 !important;  /* Color azul para el botón */
+  border-color: #4c2a85 !important;  /* Bordes azules para el botón */
+}
+
+.dark-mode .login-container .btn-submit:hover {
+  background-color: #3a2165 !important;
+  border-color: #3a2165 !important;
+}
+
+/* Fondo oscuro para toda la página en modo oscuro */
+body.dark-mode {
+  background-color: #121212; /* Fondo oscuro para toda la página */
+  color: white; /* Texto blanco */
+}

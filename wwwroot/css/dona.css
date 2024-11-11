@@ -1,0 +1,5 @@
+.chart-container {
+  display: flex !important;
+  justify-content: center !important;
+  height: 50vh;
+}
