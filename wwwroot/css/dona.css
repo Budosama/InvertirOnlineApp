@@ -1,5 +1,20 @@
 .chart-container {
   display: flex !important;
   justify-content: center !important;
-  height: 50vh;
+  position: relative;
+  width: 100%;
+  height: auto;
+  align-items: center;
+}
+
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* O ajustar según sea necesario */
+}
+
+.chart-container-principal {
+  width: 50%; /* Puedes ajustar este valor */
+  text-align: center; /* Alineación del contenido */
 }

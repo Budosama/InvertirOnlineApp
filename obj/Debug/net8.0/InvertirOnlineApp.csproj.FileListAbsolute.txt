@@ -41,3 +41,4 @@ C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+c:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\obj\Debug\net8.0\InvertirOnlineApp.sourcelink.json

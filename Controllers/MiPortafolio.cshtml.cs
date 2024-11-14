@@ -56,11 +56,11 @@ namespace InvertirOnlineApp.Pages
             {
                 if (activo.variacionDiaria > 0)
                 {
-                    valorizadoPrevio += activo.cantidad * (activo.ultimoPrecio / (1 - (activo.variacionDiaria / 100)));                   
+                    valorizadoPrevio += activo.cantidad * (activo.ultimoPrecio / (1 + (activo.variacionDiaria / 100)));                   
                 } 
                 else if (activo.variacionDiaria < 0)
                 {
-                    valorizadoPrevio += activo.cantidad * (activo.ultimoPrecio / (1 + (activo.variacionDiaria / 100)));
+                    valorizadoPrevio += activo.cantidad * (activo.ultimoPrecio / (1 - (activo.variacionDiaria / 100)));
                 } 
                 else 
                 {

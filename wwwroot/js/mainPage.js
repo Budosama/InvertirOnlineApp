@@ -6,6 +6,17 @@
 
         // Crear gráfico de dona
         crearGraficoDona('graficoDonaMainPage', labels, dataValorizado);
+
+        // Lógica para los activos
+        for (var i = 0; i < informePorTipo.length; i++) {
+            var grupo = informePorTipo[i];
+            var tipoActivo = grupo[0].titulo?.tipo;
+            var labels = grupo.map(item => item.titulo?.simbolo);
+            var dataValorizado = grupo.map(item => item.valorizado);
+
+            // Crear gráfico de dona para este tipo de activo
+            crearGraficoDona("graficoDona'" + tipoActivo + "'", labels, dataValorizado);
+        }   
     }
 
     // Función para establecer el valor de TNA en el input
