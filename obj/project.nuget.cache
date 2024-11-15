@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+l1nDRzdBtg=",
+  "dgSpecHash": "GqJ3NAx/aWc=",
   "success": true,
-  "projectFilePath": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj",
+  "projectFilePath": "C:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Budo\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\Budo\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",

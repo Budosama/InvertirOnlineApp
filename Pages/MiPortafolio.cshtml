@@ -62,10 +62,11 @@
             <div><strong>TNA diario:</strong> @Model.TnaPorDiaResult?.ToString("F2") %</div>
         </div>
 
-        <div class="mt-3 d-flex justify-content-start gap-3">        
-            <div><strong>Inflación mensual:</strong> @Model.InflacionMensual?.ToString("F2") %</div>
-            <div><strong>Inflación anual:</strong> @Model.InflacionAnual?.ToString("F2") %</div>
-            <div><strong>Inflación anual esperada:</strong> @Model.InflacionAnualEsperada?.ToString("F2") %</div>
+        <div class="mt-3 d-flex justify-content-start gap-3">     
+            <div><strong>IAE:</strong> @Model.InflacionAnualEsperada?.ToString("F2") %</div>   
+            <div><strong>Inf mensual:</strong> @Model.InflacionMensual?.ToString("F2") %</div>
+            <div><strong>Inflación inter-anual:</strong> @Model.InflacionAnual?.ToString("F2") %</div>
+            
         </div>
 
         <div class="mt-3 d-flex justify-content-start gap-3">        
