@@ -9,55 +9,55 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = InvertirOnlineApp
 build_property.RootNamespace = InvertirOnlineApp
-build_property.ProjectDir = C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\
+build_property.ProjectDir = c:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp
+build_property.MSBuildProjectDirectory = c:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Error.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Home.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Home.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Login.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/MiPortafolio.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/MiPortafolio.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWlQb3J0YWZvbGlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Operaciones.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Operaciones.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3BlcmFjaW9uZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/TasasPlazosFijos.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/TasasPlazosFijos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFzYXNQbGF6b3NGaWpvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/VariablesEconomicas.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/VariablesEconomicas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmFyaWFibGVzRWNvbm9taWNhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/_ViewImports.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/_ViewStart.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Shared/_Layout.cshtml]
+[c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-rmcjxz6xkb
