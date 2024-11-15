@@ -1,13 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Agregar servicios al contenedor
 builder.Services.AddHttpClient();
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<CurrencyService>();
 builder.Services.AddTransient<BancoInfoService>();
 builder.Services.AddTransient<EconomiaService>();
 
-// Add session services
+// Configuración de sesiones
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -17,6 +17,7 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
+// Configuración del pipeline de la aplicación
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -31,30 +32,23 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseSession(); // Mover aquí es una buena práctica
+app.UseSession();
 
+// Middleware para redirigir al login si no hay token
 app.Use(async (context, next) =>
 {
-    try
+    if (string.IsNullOrEmpty(context.Session.GetString("AuthToken")) && !context.Request.Path.StartsWithSegments("/Login"))
     {
-        if (string.IsNullOrEmpty(context.Session.GetString("AuthToken")) && context.Request.Path != "/Login")
-        {
-            context.Response.Redirect("/Login");
-            return;
-        }
-        await next();
+        context.Response.Redirect("/Login");
+        return;
     }
-    catch (Exception ex)
-    {
-        // Log the error aquí si tienes un logger configurado
-        Console.WriteLine($"Error en el middleware: {ex.Message}");
-        throw; // Re-lanzar la excepción para que se maneje por DeveloperExceptionPage o middleware de manejo de errores.
-    }
+    await next();
 });
 
+// Autorizar y mapear endpoints
 app.UseAuthorization();
 
-app.MapRazorPages();
-app.MapFallbackToPage("/Login");
+app.MapRazorPages(); // Mapear las Razor Pages
+app.MapFallbackToPage("/Login"); // Configurar la página por defecto como Login
 
 app.Run();

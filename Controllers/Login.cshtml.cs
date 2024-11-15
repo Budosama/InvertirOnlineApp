@@ -14,6 +14,17 @@ public class LoginModel : PageModel
 
     public string? Token { get; set; }
 
+    public IActionResult OnGet()
+    {
+        // Verifica si el usuario ya está autenticado
+        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("AuthToken")))
+        {
+            return RedirectToPage("/Home"); // Redirige a la página principal si está autenticado
+        }
+
+        return Page(); // Muestra la página de login si no está autenticado
+    }
+
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
