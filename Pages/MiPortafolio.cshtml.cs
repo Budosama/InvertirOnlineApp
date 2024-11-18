@@ -39,6 +39,7 @@ namespace InvertirOnlineApp.Pages
         public decimal? InflacionMensual { get; set; }
         public decimal? InflacionAnual { get; set; }  
         public decimal? InflacionAnualEsperada { get; set; } 
+        public decimal? RiesgoPais { get; set; } 
         public decimal? Btc { get; set; }  
         public decimal? Usd { get; set; } 
 
@@ -131,6 +132,9 @@ namespace InvertirOnlineApp.Pages
                 TnaPorMesResult = Tna.Value / 12;
                 TnaPorDiaResult = TnaPorMesResult / 30;
             }
+            if(!RiesgoPais.HasValue){
+                RiesgoPais = await _economiaService.GetRiesgoPaisAsync();    
+            } 
 
             return new JsonResult(new { btc = Btc, usd = Usd }); 
         }

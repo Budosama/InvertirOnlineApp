@@ -13,16 +13,22 @@ namespace InvertirOnlineApp.Pages
     public class VariablesEconomicasModel : PageModel
     {
         private readonly EconomiaService _economiaService;
+        
         public VariablesEconomicasModel(EconomiaService economiaService)
         {
             _economiaService = economiaService;
         }
-
+        public decimal? RiesgoPais;
         public List<VariableEconomica> VariablesEconomicas { get; set; } = new List<VariableEconomica>(); 
 
         public async Task OnGetAsync()
         {
             VariablesEconomicas = await _economiaService.GetVariablesEconomicasAsync();
+        }
+
+        public async Task ObtenerRiesgoPaisAsync()
+        {
+            RiesgoPais = await _economiaService.GetRiesgoPaisAsync();
         }
 
     }

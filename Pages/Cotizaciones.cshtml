@@ -52,7 +52,7 @@
 
 @if (Model.Cotizaciones != null && Model.Cotizaciones.Count > 0)
 {
-    <table class="table table-striped">
+    <table class="table dark-mode">
         <thead>
             <tr>
                 <th>Simbolo</th>
@@ -69,20 +69,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var bono in Model.Cotizaciones)
+            @foreach (var activo in Model.Cotizaciones)
             {
-                <tr>
-                    <td>@bono.simbolo</td>
-                    <td>@bono.ultimoPrecio!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
-                    <td>@bono.variacionPorcentual</td>
-                    <td>@bono.apertura!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
-                    <td>@bono.maximo!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
-                    <td>@bono.minimo!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
-                    <td>@bono.volumen!.Value.ToString("F0")</td>
-                    <td>@bono.fecha?.ToString("yyyy-MM-dd HH:mm:ss")</td>             
-                    <td>@bono.descripcion</td>
-                    <td>@bono.plazo</td>
-                    <td>@Model.ClasificarBono(bono)</td>
+                <tr class="@((Model.ClasificarBono(activo) == "Comprar" ? "table-success" : (Model.ClasificarBono(activo) == "Vender" ? "table-danger" : "")))">
+                    <td>@activo.simbolo</td>
+                    <td>@activo.ultimoPrecio!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td>@activo.variacionPorcentual!.Value.ToString("F2") %</td>
+                    <td>@activo.apertura!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td>@activo.maximo!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td>@activo.minimo!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td>@activo.volumen!.Value.ToString("F0")</td>
+                    <td>@activo.fecha?.ToString("yyyy-MM-dd HH:mm:ss")</td>             
+                    <td>@activo.descripcion</td>
+                    <td>@activo.plazo</td>
+                    <td>@Model.ClasificarBono(activo)</td>
                 </tr>
             }
         </tbody>

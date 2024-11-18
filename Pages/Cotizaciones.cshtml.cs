@@ -10,15 +10,23 @@ namespace InvertirOnlineApp.Pages
     public class CotizacionesModel : PageModel
     {
         private readonly IolService _iolService;
+        private readonly EconomiaService _economiaService;
 
-        public CotizacionesModel(IolService iolService)
+        public CotizacionesModel(IolService iolService, EconomiaService economiaService)
         {
             _iolService = iolService;
+            _economiaService = economiaService;
         }
 
         public List<TituloV2> Cotizaciones { get; set; } = new List<TituloV2>(); 
         public List<string> Instrumentos { get; set; } = ["acciones","aDRs","cauciones","cedears","cHDP","futuros","letras","obligacionesNegociables","opciones","titulosPublicos"]; 
         public List<string> Paises { get; set; } = ["argentina","estados_Unidos"]; 
+        public List<VariableEconomica> VariablesEconomicas { get; set; } = new List<VariableEconomica>(); 
+        public decimal? RiesgoPais { get; set; }
+        public decimal? InflacionMensual { get; set; }
+        public decimal? TasaReferencia { get; set; }
+        
+
 
         public async Task OnGetAsync(string instrumento = "acciones", string pais = "argentina")
         {
@@ -30,30 +38,31 @@ namespace InvertirOnlineApp.Pages
                 if (!string.IsNullOrEmpty(accessToken))
                 {
                     Cotizaciones = await _iolService.GetCotizacionesAsync(instrumento, pais, accessToken);
+                    RiesgoPais = await _economiaService.GetRiesgoPaisAsync();
+                    VariablesEconomicas = await _economiaService.GetVariablesEconomicasAsync();
+                    if(VariablesEconomicas.Count() > 0){
+                        InflacionMensual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 27)?.valor;
+                        TasaReferencia = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 6)?.valor;
+                    }
                 }       
             }  
         }   
 
-        public string ClasificarBono(TituloV2 activo)
+        public string ClasificarBono(TituloV2 bono)
         {
-            if (activo.ultimoPrecio.HasValue && activo.ultimoCierre.HasValue)
+            if (bono.variacionPorcentual.HasValue)
             {
-                if(activo.ultimoPrecio.Value > 0 && activo.ultimoCierre.Value > 0)
+                decimal rendimientoDiario = bono.variacionPorcentual.Value; // Directamente el porcentaje diario
+                decimal? rendimientoEsperado = (TasaReferencia / 12) + InflacionMensual + (RiesgoPais / 1000.0m);
+
+                if (rendimientoDiario > rendimientoEsperado)
                 {
-                    decimal variacion = ((activo.ultimoPrecio.Value - activo.ultimoCierre.Value) / activo.ultimoCierre.Value) * 100;
-                    if (variacion > 5.0m)  // Si el bono ha subido más del 5%, es buen momento para comprar
-                    {
-                        return "Comprar";
-                    }
-                    else if (variacion < -5.0m)  // Si ha bajado más del 5%, podría ser un bono a vender
-                    {
-                        return "Vender";
-                    }
-                    else  // Si está estable, mantenerlo podría ser una opción
-                    {
-                        return "Mantener";
-                    }
-                }         
+                    return "Comprar";
+                }
+                else if (rendimientoDiario < -rendimientoEsperado)
+                {
+                    return "Vender";
+                }
             }
             return "Mantener";
         }

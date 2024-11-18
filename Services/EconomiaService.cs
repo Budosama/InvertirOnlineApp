@@ -30,4 +30,20 @@ public class EconomiaService
         return apiResponse.results;
     }
 
+    public async Task<decimal?> GetRiesgoPaisAsync()
+    {
+        var response = await _httpClient.GetAsync("https://api.argentinadatos.com/v1/finanzas/indices/riesgo-pais/ultimo");
+        response.EnsureSuccessStatusCode();
+        var jsonResponse = await response.Content.ReadAsStringAsync();
+        var apiResponse = JsonSerializer.Deserialize<RiesgoPais>(jsonResponse);
+
+        if (apiResponse == null)
+        {
+            Console.WriteLine("La deserialización devolvió un objeto nulo.");
+            return null;
+        }
+
+        return apiResponse.valor;
+    }
+
 }
