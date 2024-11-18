@@ -25,9 +25,8 @@ namespace InvertirOnlineApp.Pages
         public decimal? RiesgoPais { get; set; }
         public decimal? InflacionMensual { get; set; }
         public decimal? TasaReferencia { get; set; }
+        public string InstrumentoSeleccionado { get; set; } = string.Empty;
         
-
-
         public async Task OnGetAsync(string instrumento = "acciones", string pais = "argentina")
         {
             var tokenJson = HttpContext.Session.GetString("AuthToken"); 
@@ -38,15 +37,56 @@ namespace InvertirOnlineApp.Pages
                 if (!string.IsNullOrEmpty(accessToken))
                 {
                     Cotizaciones = await _iolService.GetCotizacionesAsync(instrumento, pais, accessToken);
-                    RiesgoPais = await _economiaService.GetRiesgoPaisAsync();
-                    VariablesEconomicas = await _economiaService.GetVariablesEconomicasAsync();
-                    if(VariablesEconomicas.Count() > 0){
+                    InstrumentoSeleccionado = instrumento;
+
+                    if(!RiesgoPais.HasValue){
+                        RiesgoPais = await _economiaService.GetRiesgoPaisAsync();
+                    }
+
+                    if(VariablesEconomicas.Count() == 0) {
+                        VariablesEconomicas = await _economiaService.GetVariablesEconomicasAsync();
+                    } else {
                         InflacionMensual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 27)?.valor;
                         TasaReferencia = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 6)?.valor;
                     }
                 }       
             }  
         }   
+
+        public async Task<IActionResult> OnGetDetalleAsync(string mercado, string simbolo)
+        {
+            var tokenJson = HttpContext.Session.GetString("AuthToken");
+            if (string.IsNullOrEmpty(tokenJson))
+            {
+                return Unauthorized();
+            }
+
+            var tokenObject = JsonSerializer.Deserialize<TokenResponse>(tokenJson);
+            var accessToken = tokenObject?.AccessToken;
+
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                var detalle = await _iolService.GetCotizacionesDetalleAsync(mercado, simbolo, accessToken);
+                if (detalle != null)
+                {
+                    return new JsonResult(detalle); // Devuelve el detalle del activo como JSON.
+                }
+                else
+                {
+                    return NotFound("No se encontró el detalle del activo.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener el detalle: {ex.Message}");
+            }
+        }
+
 
         public string ClasificarBono(TituloV2 bono)
         {
@@ -65,6 +105,26 @@ namespace InvertirOnlineApp.Pages
                 }
             }
             return "Mantener";
+        }
+
+        public string ObtenerFechaVencimiento(string? leacap)
+        {            
+            if (leacap!.Length != 5)
+            {
+                throw new ArgumentException("Formato de LECAP no válido");
+            }
+            try
+            {
+                int dia = int.Parse(leacap.Substring(1, 2));
+                int anioBase = 2020; 
+                int anio = anioBase + int.Parse(leacap.Substring(4, 1));
+                string fechaVencimiento = $"LECAP-VTO-{dia:00}-01-{anio}";
+                return fechaVencimiento;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Error al procesar la fecha de vencimiento: " + ex.Message);
+            }
         }
     }
 }

@@ -63,26 +63,53 @@
                 <th>Mínimo</th>
                 <th>Volumen</th>
                 <th>Fecha</th>           
-                <th>Descripción</th>
-                <th>Plazo</th>
-                <th>Estado</th>
+                <th>Descripción</th>             
+                @* <th>Estado</th> *@
+                <th>Detalle</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var activo in Model.Cotizaciones)
             {
-                <tr class="@((Model.ClasificarBono(activo) == "Comprar" ? "table-success" : (Model.ClasificarBono(activo) == "Vender" ? "table-danger" : "")))">
+                <tr>
                     <td>@activo.simbolo</td>
                     <td>@activo.ultimoPrecio!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
-                    <td>@activo.variacionPorcentual!.Value.ToString("F2") %</td>
+                     <td class="@(activo.variacionPorcentual < 0 ? "text-danger" : (activo.variacionPorcentual > 0 ? "text-success" : ""))">
+                        @activo.variacionPorcentual %
+                    </td>
                     <td>@activo.apertura!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
                     <td>@activo.maximo!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
                     <td>@activo.minimo!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
                     <td>@activo.volumen!.Value.ToString("F0")</td>
-                    <td>@activo.fecha?.ToString("yyyy-MM-dd HH:mm:ss")</td>             
+                    <td>@activo.fecha?.ToString("yyyy-MM-dd")</td>             
                     <td>@activo.descripcion</td>
-                    <td>@activo.plazo</td>
-                    <td>@Model.ClasificarBono(activo)</td>
+                    @* <td>@Model.ClasificarBono(activo)</td> *@
+                    <td>
+                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#detalleModal"
+                                data-cotizaciones='@Html.Raw(Json.Serialize(Model.Cotizaciones))'
+                                onclick="verDetalle('@activo.simbolo', '@activo.mercado')">
+                            <i class="fas fa-list"></i> 
+                        </button>                        
+
+                        @if (Model.InstrumentoSeleccionado == "acciones" || Model.InstrumentoSeleccionado == "cedears")
+                        {
+                            <a href="https://www.tradingview.com/chart/JT6qEyhm/?symbol=@activo.simbolo" target="_blank" class="btn btn-link">
+                                <i class="fas fa-chart-line"></i>
+                            </a>
+                        }
+                        else if (Model.InstrumentoSeleccionado == "titulosPublicos")
+                        {
+                            <a href="https://www.rava.com/perfil/@activo.simbolo" target="_blank" class="btn btn-link">
+                                <i class="fas fa-chart-line"></i>
+                            </a>
+                        }
+                        else if (Model.InstrumentoSeleccionado == "letras")
+                        {
+                            <a href="https://iol.invertironline.com/titulo/cotizacion/BCBA/@activo.simbolo/@Model.ObtenerFechaVencimiento(activo!.simbolo)/graficador" target="_blank" class="btn btn-link">
+                                <i class="fas fa-chart-line"></i>
+                            </a>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
@@ -92,3 +119,29 @@ else
 {
     <p>No se encontraron cotizaciones.</p>
 }
+
+<div class="modal fade" id="detalleModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content dark-mode">
+            <div class="modal-header dark-mode">
+                <h5 class="modal-title" id="detalleModalLabel">Detalle del Activo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="simboloSeleccionado" />
+                <table class="table dark-mode" id="tablaDetalle">
+                    <thead>
+                        <tr>
+                            <th>Simbolo</th>
+                            <th>Tendencia</th>
+                            <th>Cierre Anterior</th>
+                            <th>Plazo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detalleTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

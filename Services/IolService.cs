@@ -48,6 +48,35 @@ public class IolService
         return cotizaciones!;
     }
 
+    public async Task<TituloDetalle> GetCotizacionesDetalleAsync(string mercado, string simbolo, string accessToken)
+    {
+        var url = $"/api/v2/{mercado}/Titulos/{simbolo}/CotizacionDetalle";
+        var client = new RestClient("https://api.invertironline.com");
+        var request = new RestRequest(url, Method.Get);
+        request.AddHeader("Authorization", $"Bearer {accessToken}");
+
+        var response = await client.ExecuteAsync(request);
+        var cotizacionDetalle = new TituloDetalle();
+
+        if (response.IsSuccessful)
+        {
+            if (!string.IsNullOrEmpty(response.Content))
+            {
+                var jsonResponse = response.Content;
+                var cotizacionResponse = JsonSerializer.Deserialize<TituloDetalle>(jsonResponse);
+                
+                cotizacionDetalle = cotizacionResponse;
+            }
+        }
+
+        if (cotizacionDetalle == null)
+        {
+            Console.WriteLine("La deserialización devolvió un objeto nulo.");
+        }
+
+        return cotizacionDetalle!;
+    }
+
     public async Task<List<Operacion>> GetOperacionesFiltradasAsync(string? estado, string? tipo, DateTime? fechaDesde, DateTime? fechaHasta, string? accessToken)
     {
         string fechaDesdeStr = fechaDesde.HasValue ? fechaDesde.Value.ToString("yyyy-MM-dd") : string.Empty;
