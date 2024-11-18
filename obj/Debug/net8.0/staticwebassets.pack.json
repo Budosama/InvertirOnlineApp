@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\bonos.js",
+      "PackagePath": "staticwebassets\\js\\bonos.js"
+    },
+    {
       "Id": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\graficos.js",
       "PackagePath": "staticwebassets\\js\\graficos.js"
     },

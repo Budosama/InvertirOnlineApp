@@ -18,7 +18,6 @@ public class CurrencyService
         var response = await _httpClient.GetAsync("https://api.coindesk.com/v1/bpi/currentprice.json");
         response.EnsureSuccessStatusCode();
         var jsonResponse = await response.Content.ReadAsStringAsync();
-
         var bitcoinPriceResponse = JsonSerializer.Deserialize<BitcoinPriceResponse>(jsonResponse);
 
         if (bitcoinPriceResponse != null)

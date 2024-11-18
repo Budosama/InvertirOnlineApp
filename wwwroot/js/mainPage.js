@@ -5,7 +5,7 @@
         var dataValorizado = valorizadoPorTipo.map(item => item.ValorizadoTotal);
 
         // Crear gráfico de dona
-        crearGraficoDona('graficoDonaMainPage', labels, dataValorizado);
+        crearGraficoDona('graficoDonaMainPage', labels, dataValorizado, "Sin Tipo");
 
         // Lógica para los activos
         for (var i = 0; i < informePorTipo.length; i++) {
@@ -15,7 +15,7 @@
             var dataValorizado = grupo.map(item => item.valorizado);
 
             // Crear gráfico de dona para este tipo de activo
-            crearGraficoDona("graficoDona'" + tipoActivo + "'", labels, dataValorizado);
+            crearGraficoDona("graficoDona'" + tipoActivo + "'", labels, dataValorizado, tipoActivo);
         }   
     }
 

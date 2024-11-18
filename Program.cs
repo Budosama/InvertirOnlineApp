@@ -6,6 +6,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddTransient<CurrencyService>();
 builder.Services.AddTransient<BancoInfoService>();
 builder.Services.AddTransient<EconomiaService>();
+builder.Services.AddTransient<BonosService>();
+builder.Services.AddTransient<IolService>();
 
 // Configuración de sesiones
 builder.Services.AddSession(options =>

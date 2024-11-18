@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qFZE2rtzGVh7T0ssaB6j/YVzJV781Om1FHWyM+VewSU=",
+  "Hash": "8djjLs53lEN9+9B02qDXxGd5jYPMhdX0Dle6O0HDiCQ=",
   "Source": "InvertirOnlineApp",
   "BasePath": "_content/InvertirOnlineApp",
   "Mode": "Default",
@@ -148,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\bonos.js",
+      "SourceId": "InvertirOnlineApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\",
+      "BasePath": "_content/InvertirOnlineApp",
+      "RelativePath": "js/bonos.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\bonos.js"
     },
     {
       "Identity": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\graficos.js",

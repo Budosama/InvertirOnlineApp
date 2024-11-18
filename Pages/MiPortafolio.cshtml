@@ -30,6 +30,7 @@
 </script>
 
 <h2>Mi Portafolio</h2>
+<hr>
 
 <div class="card mb-4">
     <div class="card-body">
@@ -224,6 +225,7 @@
 
     <div class="row mt-4">
         <h3 class="text-center">Informe Agrupado por Tipo de Activo</h3>
+        <hr>
         <table class="table dark-mode">
             <thead>
                 <tr>
@@ -274,7 +276,7 @@
         </table>
     </div>
 
-    <div class="contenedor">
+    <div class="contenedor"> 
         <div class="chart-container-principal">
             <canvas id="graficoDonaMainPage" width="400" height="400"></canvas>
         </div>
@@ -282,6 +284,7 @@
 
     <div class="row mt-4">
         <h3 class="text-center">Informe Detallado por Tipo de Activo</h3>
+        <hr>
         @if (Model.PortafolioItems != null && Model.PortafolioItems.Count > 0)
         {
             var informePorTipo = Model.PortafolioItems

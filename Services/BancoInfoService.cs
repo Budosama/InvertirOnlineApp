@@ -19,7 +19,6 @@ public class BancoInfoService
         var response = await _httpClient.GetAsync("https://api.argentinadatos.com/v1/finanzas/tasas/plazoFijo");
         response.EnsureSuccessStatusCode();
         var jsonResponse = await response.Content.ReadAsStringAsync();
-
         var bancos = new List<BancoInfo>();
         bancos = JsonSerializer.Deserialize<List<BancoInfo>>(jsonResponse);
 

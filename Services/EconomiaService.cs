@@ -19,7 +19,6 @@ public class EconomiaService
         var response = await _httpClient.GetAsync("https://api.bcra.gob.ar/estadisticas/v2.0/PrincipalesVariables");
         response.EnsureSuccessStatusCode();
         var jsonResponse = await response.Content.ReadAsStringAsync();
-
         var apiResponse = JsonSerializer.Deserialize<ApiResponse>(jsonResponse);
 
         if (apiResponse == null)

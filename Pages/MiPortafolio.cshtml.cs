@@ -15,11 +15,13 @@ namespace InvertirOnlineApp.Pages
         private readonly CurrencyService _currencyService;
         private readonly BancoInfoService _bancoInfoService;
         private readonly EconomiaService _economiaService;
-        public MiPortafolioModel(CurrencyService currencyService, BancoInfoService bancoInfoService, EconomiaService economiaService)
+        private readonly IolService _iolService;
+        public MiPortafolioModel(CurrencyService currencyService, BancoInfoService bancoInfoService, EconomiaService economiaService, IolService iolService)
         {
             _currencyService = currencyService;
             _bancoInfoService = bancoInfoService;
             _economiaService = economiaService;
+            _iolService = iolService;
         }
 
         public string? PortafolioData { get; set; }
@@ -178,7 +180,6 @@ namespace InvertirOnlineApp.Pages
                 AccessToken = tokenObject?.AccessToken!;
 
                 var accessToken = tokenObject?.AccessToken; 
-                Console.WriteLine($"Token: {accessToken}");
 
                 if (!string.IsNullOrEmpty(accessToken))
                 {
@@ -289,53 +290,7 @@ namespace InvertirOnlineApp.Pages
 
         private async Task<List<Operacion>> ObtenerOperacionesFiltradas(string? estado, string? tipo, DateTime? fechaDesde, DateTime? fechaHasta, string? accessToken)
         {
-            using (var httpClient = new HttpClient())
-            {
-                // Formatea las fechas con guiones
-                string fechaDesdeStr = fechaDesde.HasValue ? fechaDesde.Value.ToString("yyyy-MM-dd") : string.Empty;
-                string fechaHastaStr = fechaHasta.HasValue ? fechaHasta.Value.ToString("yyyy-MM-dd") : string.Empty;
-
-                var url = $"/api/v2/operaciones?filtro.estado={estado}&filtro.fechaDesde={fechaDesdeStr}&filtro.fechaHasta={fechaHastaStr}";
-                var client = new RestClient("https://api.invertironline.com");
-                var request = new RestRequest(url, Method.Get);
-                request.AddHeader("Authorization", $"Bearer {accessToken}");
-
-                var response = await client.ExecuteAsync(request);
-
-                if (response.IsSuccessful)
-                {
-                    if (!string.IsNullOrEmpty(response.Content))
-                    {
-                        try
-                        {
-                            var operacionesFiltradas = JsonSerializer.Deserialize<List<Operacion>>(response.Content) ?? new List<Operacion>();
-
-                            if (!string.IsNullOrEmpty(tipo) && tipo != "todas")
-                            {
-                                operacionesFiltradas = operacionesFiltradas.Where(o => o.tipo == tipo).ToList();
-                            }
-
-                            return operacionesFiltradas;
-                        }
-                        catch (JsonException ex)
-                        {
-                            Console.WriteLine($"Error al deserializar la respuesta: {ex.Message}");
-                            return new List<Operacion>();
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("La respuesta del servidor está vacía.");
-                        return new List<Operacion>();
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"Error al obtener las operaciones. Código de estado: {response.StatusCode}, Mensaje: {response.ErrorMessage}, Contenido: {response.Content}");
-                    return new List<Operacion>();
-                }
-
-            }
+            return await _iolService.GetOperacionesFiltradasAsync(estado, tipo, fechaDesde, fechaHasta, accessToken);
         }        
 
         public class TokenResponse
