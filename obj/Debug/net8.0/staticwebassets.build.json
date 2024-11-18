@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8djjLs53lEN9+9B02qDXxGd5jYPMhdX0Dle6O0HDiCQ=",
+  "Hash": "wvVi+puawER1sMmorXZR++WQ4qe99ytpfnmnzPUe/Ow=",
   "Source": "InvertirOnlineApp",
   "BasePath": "_content/InvertirOnlineApp",
   "Mode": "Default",
@@ -150,12 +150,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\bonos.js",
+      "Identity": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\cotizaciones.js",
       "SourceId": "InvertirOnlineApp",
       "SourceType": "Discovered",
       "ContentRoot": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\",
       "BasePath": "_content/InvertirOnlineApp",
-      "RelativePath": "js/bonos.js",
+      "RelativePath": "js/cotizaciones.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -166,7 +166,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\bonos.js"
+      "OriginalItemSpec": "wwwroot\\js\\cotizaciones.js"
     },
     {
       "Identity": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\graficos.js",

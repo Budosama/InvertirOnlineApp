@@ -1,0 +1,94 @@
+﻿@page
+@model InvertirOnlineApp.Pages.CotizacionesModel
+@using System.Text.Json
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="~/css/color.css" />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="~/js/tablas.js"></script>
+<script src="~/js/cotizaciones.js"></script>
+
+<script>
+</script>
+
+<h2>Cotizaciones</h2>
+<hr>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get">
+            <div class="form-group mb-3">
+                <div class="row align-items-end">
+                    <div class="col-md-5 mb-3">
+                        <label for="instrumento" class="form-label">Tipo Activo:</label>
+                        <select id="instrumento" name="instrumento" class="form-control">
+                            @foreach (var instrumento in Model.Instrumentos)
+                            {
+                                <option value="@instrumento">@instrumento.ToUpper()</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-5 mb-3">
+                        <label for="pais" class="form-label">País:</label>
+                        <select id="pais" name="pais" class="form-control">
+                            @foreach (var pais in Model.Paises)
+                            {
+                                <option value="@pais">@pais.ToUpper()</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model.Cotizaciones != null && Model.Cotizaciones.Count > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Simbolo</th>
+                <th>Último Precio</th>
+                <th>Variación Porcentual</th>
+                <th>Apertura</th>
+                <th>Máximo</th>
+                <th>Mínimo</th>
+                <th>Volumen</th>
+                <th>Fecha</th>           
+                <th>Descripción</th>
+                <th>Plazo</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bono in Model.Cotizaciones)
+            {
+                <tr>
+                    <td>@bono.simbolo</td>
+                    <td>@bono.ultimoPrecio!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td>@bono.variacionPorcentual</td>
+                    <td>@bono.apertura!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td>@bono.maximo!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td>@bono.minimo!.Value.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</td>
+                    <td>@bono.volumen!.Value.ToString("F0")</td>
+                    <td>@bono.fecha?.ToString("yyyy-MM-dd HH:mm:ss")</td>             
+                    <td>@bono.descripcion</td>
+                    <td>@bono.plazo</td>
+                    <td>@Model.ClasificarBono(bono)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No se encontraron cotizaciones.</p>
+}

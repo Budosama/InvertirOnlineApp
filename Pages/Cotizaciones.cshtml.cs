@@ -7,18 +7,20 @@ using static InvertirOnlineApp.Pages.MiPortafolioModel;
 
 namespace InvertirOnlineApp.Pages 
 {
-    public class BonosModel : PageModel
+    public class CotizacionesModel : PageModel
     {
         private readonly IolService _iolService;
 
-        public BonosModel(IolService iolService)
+        public CotizacionesModel(IolService iolService)
         {
             _iolService = iolService;
         }
 
-        public List<TituloV2> Bonos { get; set; } = new List<TituloV2>(); 
+        public List<TituloV2> Cotizaciones { get; set; } = new List<TituloV2>(); 
+        public List<string> Instrumentos { get; set; } = ["acciones","aDRs","cauciones","cedears","cHDP","futuros","letras","obligacionesNegociables","opciones","titulosPublicos"]; 
+        public List<string> Paises { get; set; } = ["argentina","estados_Unidos"]; 
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string instrumento = "acciones", string pais = "argentina")
         {
             var tokenJson = HttpContext.Session.GetString("AuthToken"); 
             if (!string.IsNullOrEmpty(tokenJson))
@@ -27,21 +29,18 @@ namespace InvertirOnlineApp.Pages
                 var accessToken = tokenObject?.AccessToken; 
                 if (!string.IsNullOrEmpty(accessToken))
                 {
-                    Bonos = await _iolService.GetCotizacionesAsync("titulosPublicos", "argentina", accessToken);
+                    Cotizaciones = await _iolService.GetCotizacionesAsync(instrumento, pais, accessToken);
                 }       
             }  
         }   
-        public string ClasificarBono(TituloV2 bono)
-        {
-            // Verificar si el bono tiene datos suficientes
-            if (bono.ultimoPrecio.HasValue && bono.ultimoCierre.HasValue)
-            {
-                if(bono.ultimoPrecio.Value > 0 && bono.ultimoCierre.Value > 0)
-                {
-                    // Calcular la variación porcentual
-                    decimal variacion = ((bono.ultimoPrecio.Value - bono.ultimoCierre.Value) / bono.ultimoCierre.Value) * 100;
 
-                    // Definir la lógica para clasificación
+        public string ClasificarBono(TituloV2 activo)
+        {
+            if (activo.ultimoPrecio.HasValue && activo.ultimoCierre.HasValue)
+            {
+                if(activo.ultimoPrecio.Value > 0 && activo.ultimoCierre.Value > 0)
+                {
+                    decimal variacion = ((activo.ultimoPrecio.Value - activo.ultimoCierre.Value) / activo.ultimoCierre.Value) * 100;
                     if (variacion > 5.0m)  // Si el bono ha subido más del 5%, es buen momento para comprar
                     {
                         return "Comprar";
@@ -56,8 +55,6 @@ namespace InvertirOnlineApp.Pages
                     }
                 }         
             }
-
-            // Si no tiene información suficiente, clasificar como "Mantener" por defecto
             return "Mantener";
         }
     }
