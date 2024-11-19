@@ -13,6 +13,7 @@
 <script src="~/js/graficos.js"></script>
 <script src="~/js/mainPage.js"></script>
 <script src="~/js/operaciones.js"></script>
+<script src="~/js/cotizaciones.js"></script>
 
 <script>
     var valorizadoPorTipo = @Html.Raw(JsonSerializer.Serialize(
@@ -146,6 +147,11 @@
                                 onclick="enviarSimbolo('@item.titulo?.simbolo', this.dataset.operaciones)">
                             <i class="fas fa-list"></i> 
                         </button>
+
+                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#detalleModal2"
+                            onclick="verDetalle('@item.titulo?.simbolo', '@item.titulo?.mercado')">
+                            <i class="fas fa-list"></i> 
+                        </button>  
                         
                         <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#calculadoraModal"
                                 onclick="abrirCalculadora('@item.titulo?.simbolo', '@item.cantidad', '@item.ppc', '@item.ultimoPrecio')">
@@ -350,6 +356,32 @@ else
                 <div class="mt-3 text-end">
                     <strong>Total Invertido: </strong><span id="totalInvertido">0</span>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detalleModal2" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content dark-mode">
+            <div class="modal-header dark-mode">
+                <h5 class="modal-title" id="detalleModalLabel">Detalle del Activo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="simboloSeleccionado" />
+                <table class="table dark-mode" id="tablaDetalle">
+                    <thead>
+                        <tr>
+                            <th>Simbolo</th>
+                            <th>Tendencia</th>
+                            <th>Cierre Anterior</th>
+                            <th>Plazo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detalleTableBody">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

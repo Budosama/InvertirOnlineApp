@@ -173,6 +173,40 @@ namespace InvertirOnlineApp.Pages
             }
         }
 
+        public async Task<IActionResult> OnGetDetalleAsync(string mercado, string simbolo)
+        {
+            var tokenJson = HttpContext.Session.GetString("AuthToken");
+            if (string.IsNullOrEmpty(tokenJson))
+            {
+                return Unauthorized();
+            }
+
+            var tokenObject = JsonSerializer.Deserialize<TokenResponse>(tokenJson);
+            var accessToken = tokenObject?.AccessToken;
+
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                var detalle = await _iolService.GetCotizacionesDetalleAsync(mercado, simbolo, accessToken);
+                if (detalle != null)
+                {
+                    return new JsonResult(detalle); // Devuelve el detalle del activo como JSON.
+                }
+                else
+                {
+                    return NotFound("No se encontró el detalle del activo.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener el detalle: {ex.Message}");
+            }
+        }
+
         public async Task OnGetAsync()
         {           
             await OnGetCurrencyValues();

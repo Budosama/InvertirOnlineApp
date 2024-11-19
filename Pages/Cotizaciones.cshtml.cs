@@ -87,7 +87,6 @@ namespace InvertirOnlineApp.Pages
             }
         }
 
-
         public string ClasificarBono(TituloV2 bono)
         {
             if (bono.variacionPorcentual.HasValue)
