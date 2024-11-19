@@ -108,13 +108,13 @@ namespace InvertirOnlineApp.Pages
 
         public string ObtenerFechaVencimiento(string? leacap)
         {            
-            if (leacap!.Length != 5)
-            {
-                throw new ArgumentException("Formato de LECAP no válido");
-            }
+            // if (leacap!.Length != 5)
+            // {
+            //     throw new ArgumentException("Formato de LECAP no válido");
+            // }
             try
             {
-                int dia = int.Parse(leacap.Substring(1, 2));
+                int dia = int.Parse(leacap!.Substring(1, 2));
                 int anioBase = 2020; 
                 int anio = anioBase + int.Parse(leacap.Substring(4, 1));
                 string fechaVencimiento = $"LECAP-VTO-{dia:00}-01-{anio}";
@@ -122,7 +122,8 @@ namespace InvertirOnlineApp.Pages
             }
             catch (Exception ex)
             {
-                throw new ArgumentException("Error al procesar la fecha de vencimiento: " + ex.Message);
+                // throw new ArgumentException("Error al procesar la fecha de vencimiento: " + ex.Message);
+                return $"LECAP-VTO-DESCONOCIDO:00-01-DESCONOCIDO";
             }
         }
     }

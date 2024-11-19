@@ -19,7 +19,8 @@
             "ACCIONES": "#00FF7F",
             "LEACAPS": "#FF4500",
             "CEDEARS": "#1E90FF",
-            "FCI": "#FF0000"
+            "FCI": "#FF0000",
+            "ON": "#FFF000"
         };
 
         const generarTonos = (baseColor, cantidad) => {

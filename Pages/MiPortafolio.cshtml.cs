@@ -247,7 +247,7 @@ namespace InvertirOnlineApp.Pages
                                         Operaciones = await ObtenerOperacionesFiltradas("terminadas", "todas", fechaDesde, fechaHasta, accessToken);                                     
 
                                         var simbolosTipoEspecial = PortafolioItems
-                                            .Where(item => item.titulo.tipo == "TitulosPublicos" || item.titulo.tipo == "Letras")
+                                            .Where(item => item.titulo.tipo == "TitulosPublicos" || item.titulo.tipo == "Letras" || item.titulo.tipo == "ObligacionesNegociables")
                                             .Select(item => item.titulo.simbolo)
                                             .ToHashSet();
 
@@ -288,6 +288,12 @@ namespace InvertirOnlineApp.Pages
                                             else if (item.titulo.tipo == "Letras")
                                             {
                                                 item.titulo.tipo = "LEACAPS";
+                                                item.ppc /= 100;
+                                                item.ultimoPrecio /= 100;
+                                            }
+                                            else if (item.titulo.tipo == "ObligacionesNegociables")
+                                            {
+                                                item.titulo.tipo = "ON";
                                                 item.ppc /= 100;
                                                 item.ultimoPrecio /= 100;
                                             }
