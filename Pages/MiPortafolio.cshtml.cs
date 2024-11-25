@@ -260,23 +260,42 @@ namespace InvertirOnlineApp.Pages
                                             }
                                         }
 
+                                        var ventasPorSimbolo = Operaciones
+                                            .Where(o => o.tipo == "Venta")
+                                            .GroupBy(o => o.simbolo)
+                                            .Select(g => new
+                                            {
+                                                simbolo = g.Key,
+                                                fechaUltimaVenta = g.Max(o => o.fechaOperada),
+                                                sumatoriaMontoVentas = g.Sum(o => o.montoOperado)
+                                            }).ToList();
+
                                         var comprasPorSimbolo = Operaciones
                                             .Where(o => o.tipo == "Compra")
                                             .GroupBy(o => o.simbolo)
                                             .Select(g => new
                                             {
                                                 simbolo = g.Key,
-                                                fechaPrimerCompra = g.Min(o => o.fechaOperada),
+                                                // Tomamos la fecha mínima de la compra solo si es posterior a la última venta
+                                                fechaPrimerCompra = g.Where(o =>
+                                                {
+                                                    var ultimaVenta = ventasPorSimbolo.FirstOrDefault(v => v.simbolo == g.Key)?.fechaUltimaVenta;
+                                                    // Si no existe venta, no filtramos
+                                                    if (ultimaVenta == null) return true;
+                                                    return o.fechaOperada > ultimaVenta; // Filtramos las compras anteriores a la última venta
+                                                })
+                                                .Min(o => o.fechaOperada), // Tomamos la mínima fecha que cumpla con la condición
                                                 sumatoriaMontoCompras = g.Sum(o => o.montoOperado)
-                                            }).ToList();
-
+                                            })
+                                            .ToList();
+                                        
                                         foreach (var item in PortafolioItems)
                                         {
                                             var compra = comprasPorSimbolo.FirstOrDefault(c => c.simbolo == item.titulo.simbolo);
+                                            
                                             if (compra != null)
                                             {
                                                 item.fechaPrimerCompra = compra.fechaPrimerCompra;
-                                                // item.sumatoriaMontoCompras = compra.sumatoriaMontoCompras; // Esto no es correcto
                                             }
 
                                             if (item.titulo.tipo == "TitulosPublicos")
