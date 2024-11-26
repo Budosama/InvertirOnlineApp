@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\js\\operaciones.js"
     },
     {
+      "Id": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\plazoFijoCompuesto.js",
+      "PackagePath": "staticwebassets\\js\\plazoFijoCompuesto.js"
+    },
+    {
       "Id": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

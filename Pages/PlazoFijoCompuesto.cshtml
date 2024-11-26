@@ -1,0 +1,45 @@
+﻿@page
+@model InvertirOnlineApp.Pages.PlazoFijoCompuestoModel
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+<script src="~/js/plazoFijoCompuesto.js"></script>
+
+<div class="container mt-5">
+    <h2>Calculadora Plazo Fijo Compuesto</h2>
+    
+    <!-- Formulario -->
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="CapitalInicial" class="form-label">Capital Inicial ($):</label>
+            <input asp-for="CapitalInicial" class="form-control" 
+                value="@Model.CapitalInicial.ToString(System.Globalization.CultureInfo.InvariantCulture)" 
+                type="number" step="0.01" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Tna" class="form-label">TNA (%):</label>
+            <input asp-for="Tna" class="form-control" 
+                value="@Model.Tna.ToString(System.Globalization.CultureInfo.InvariantCulture)" 
+                type="number" step="0.01" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="PlazoMeses" class="form-label">Plazo (Meses):</label>
+            <input asp-for="PlazoMeses" class="form-control" type="number" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="AgregadoMensual" class="form-label">Agregado Mensual ($):</label>
+            <input asp-for="AgregadoMensual" class="form-control" 
+                value="@Model.AgregadoMensual.ToString(System.Globalization.CultureInfo.InvariantCulture)" 
+                type="number" step="0.01" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+    </form>
+
+    <!-- Resultado -->
+    @if (Model.Resultado.HasValue)
+    {
+        <div class="mt-4 alert alert-success">
+            <strong>Resultado:</strong> Monto Total Acumulado: @Model.Resultado.Value.ToString("C2")
+        </div>
+    }
+</div>

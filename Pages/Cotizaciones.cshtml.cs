@@ -120,7 +120,7 @@ namespace InvertirOnlineApp.Pages
                 string fechaVencimiento = $"LECAP-VTO-{dia:00}-01-{anio}";
                 return fechaVencimiento;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // throw new ArgumentException("Error al procesar la fecha de vencimiento: " + ex.Message);
                 return $"LECAP-VTO-DESCONOCIDO:00-01-DESCONOCIDO";

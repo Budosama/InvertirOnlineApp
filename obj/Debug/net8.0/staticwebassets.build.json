@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wvVi+puawER1sMmorXZR++WQ4qe99ytpfnmnzPUe/Ow=",
+  "Hash": "hxkEqAXLG7B3vdIgmosny0j+byAo33RGWEUti+lLbM4=",
   "Source": "InvertirOnlineApp",
   "BasePath": "_content/InvertirOnlineApp",
   "Mode": "Default",
@@ -224,6 +224,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\operaciones.js"
+    },
+    {
+      "Identity": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\plazoFijoCompuesto.js",
+      "SourceId": "InvertirOnlineApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\",
+      "BasePath": "_content/InvertirOnlineApp",
+      "RelativePath": "js/plazoFijoCompuesto.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\plazoFijoCompuesto.js"
     },
     {
       "Identity": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\site.js",
