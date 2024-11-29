@@ -24,7 +24,22 @@
         var valorSeleccionado = $(this).val(); // Obtener el valor seleccionado
         var tnaClientes = (parseFloat(valorSeleccionado.replace(',', '.')) * 100).toFixed(2); // Convertir a porcentaje y limitar a 2 decimales
         $('#tna').val(tnaClientes); // Rellenar el input de TNA
-    });    
+    });  
+    
+    document.getElementById('exportarExcel').addEventListener('click', function () {
+        // Seleccionar la tabla HTML
+        const tabla = document.querySelector('.table');
+        
+        // Crear un libro de Excel a partir de la tabla
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.table_to_sheet(tabla);
+
+        // Agregar la hoja al libro
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Portafolio');
+
+        // Exportar el archivo
+        XLSX.writeFile(workbook, 'portafolio.xlsx');
+    });
      
 });
 

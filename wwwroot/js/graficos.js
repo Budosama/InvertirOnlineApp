@@ -56,7 +56,7 @@
                     label: 'Tipos Activos',
                     data: dataOrdenados,
                     borderWidth: 1,
-                    backgroundColor: colores
+                    // backgroundColor: colores
                 }]
             },
             options: {
