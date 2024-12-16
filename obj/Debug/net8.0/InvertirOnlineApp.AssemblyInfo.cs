@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InvertirOnlineApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+70e219d304421e13df872416c7d5c0665dd58b69")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1dc7a0e225cfeb5bf26c7374eed49586f8bb9b9b")]
 [assembly: System.Reflection.AssemblyProductAttribute("InvertirOnlineApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InvertirOnlineApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

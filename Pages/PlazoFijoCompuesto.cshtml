@@ -1,13 +1,21 @@
 ﻿@page
 @model InvertirOnlineApp.Pages.PlazoFijoCompuestoModel
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+@* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> *@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="~/css/color.css" />
+<link rel="stylesheet" href="~/css/dona.css" />
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script src="~/js/tablas.js"></script>
 <script src="~/js/plazoFijoCompuesto.js"></script>
 
 <div class="container mt-5">
     <h2>Calculadora Plazo Fijo Compuesto</h2>
-    
+
     <!-- Formulario -->
     <form method="post">
         <div class="mb-3">
@@ -40,6 +48,34 @@
     {
         <div class="mt-4 alert alert-success">
             <strong>Resultado:</strong> Monto Total Acumulado: @Model.Resultado.Value.ToString("C2")
+        </div>
+
+        <!-- Detalle Mes a Mes -->
+        <div class="mt-4">
+            <h4>Detalle Mes a Mes</h4>
+            <table class="table dark-mode">
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Capital Inicial</th>
+                        <th>Interés Ganado</th>
+                        <th>Agregado Mensual</th>
+                        <th>Total Acumulado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detalle in Model.DetalleMesAMes)
+                    {
+                        <tr>
+                            <td>@detalle.Mes</td>
+                            <td>@detalle.CapitalInicial.ToString("C2")</td>
+                            <td>@detalle.InteresGanado.ToString("C2")</td>
+                            <td>@detalle.AgregadoMensual.ToString("C2")</td>
+                            <td>@detalle.TotalAcumulado.ToString("C2")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     }
 </div>

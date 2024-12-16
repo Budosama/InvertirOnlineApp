@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 
-namespace InvertirOnlineApp.Pages 
+namespace InvertirOnlineApp.Pages
 {
     public class PlazoFijoCompuestoModel : PageModel
     {
@@ -19,6 +20,8 @@ namespace InvertirOnlineApp.Pages
 
         public decimal? Resultado { get; set; }
 
+        public List<DetalleMes> DetalleMesAMes { get; set; } = new List<DetalleMes>();
+
         public IActionResult OnGet()
         {
             return Page();
@@ -34,8 +37,19 @@ namespace InvertirOnlineApp.Pages
 
                 for (int i = 0; i < PlazoMeses; i++)
                 {
-                    montoAcumulado += montoAcumulado * tasaMensual; // Interés compuesto
-                    montoAcumulado += AgregadoMensual; // Agregado mensual
+                    decimal capitalInicialMes = montoAcumulado;
+                    decimal interesGanado = montoAcumulado * tasaMensual;
+                    montoAcumulado += interesGanado + AgregadoMensual;
+
+                    // Agregar el detalle de este mes a la lista
+                    DetalleMesAMes.Add(new DetalleMes
+                    {
+                        Mes = i + 1,
+                        CapitalInicial = capitalInicialMes,
+                        InteresGanado = interesGanado,
+                        AgregadoMensual = AgregadoMensual,
+                        TotalAcumulado = montoAcumulado
+                    });
                 }
 
                 Resultado = montoAcumulado;
@@ -46,5 +60,14 @@ namespace InvertirOnlineApp.Pages
                 return Page(); // Si hay errores de validación
             }
         }
+    }
+
+    public class DetalleMes
+    {
+        public int Mes { get; set; }
+        public decimal CapitalInicial { get; set; }
+        public decimal InteresGanado { get; set; }
+        public decimal AgregadoMensual { get; set; }
+        public decimal TotalAcumulado { get; set; }
     }
 }

@@ -30,16 +30,49 @@
         // Seleccionar la tabla HTML
         const tabla = document.querySelector('.table');
         
-        // Crear un libro de Excel a partir de la tabla
+        // Crear una copia de la tabla para trabajar
+        const tablaCopia = tabla.cloneNode(true);
+        
+        // Eliminar la columna "Detalle" (última columna, índice 12)
+        tablaCopia.querySelectorAll('tr').forEach((fila) => {
+            const celdaDetalle = fila.children[12]; // Índice de la columna Detalle
+            if (celdaDetalle) {
+                fila.removeChild(celdaDetalle);
+            }
+        });
+        
+        // Iterar por cada fila de la tabla para aplicar cambios
+        tablaCopia.querySelectorAll('tr').forEach((fila) => {
+            fila.querySelectorAll('td').forEach((celda, indice) => {
+                // Reemplazar puntos solo en columnas específicas: PPC (6), Ganancia ($) (10), Valorizado (11)
+                if ([6, 10, 11].includes(indice)) {
+                    celda.textContent = celda.textContent.replace(/\./g, '').replace(/\,/g, '.');
+                }
+    
+                // Arreglar formato de fecha en columna P. Compra (1)
+                if (indice === 1) {
+                    const fechaOriginal = celda.textContent.trim();
+                    const partesFecha = fechaOriginal.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+                    if (partesFecha) {
+                        const dia = partesFecha[1].padStart(2, '0');
+                        const mes = partesFecha[2].padStart(2, '0');
+                        const anio = partesFecha[3];
+                        celda.textContent = `${dia}-${mes}-${anio}`;
+                    }
+                }
+            });
+        });
+    
+        // Crear un libro de Excel a partir de la tabla modificada
         const workbook = XLSX.utils.book_new();
-        const worksheet = XLSX.utils.table_to_sheet(tabla);
-
+        const worksheet = XLSX.utils.table_to_sheet(tablaCopia);
+    
         // Agregar la hoja al libro
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Portafolio');
-
+    
         // Exportar el archivo
         XLSX.writeFile(workbook, 'portafolio.xlsx');
-    });
+    });     
      
 });
 
