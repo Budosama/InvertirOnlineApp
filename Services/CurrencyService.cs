@@ -40,6 +40,37 @@ public class CurrencyService
         return 0;
     }
 
+    public async Task<decimal?> GetBTCValueYesterdayInUSDAsync()
+    {
+        var yesterday = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd");
+        var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+
+        var url = $"https://api.coindesk.com/v1/bpi/historical/close.json?start={yesterday}&end={yesterday}";
+        var response = await _httpClient.GetAsync(url);
+        response.EnsureSuccessStatusCode();
+        var jsonResponse = await response.Content.ReadAsStringAsync();
+
+        var historicalPriceResponse = JsonSerializer.Deserialize<HistoricalBitcoinPriceResponse>(jsonResponse);
+
+        if (historicalPriceResponse != null && historicalPriceResponse.bpi != null)
+        {
+            if (historicalPriceResponse.bpi.ContainsKey(yesterday))
+            {
+                return historicalPriceResponse.bpi[yesterday];
+            }
+            else
+            {
+                Console.WriteLine($"No se encontró información para la fecha {yesterday}.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("La deserialización devolvió un objeto nulo.");
+        }
+
+        return 0;
+    }
+
     public async Task<decimal> GetUSDTValueInARSAsync()
     {
         var response = await _httpClient.GetAsync("https://criptoya.com/api/binance/USDT/ARS/0.1");
@@ -52,6 +83,27 @@ public class CurrencyService
         {
             decimal usdtToArs = usdtToArsResponse.totalAsk; 
             return usdtToArs;
+        }
+        else
+        {
+            Console.WriteLine("La deserialización devolvió un objeto nulo.");
+        }
+
+        return 0;
+    }
+
+    public async Task<decimal> GetUSDTValueInARSYesterdayAsync()
+    {
+        string yesterdayDate = DateTime.UtcNow.AddDays(-1).ToString("dd-MM-yyyy");
+        var response = await _httpClient.GetAsync($"https://api.coingecko.com/api/v3/coins/tether/history?date={yesterdayDate}&localization=false");
+        response.EnsureSuccessStatusCode();
+        var jsonResponse = await response.Content.ReadAsStringAsync();
+
+        var usdtHistoryResponse = JsonSerializer.Deserialize<CoinGeckoResponse>(jsonResponse);
+
+        if (usdtHistoryResponse != null && usdtHistoryResponse.market_data != null)
+        {
+            return usdtHistoryResponse.market_data.current_price["ars"];
         }
         else
         {
@@ -77,6 +129,16 @@ public class BitcoinPriceResponse
     public TimeInfo time { get; set; } = new TimeInfo();
     public string disclaimer { get; set; } = string.Empty;
     public Bpi bpi { get; set; } = new Bpi();
+}
+
+public class CoinGeckoResponse
+{
+    public MarketData market_data { get; set; } = new MarketData();
+}
+
+public class MarketData
+{
+    public Dictionary<string, decimal> current_price { get; set; } = new Dictionary<string, decimal>();
 }
 
 public class TimeInfo

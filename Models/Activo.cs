@@ -32,7 +32,7 @@ namespace InvertirOnlineApp.Models
             {
                 return (DateTime.Now - fechaPrimerCompra.Value).Days;
             }
-            return 0;
+            return 1;
         }
     }
 

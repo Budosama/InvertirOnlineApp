@@ -2,7 +2,7 @@
   "Files": [
     {
       "Id": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\InvertirOnlineApp.bundle.scp.css",
-      "PackagePath": "staticwebassets\\InvertirOnlineApp.bundle.scp.css"
+      "PackagePath": "staticwebassets\\InvertirOnlineApp.68y2v8jrku.bundle.scp.css"
     },
     {
       "Id": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\css\\color.css",
@@ -279,6 +279,10 @@
     {
       "Id": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.InvertirOnlineApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.InvertirOnlineApp.Microsoft.AspNetCore.StaticWebAssets.props",

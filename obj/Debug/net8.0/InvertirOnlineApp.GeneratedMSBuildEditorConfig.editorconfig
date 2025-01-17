@@ -17,6 +17,8 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = c:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp
 build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
 
 [c:/Users/Budo/OneDrive/Escritorio/Agus/Proyectos/InvertirOnlineApp/Pages/Cotizaciones.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ290aXphY2lvbmVzLmNzaHRtbA==

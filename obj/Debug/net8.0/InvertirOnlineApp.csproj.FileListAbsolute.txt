@@ -31,7 +31,6 @@ C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\obj\Debug\net
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\obj\Debug\net8.0\InvertirOnlineApp.pdb
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\obj\Debug\net8.0\InvertirOnlineApp.genruntimeconfig.cache
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\obj\Debug\net8.0\ref\InvertirOnlineApp.dll
-C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\System.Text.Json.dll
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
@@ -42,3 +41,6 @@ C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 c:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\obj\Debug\net8.0\InvertirOnlineApp.sourcelink.json
+c:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\bin\Debug\net8.0\InvertirOnlineApp.staticwebassets.endpoints.json
+c:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+c:\Users\Budo\OneDrive\Escritorio\Agus\Proyectos\InvertirOnlineApp\obj\Debug\net8.0\staticwebassets\msbuild.InvertirOnlineApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props

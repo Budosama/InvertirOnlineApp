@@ -36,12 +36,15 @@ namespace InvertirOnlineApp.Pages
         public decimal? Tna { get; set; }
         public decimal? TnaPorMesResult { get; set; }  
         public decimal? TnaPorDiaResult { get; set; }  
+        public decimal? InflacionDiaria { get; set; }
         public decimal? InflacionMensual { get; set; }
         public decimal? InflacionAnual { get; set; }  
         public decimal? InflacionAnualEsperada { get; set; } 
         public decimal? RiesgoPais { get; set; } 
-        public decimal? Btc { get; set; }  
+        public decimal? Btc { get; set; } 
+        public decimal? BtcYesterday { get; set; } 
         public decimal? Usd { get; set; } 
+        public decimal? UsdYesterday { get; set; } 
 
         public decimal CalcularPorcentajePlazoFijoCompuesto(int dias)
         {
@@ -112,8 +115,14 @@ namespace InvertirOnlineApp.Pages
             if(!Btc.HasValue){
                 Btc = await _currencyService.GetBTCValueInUSDAsync(); 
             }
+            if(!BtcYesterday.HasValue){
+                BtcYesterday = await _currencyService.GetBTCValueYesterdayInUSDAsync(); 
+            }
             if(!Usd.HasValue){
                 Usd = await _currencyService.GetUSDTValueInARSAsync(); 
+            }
+            if(!UsdYesterday.HasValue){
+                UsdYesterday = await _currencyService.GetUSDTValueInARSYesterdayAsync(); 
             }
             if(!(Bancos.Count > 0)){
                 Bancos = await _bancoInfoService.GetBancoInfoAsync();
@@ -124,6 +133,7 @@ namespace InvertirOnlineApp.Pages
             if(!(VariablesEconomicas.Count > 0)){
                 VariablesEconomicas = await _economiaService.GetVariablesEconomicasAsync();    
                 InflacionMensual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 27)?.valor;
+                InflacionDiaria = InflacionMensual / 30;
                 InflacionAnual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 28)?.valor;
                 InflacionAnualEsperada = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 29)?.valor;
             }            
