@@ -95,35 +95,41 @@ public class CurrencyService
 
     public async Task<decimal> GetUSDTValueInARSYesterdayAsync()
     {
-        string apiUrl = "https://api.binance.com/api/v3/klines";
-        string symbol = "USDTARS";
-        string interval = "1d";
-        long yesterdayTimestamp = ((DateTimeOffset)DateTime.UtcNow.AddDays(-1)).ToUnixTimeMilliseconds();
+        var yesterday = DateTime.UtcNow.AddDays(-1);
+        var startOfDay = new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, 0, 0, 0, DateTimeKind.Utc);
+        var endOfDay = new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, 23, 59, 59, DateTimeKind.Utc);
+        
+        long startTimestamp = new DateTimeOffset(startOfDay).ToUnixTimeMilliseconds();
+        long endTimestamp = new DateTimeOffset(endOfDay).ToUnixTimeMilliseconds();
 
-        var response = await _httpClient.GetAsync($"{apiUrl}?symbol={symbol}&interval={interval}&startTime={yesterdayTimestamp}&limit=1");
+        string url = $"https://api.binance.com/api/v3/klines?symbol=USDTARS&interval=1d&startTime={startTimestamp}&endTime={endTimestamp}";
+
+        var response = await _httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();
+
         var jsonResponse = await response.Content.ReadAsStringAsync();
+        var data = JsonSerializer.Deserialize<List<List<object>>>(jsonResponse);
 
-        // Deserializamos la respuesta como una lista de listas
-        var binanceResponse = JsonSerializer.Deserialize<List<List<JsonElement>>>(jsonResponse);
-
-        if (binanceResponse != null && binanceResponse.Any())
+        if (data != null && data.Count > 0)
         {
-            // El precio de cierre se encuentra en la posición 4
-            var closingPriceElement = binanceResponse[0][4];
-
-            // Convertir el elemento a decimal de forma segura
-            if (closingPriceElement.ValueKind == JsonValueKind.String)
+            // La posición 4 contiene el precio de cierre, que es un string dentro del array
+            var closePriceString = data[0][4].ToString();
+            
+            // Convertimos el precio de cierre a decimal
+            if (decimal.TryParse(closePriceString!.Replace(".",","), out decimal closePrice))
             {
-                return decimal.Parse(closingPriceElement.GetString()!, CultureInfo.InvariantCulture);
+                return closePrice;
             }
-            else if (closingPriceElement.ValueKind == JsonValueKind.Number)
+            else
             {
-                return closingPriceElement.GetDecimal();
+                Console.WriteLine("No se pudo convertir el precio de cierre a decimal.");
             }
         }
+        else
+        {
+            Console.WriteLine("No se encontró data válida para el valor de USDT en ARS de ayer.");
+        }
 
-        Console.WriteLine("No se pudo obtener el precio de cierre.");
         return 0;
     }
 
