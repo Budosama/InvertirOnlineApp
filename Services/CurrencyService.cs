@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Globalization;
 
 public class CurrencyService
 {
@@ -94,22 +95,35 @@ public class CurrencyService
 
     public async Task<decimal> GetUSDTValueInARSYesterdayAsync()
     {
-        string yesterdayDate = DateTime.UtcNow.AddDays(-1).ToString("dd-MM-yyyy");
-        var response = await _httpClient.GetAsync($"https://api.coingecko.com/api/v3/coins/tether/history?date={yesterdayDate}&localization=false");
+        string apiUrl = "https://api.binance.com/api/v3/klines";
+        string symbol = "USDTARS";
+        string interval = "1d";
+        long yesterdayTimestamp = ((DateTimeOffset)DateTime.UtcNow.AddDays(-1)).ToUnixTimeMilliseconds();
+
+        var response = await _httpClient.GetAsync($"{apiUrl}?symbol={symbol}&interval={interval}&startTime={yesterdayTimestamp}&limit=1");
         response.EnsureSuccessStatusCode();
         var jsonResponse = await response.Content.ReadAsStringAsync();
 
-        var usdtHistoryResponse = JsonSerializer.Deserialize<CoinGeckoResponse>(jsonResponse);
+        // Deserializamos la respuesta como una lista de listas
+        var binanceResponse = JsonSerializer.Deserialize<List<List<JsonElement>>>(jsonResponse);
 
-        if (usdtHistoryResponse != null && usdtHistoryResponse.market_data != null)
+        if (binanceResponse != null && binanceResponse.Any())
         {
-            return usdtHistoryResponse.market_data.current_price["ars"];
-        }
-        else
-        {
-            Console.WriteLine("La deserialización devolvió un objeto nulo.");
+            // El precio de cierre se encuentra en la posición 4
+            var closingPriceElement = binanceResponse[0][4];
+
+            // Convertir el elemento a decimal de forma segura
+            if (closingPriceElement.ValueKind == JsonValueKind.String)
+            {
+                return decimal.Parse(closingPriceElement.GetString()!, CultureInfo.InvariantCulture);
+            }
+            else if (closingPriceElement.ValueKind == JsonValueKind.Number)
+            {
+                return closingPriceElement.GetDecimal();
+            }
         }
 
+        Console.WriteLine("No se pudo obtener el precio de cierre.");
         return 0;
     }
 
@@ -129,16 +143,6 @@ public class BitcoinPriceResponse
     public TimeInfo time { get; set; } = new TimeInfo();
     public string disclaimer { get; set; } = string.Empty;
     public Bpi bpi { get; set; } = new Bpi();
-}
-
-public class CoinGeckoResponse
-{
-    public MarketData market_data { get; set; } = new MarketData();
-}
-
-public class MarketData
-{
-    public Dictionary<string, decimal> current_price { get; set; } = new Dictionary<string, decimal>();
 }
 
 public class TimeInfo

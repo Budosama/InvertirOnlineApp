@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj": {}
+    "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj": {
+    "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj",
+        "projectUniqueName": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj",
         "projectName": "InvertirOnlineApp",
-        "projectPath": "C:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj",
+        "projectPath": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\InvertirOnlineApp.csproj",
         "packagesPath": "C:\\Users\\Budo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\obj\\",
+        "outputPath": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Budo\\AppData\\Roaming\\NuGet\\NuGet.Config"
