@@ -121,9 +121,9 @@ namespace InvertirOnlineApp.Pages
             if(!Usd.HasValue){
                 Usd = await _currencyService.GetUSDTValueInARSAsync(); 
             }
-            if(!UsdYesterday.HasValue){
-                UsdYesterday = await _currencyService.GetUSDTValueInARSYesterdayAsync(); 
-            }
+            // if(!UsdYesterday.HasValue){
+            //     UsdYesterday = await _currencyService.GetUSDTValueInARSYesterdayAsync(); 
+            // }
             if(!(Bancos.Count > 0)){
                 Bancos = await _bancoInfoService.GetBancoInfoAsync();
                 if(!Tna.HasValue){

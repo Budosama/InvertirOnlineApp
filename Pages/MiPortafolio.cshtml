@@ -80,7 +80,7 @@
             <div>
                 <strong>BTC:</strong> 
                 @Model.Btc?.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))
-                @if (Model.Btc.HasValue && Model.BtcYesterday.HasValue)
+                @if (Model.Btc.HasValue && Model.BtcYesterday.HasValue && Model.BtcYesterday.Value > 0)
                 {
                     var btcChangePercentage = ((Model.Btc.Value - Model.BtcYesterday.Value) / Model.BtcYesterday.Value) * 100;
                     if (Model.Btc > Model.BtcYesterday)
@@ -96,7 +96,7 @@
             <div>
                 <strong>USDT:</strong> 
                 @Model.Usd?.ToString("C")
-                @if (Model.Usd.HasValue && Model.UsdYesterday.HasValue)
+                @if (Model.Usd.HasValue && Model.UsdYesterday.HasValue && Model.UsdYesterday.Value > 0)
                 {
                     var usdtChangePercentage = ((Model.Usd.Value - Model.UsdYesterday.Value) / Model.UsdYesterday.Value) * 100;
                     if (Model.Usd > Model.UsdYesterday)

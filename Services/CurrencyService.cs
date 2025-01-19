@@ -43,8 +43,8 @@ public class CurrencyService
 
     public async Task<decimal?> GetBTCValueYesterdayInUSDAsync()
     {
-        var yesterday = DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd");
-        var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+        var yesterday = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
+        var today = DateTime.Now.ToString("yyyy-MM-dd");
 
         var url = $"https://api.coindesk.com/v1/bpi/historical/close.json?start={yesterday}&end={yesterday}";
         var response = await _httpClient.GetAsync(url);
@@ -95,7 +95,7 @@ public class CurrencyService
 
     public async Task<decimal> GetUSDTValueInARSYesterdayAsync()
     {
-        var yesterday = DateTime.UtcNow.AddDays(-1);
+        var yesterday = DateTime.Now.AddDays(-1);
         var startOfDay = new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, 0, 0, 0, DateTimeKind.Utc);
         var endOfDay = new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, 23, 59, 59, DateTimeKind.Utc);
         
