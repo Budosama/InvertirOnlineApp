@@ -95,7 +95,7 @@
             </div>
             <div>
                 <strong>USDT:</strong> 
-                @Model.Usd?.ToString("C")
+                @Model.Usd?.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US"))
                 @if (Model.Usd.HasValue && Model.UsdYesterday.HasValue && Model.UsdYesterday.Value > 0)
                 {
                     var usdtChangePercentage = ((Model.Usd.Value - Model.UsdYesterday.Value) / Model.UsdYesterday.Value) * 100;
