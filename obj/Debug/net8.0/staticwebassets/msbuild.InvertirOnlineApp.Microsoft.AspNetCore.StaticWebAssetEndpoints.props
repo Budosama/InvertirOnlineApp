@@ -39,14 +39,14 @@
     <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-/i0x9AWYWJqAi8CE2p\u002BdLV5twQtqd7CAVhDJ\u002B4kmLSk="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"4853"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022/i0x9AWYWJqAi8CE2p\u002BdLV5twQtqd7CAVhDJ\u002B4kmLSk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 11 Nov 2024 15:52:54 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"5179"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8=\u0022"},{"Name":"Last-Modified","Value":"Wed, 22 Jan 2025 15:42:47 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/css/site.mz4j6vdfwx.css">
+    <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/css/site.u02kp5fdsr.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"mz4j6vdfwx"},{"Name":"integrity","Value":"sha256-/i0x9AWYWJqAi8CE2p\u002BdLV5twQtqd7CAVhDJ\u002B4kmLSk="},{"Name":"label","Value":"_content/InvertirOnlineApp/css/site.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4853"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022/i0x9AWYWJqAi8CE2p\u002BdLV5twQtqd7CAVhDJ\u002B4kmLSk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 11 Nov 2024 15:52:54 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"u02kp5fdsr"},{"Name":"integrity","Value":"sha256-PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8="},{"Name":"label","Value":"_content/InvertirOnlineApp/css/site.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5179"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8=\u0022"},{"Name":"Last-Modified","Value":"Wed, 22 Jan 2025 15:42:47 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/favicon.61n19gt1b8.ico">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.ico'))</AssetFile>
@@ -99,14 +99,14 @@
     <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/js/mainPage.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\mainPage.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-huPLF\u002BzZE6cx0p3U5avk8MkygZQuZnommyDJ/bzonKU="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"8653"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022huPLF\u002BzZE6cx0p3U5avk8MkygZQuZnommyDJ/bzonKU=\u0022"},{"Name":"Last-Modified","Value":"Tue, 03 Dec 2024 15:50:34 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-czYdZgeS\u002BGDkgndidx3eZuBsUNjlANhZfQyODR66t8g="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"9958"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022czYdZgeS\u002BGDkgndidx3eZuBsUNjlANhZfQyODR66t8g=\u0022"},{"Name":"Last-Modified","Value":"Wed, 22 Jan 2025 15:38:41 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/js/mainPage.uqgft5fq8y.js">
+    <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/js/mainPage.tgjs0uof4r.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\mainPage.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"uqgft5fq8y"},{"Name":"integrity","Value":"sha256-huPLF\u002BzZE6cx0p3U5avk8MkygZQuZnommyDJ/bzonKU="},{"Name":"label","Value":"_content/InvertirOnlineApp/js/mainPage.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"8653"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022huPLF\u002BzZE6cx0p3U5avk8MkygZQuZnommyDJ/bzonKU=\u0022"},{"Name":"Last-Modified","Value":"Tue, 03 Dec 2024 15:50:34 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"tgjs0uof4r"},{"Name":"integrity","Value":"sha256-czYdZgeS\u002BGDkgndidx3eZuBsUNjlANhZfQyODR66t8g="},{"Name":"label","Value":"_content/InvertirOnlineApp/js/mainPage.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"9958"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022czYdZgeS\u002BGDkgndidx3eZuBsUNjlANhZfQyODR66t8g=\u0022"},{"Name":"Last-Modified","Value":"Wed, 22 Jan 2025 15:38:41 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/js/operaciones.ib9txywqag.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\operaciones.js'))</AssetFile>
@@ -136,13 +136,13 @@
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"5unmtk2692"},{"Name":"integrity","Value":"sha256-Lc9Q7oRH2TFMIqd2URulwNHpRjKAiVuOe9E3w2EFsSw="},{"Name":"label","Value":"_content/InvertirOnlineApp/js/site.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1143"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022Lc9Q7oRH2TFMIqd2URulwNHpRjKAiVuOe9E3w2EFsSw=\u0022"},{"Name":"Last-Modified","Value":"Mon, 11 Nov 2024 15:40:48 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1143"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022Lc9Q7oRH2TFMIqd2URulwNHpRjKAiVuOe9E3w2EFsSw=\u0022"},{"Name":"Last-Modified","Value":"Wed, 22 Jan 2025 15:38:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/js/site.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Lc9Q7oRH2TFMIqd2URulwNHpRjKAiVuOe9E3w2EFsSw="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1143"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022Lc9Q7oRH2TFMIqd2URulwNHpRjKAiVuOe9E3w2EFsSw=\u0022"},{"Name":"Last-Modified","Value":"Mon, 11 Nov 2024 15:40:48 GMT"}]]]></ResponseHeaders>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1143"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022Lc9Q7oRH2TFMIqd2URulwNHpRjKAiVuOe9E3w2EFsSw=\u0022"},{"Name":"Last-Modified","Value":"Wed, 22 Jan 2025 15:38:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/js/tablas.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\tablas.js'))</AssetFile>

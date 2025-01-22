@@ -175,3 +175,38 @@ function calcularAccionesAdicionales() {
     document.getElementById('totalAInvertir').textContent = totalAInvertir.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
     document.getElementById('resultadoCalculo').classList.remove('d-none');
 }
+
+function toggleAllColumnsVisibility() {
+    const columnClasses = ['cantidad', 'ganancia', 'valorizado'];
+    const ojito = document.getElementById('ojito-general');
+    const additionalValues = document.querySelectorAll('.ocultable');
+
+    // Ocultar/mostrar valores en las columnas de la tabla
+    columnClasses.forEach(className => {
+        const cells = document.querySelectorAll(`.${className}`);
+        cells.forEach(cell => {
+            if (cell.dataset.originalValue === undefined) {
+                cell.dataset.originalValue = cell.textContent;
+                cell.textContent = '***';
+            } else {
+                cell.textContent = cell.dataset.originalValue;
+                delete cell.dataset.originalValue;
+            }
+        });
+    });
+
+    // Ocultar/mostrar valores adicionales
+    additionalValues.forEach(value => {
+        if (value.dataset.originalValue === undefined) {
+            value.dataset.originalValue = value.textContent;
+            value.textContent = '***';
+        } else {
+            value.textContent = value.dataset.originalValue;
+            delete value.dataset.originalValue;
+        }
+    });
+
+    // Alternar icono del ojito
+    ojito.classList.toggle('fa-eye');
+    ojito.classList.toggle('fa-eye-slash');
+}

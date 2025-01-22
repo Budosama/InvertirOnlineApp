@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "drpAIYS+G9Nc6P+PDu+EomEpcpN7WhWmrZZQakd65oo=",
+  "Hash": "m+xVQODzAEVw+mLNHhYKC3ucPlAqTL7VReqC3qgOs3s=",
   "Source": "InvertirOnlineApp",
   "BasePath": "_content/InvertirOnlineApp",
   "Mode": "Default",
@@ -136,8 +136,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "mz4j6vdfwx",
-      "Integrity": "/i0x9AWYWJqAi8CE2p+dLV5twQtqd7CAVhDJ+4kmLSk=",
+      "Fingerprint": "u02kp5fdsr",
+      "Integrity": "PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -220,8 +220,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "uqgft5fq8y",
-      "Integrity": "huPLF+zZE6cx0p3U5avk8MkygZQuZnommyDJ/bzonKU=",
+      "Fingerprint": "tgjs0uof4r",
+      "Integrity": "czYdZgeS+GDkgndidx3eZuBsUNjlANhZfQyODR66t8g=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\mainPage.js"
@@ -1766,7 +1766,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "4853"
+          "Value": "5179"
         },
         {
           "Name": "Content-Type",
@@ -1774,11 +1774,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"/i0x9AWYWJqAi8CE2p+dLV5twQtqd7CAVhDJ+4kmLSk=\""
+          "Value": "\"PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 11 Nov 2024 15:52:54 GMT"
+          "Value": "Wed, 22 Jan 2025 15:42:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1788,12 +1788,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-/i0x9AWYWJqAi8CE2p+dLV5twQtqd7CAVhDJ+4kmLSk="
+          "Value": "sha256-PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8="
         }
       ]
     },
     {
-      "Route": "css/site.mz4j6vdfwx.css",
+      "Route": "css/site.u02kp5fdsr.css",
       "AssetFile": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -1803,7 +1803,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "4853"
+          "Value": "5179"
         },
         {
           "Name": "Content-Type",
@@ -1811,11 +1811,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"/i0x9AWYWJqAi8CE2p+dLV5twQtqd7CAVhDJ+4kmLSk=\""
+          "Value": "\"PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 11 Nov 2024 15:52:54 GMT"
+          "Value": "Wed, 22 Jan 2025 15:42:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1825,7 +1825,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "mz4j6vdfwx"
+          "Value": "u02kp5fdsr"
         },
         {
           "Name": "label",
@@ -1833,7 +1833,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-/i0x9AWYWJqAi8CE2p+dLV5twQtqd7CAVhDJ+4kmLSk="
+          "Value": "sha256-PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8="
         }
       ]
     },
@@ -2258,7 +2258,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8653"
+          "Value": "9958"
         },
         {
           "Name": "Content-Type",
@@ -2266,11 +2266,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"huPLF+zZE6cx0p3U5avk8MkygZQuZnommyDJ/bzonKU=\""
+          "Value": "\"czYdZgeS+GDkgndidx3eZuBsUNjlANhZfQyODR66t8g=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 15:50:34 GMT"
+          "Value": "Wed, 22 Jan 2025 15:38:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2280,12 +2280,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-huPLF+zZE6cx0p3U5avk8MkygZQuZnommyDJ/bzonKU="
+          "Value": "sha256-czYdZgeS+GDkgndidx3eZuBsUNjlANhZfQyODR66t8g="
         }
       ]
     },
     {
-      "Route": "js/mainPage.uqgft5fq8y.js",
+      "Route": "js/mainPage.tgjs0uof4r.js",
       "AssetFile": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\mainPage.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2295,7 +2295,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8653"
+          "Value": "9958"
         },
         {
           "Name": "Content-Type",
@@ -2303,11 +2303,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"huPLF+zZE6cx0p3U5avk8MkygZQuZnommyDJ/bzonKU=\""
+          "Value": "\"czYdZgeS+GDkgndidx3eZuBsUNjlANhZfQyODR66t8g=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 15:50:34 GMT"
+          "Value": "Wed, 22 Jan 2025 15:38:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2317,7 +2317,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "uqgft5fq8y"
+          "Value": "tgjs0uof4r"
         },
         {
           "Name": "label",
@@ -2325,7 +2325,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-huPLF+zZE6cx0p3U5avk8MkygZQuZnommyDJ/bzonKU="
+          "Value": "sha256-czYdZgeS+GDkgndidx3eZuBsUNjlANhZfQyODR66t8g="
         }
       ]
     },
@@ -2516,7 +2516,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 11 Nov 2024 15:40:48 GMT"
+          "Value": "Wed, 22 Jan 2025 15:38:37 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2561,7 +2561,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 11 Nov 2024 15:40:48 GMT"
+          "Value": "Wed, 22 Jan 2025 15:38:37 GMT"
         },
         {
           "Name": "Cache-Control",

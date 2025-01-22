@@ -239,3 +239,21 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(26px);
 }
+
+.btn-icon {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.btn-icon:hover {
+  color: #007bff; /* Cambia el color al pasar el cursor */
+}
+.btn-icon i {
+  font-size: 1.5rem; /* Ajusta el tamaño del ícono */
+}
+
+/* Mantener los botones alineados */
+#exportarExcel {
+  margin-left: 0;
+}
