@@ -33,11 +33,19 @@
 
 <div style="display: flex; align-items: center; justify-content: space-between;">
     <h2>Mi Portafolio</h2>
-    <div style="display: flex; align-items: center; gap: 8px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
         <button type="button" class="btn btn-icon" onclick="toggleAllColumnsVisibility()" title="Mostrar/Ocultar Valores">
             <i class="fas fa-eye" id="ojito-general"></i>
         </button>
-        <button type="button" class="btn btn-success" id="exportarExcel">Exportar a Excel</button>
+        <button type="button" class="btn btn-success" title="Exportar Portafolio" id="exportarExcel" style="font-size: 0.80rem; padding: 5px 10px;">
+            <i class="fas fa-file-excel" style="font-size: 0.95rem;"></i>
+        </button>
+        <button type="button" class="generar-png" title="Descargar Resumen" alt="Descargar resumen">
+            <i class="fas fa-file-download"></i>
+        </button>
+        @* <img class="generar-png" src="~/img/png.png" alt="Descargar resumen" 
+            title="Descargar resumen" 
+            style="width: 40px; cursor: pointer;" /> *@
     </div>
 </div>
 <hr>
@@ -234,138 +242,146 @@
     decimal? diferenciaPorcentaje = gananciaPromedio - gananciaNetaPrevia;
     decimal? diferenciaPesos = sumatoriaGanancia - gananciaNetaPreviaEnPesos;
 
-    <div class="card mb-4 mt-4">
-        <div class="card-body">
-            <div class="row">
-                <div class="col text-center mb-2">
-                    <strong>Total Invertido:</strong> 
-                    <span class="ocultable">@totalInvertido?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
-                </div>
-            </div>
+    var nombreImagen = "MiPortafolio_" + DateTime.Now.ToString("dd-MM-yyyy");
 
-            <div class="row">
-                <div class="col text-center mb-2">
-                    <strong>Ganancia Neta Ayer (%):</strong> @gananciaNetaPrevia?.ToString("F2") %
-                </div>
-                <div class="col text-center mb-2">
-                    <strong>Ganancia Neta Ayer ($):</strong> 
-                    <span class="ocultable">@gananciaNetaPreviaEnPesos?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
-                </div>
-                <div class="col text-center mb-2">
-                    <strong>Saldo Total Ayer:</strong> 
-                    <span class="ocultable">@valorizadoPrevio?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col text-center mb-2">
-                    <strong>Ganancia Neta (%):</strong> 
-                    <span>@gananciaPromedio?.ToString("F2") %</span>
-                    <span class="@(diferenciaPorcentaje < 0 ? "text-danger" : "text-success")">
-                        (@diferenciaPorcentaje?.ToString("F2") %)
-                    </span>
-                </div>
-                <div class="col text-center mb-2">
-                    <strong>Ganancia Neta ($):</strong> 
-                    <span class="ocultable">@sumatoriaGanancia?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
-                    <span class="ocultable @(diferenciaPesos < 0 ? "text-danger" : "text-success")">
-                        (@diferenciaPesos?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR")))</span>
-                </div>
-                <div class="col text-center mb-2">
-                    <strong>Saldo Total:</strong> 
-                    <span class="ocultable">@sumatoriaValorizado?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
-                </div>
-            </div>
+    <div id="contenidoImagen" class="divGenerarImagen" data-nombre-img="@nombreImagen" style="margin: 0; padding: 20px; box-sizing: border-box; max-width: 100%; overflow: hidden;">
+        <div style="position: relative; text-align: center; padding: 10px;">
+            <h2 style="margin: 0;">Resumen</h2>
         </div>
-    </div>
-
-    <div class="row mt-4">
-        <h3 class="text-center">Informe Agrupado por Tipo de Activo</h3>
         <hr>
-        <table class="table dark-mode">
-            <thead>
-                <tr>
-                    <th>Tipo de Activo</th>
-                    <th>Porcentaje</th>
-                    <th>Ganancia Total ($)</th>
-                    <th>Ganancia Total (%)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.PortafolioItems != null && Model.PortafolioItems.Count > 0)
-                {
-                    var informePorTipo = Model.PortafolioItems
-                        .GroupBy(item => item.titulo?.tipo)
-                        .Select(grupo => new
-                        {
-                            Tipo = grupo.Key,
-                            GananciaTotalDolares = grupo.Sum(item => item.gananciaDinero),
-                            TotalInvertido = grupo.Sum(item => item.valorizado - item.gananciaDinero),
-                            GananciaTotalPorcentaje = (grupo.Sum(item => item.gananciaDinero) / (grupo.Sum(item => item.valorizado - item.gananciaDinero) + 1)) * 100, // Evitar división por cero
-                            PorcentajePortafolio = totalInvertido > 0 ? (grupo.Sum(item => item.valorizado - item.gananciaDinero) / totalInvertido) * 100 : 0
-                        })
-                        .ToList();
-
-                    foreach (var item in informePorTipo)
-                    {
-                        <tr>
-                            <td>@item.Tipo</td>
-                            <td>
-                                @item.PorcentajePortafolio!.Value.ToString("F2") %
-                            </td>
-                            <td class="ganancia @(item.GananciaTotalDolares >= 0 ? "text-success" : "text-danger")">
-                                @item.GananciaTotalDolares.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
-                            </td>
-                            <td class="ganancia @(item.GananciaTotalPorcentaje >= 0 ? "text-success" : "text-danger")">
-                                @item.GananciaTotalPorcentaje.ToString("F2") %
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="4" class="text-center">No se encontraron datos para mostrar.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-    <div class="contenedor"> 
-        <div class="chart-container-principal">
-            <canvas id="graficoDonaMainPage" width="400" height="400"></canvas>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <h3 class="text-center">Informe Detallado por Tipo de Activo</h3>
-        <hr>
-        @if (Model.PortafolioItems != null && Model.PortafolioItems.Count > 0)
-        {
-            var informePorTipo = Model.PortafolioItems
-                .GroupBy(item => item.titulo?.tipo)
-                .ToList();
-
-            foreach (var grupo in informePorTipo)
-            {
-                var tipoActivo = grupo.Key;
-                var activosDelTipo = grupo.ToList();
-                var totalTipoActivo = activosDelTipo.Sum(item => item.valorizado - item.gananciaDinero);
-                var porcentajePortafolio = totalInvertido > 0 ? (totalTipoActivo / totalInvertido) * 100 : 0;
-
-                <div class="col-md-3 mb-4"> 
-                    <h4 class="text-center">@tipoActivo (@porcentajePortafolio.Value.ToString("F2")%)</h4>
-                    <div class="chart-container">
-                        <canvas id="graficoDona'@tipoActivo'" width="400" height="400"></canvas>
+        <div class="card mb-4 mt-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col text-center mb-2">
+                        <strong>Total Invertido:</strong> 
+                        <span class="ocultable">@totalInvertido?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col text-center mb-2">
+                        <strong>Ganancia Neta Ayer (%):</strong> @gananciaNetaPrevia?.ToString("F2") %
+                    </div>
+                    <div class="col text-center mb-2">
+                        <strong>Ganancia Neta Ayer ($):</strong> 
+                        <span class="ocultable">@gananciaNetaPreviaEnPesos?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
+                    </div>
+                    <div class="col text-center mb-2">
+                        <strong>Saldo Total Ayer:</strong> 
+                        <span class="ocultable">@valorizadoPrevio?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col text-center mb-2">
+                        <strong>Ganancia Neta (%):</strong> 
+                        <span>@gananciaPromedio?.ToString("F2") %</span>
+                        <span class="@(diferenciaPorcentaje < 0 ? "text-danger" : "text-success")">
+                            (@diferenciaPorcentaje?.ToString("F2") %)
+                        </span>
+                    </div>
+                    <div class="col text-center mb-2">
+                        <strong>Ganancia Neta ($):</strong> 
+                        <span class="ocultable">@sumatoriaGanancia?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
+                        <span class="ocultable @(diferenciaPesos < 0 ? "text-danger" : "text-success")">
+                            (@diferenciaPesos?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR")))</span>
+                    </div>
+                    <div class="col text-center mb-2">
+                        <strong>Saldo Total:</strong> 
+                        <span class="ocultable">@sumatoriaValorizado?.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <h3 class="text-center">Informe Agrupado por Tipo de Activo</h3>
+            <hr>
+            <table class="table dark-mode">
+                <thead>
+                    <tr>
+                        <th>Tipo de Activo</th>
+                        <th>Porcentaje</th>
+                        <th>Ganancia Total ($)</th>
+                        <th>Ganancia Total (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.PortafolioItems != null && Model.PortafolioItems.Count > 0)
+                    {
+                        var informePorTipo = Model.PortafolioItems
+                            .GroupBy(item => item.titulo?.tipo)
+                            .Select(grupo => new
+                            {
+                                Tipo = grupo.Key,
+                                GananciaTotalDolares = grupo.Sum(item => item.gananciaDinero),
+                                TotalInvertido = grupo.Sum(item => item.valorizado - item.gananciaDinero),
+                                GananciaTotalPorcentaje = (grupo.Sum(item => item.gananciaDinero) / (grupo.Sum(item => item.valorizado - item.gananciaDinero) + 1)) * 100, // Evitar división por cero
+                                PorcentajePortafolio = totalInvertido > 0 ? (grupo.Sum(item => item.valorizado - item.gananciaDinero) / totalInvertido) * 100 : 0
+                            })
+                            .ToList();
+
+                        foreach (var item in informePorTipo)
+                        {
+                            <tr>
+                                <td>@item.Tipo</td>
+                                <td>
+                                    @item.PorcentajePortafolio!.Value.ToString("F2") %
+                                </td>
+                                <td class="ganancia @(item.GananciaTotalDolares >= 0 ? "text-success" : "text-danger")">
+                                    @item.GananciaTotalDolares.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR"))
+                                </td>
+                                <td class="ganancia @(item.GananciaTotalPorcentaje >= 0 ? "text-success" : "text-danger")">
+                                    @item.GananciaTotalPorcentaje.ToString("F2") %
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">No se encontraron datos para mostrar.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="contenedor"> 
+            <div class="chart-container-principal">
+                <canvas id="graficoDonaMainPage" width="400" height="400"></canvas>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <h3 class="text-center">Informe Detallado por Tipo de Activo</h3>
+            <hr>
+            @if (Model.PortafolioItems != null && Model.PortafolioItems.Count > 0)
+            {
+                var informePorTipo = Model.PortafolioItems
+                    .GroupBy(item => item.titulo?.tipo)
+                    .ToList();
+
+                foreach (var grupo in informePorTipo)
+                {
+                    var tipoActivo = grupo.Key;
+                    var activosDelTipo = grupo.ToList();
+                    var totalTipoActivo = activosDelTipo.Sum(item => item.valorizado - item.gananciaDinero);
+                    var porcentajePortafolio = totalInvertido > 0 ? (totalTipoActivo / totalInvertido) * 100 : 0;
+
+                    <div class="col-md-3 mb-4"> 
+                        <h4 class="text-center">@tipoActivo (@porcentajePortafolio.Value.ToString("F2")%)</h4>
+                        <div class="chart-container">
+                            <canvas id="graficoDona'@tipoActivo'" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+                }
             }
-        }
-        else
-        {
-            <div class="text-center">No se encontraron datos para mostrar.</div>
-        }
+            else
+            {
+                <div class="text-center">No se encontraron datos para mostrar.</div>
+            }
+        </div>
     </div>
 
 }

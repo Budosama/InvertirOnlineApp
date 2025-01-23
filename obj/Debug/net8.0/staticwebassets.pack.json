@@ -25,6 +25,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\img\\png.png",
+      "PackagePath": "staticwebassets\\img\\png.png"
+    },
+    {
       "Id": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\cotizaciones.js",
       "PackagePath": "staticwebassets\\js\\cotizaciones.js"
     },
