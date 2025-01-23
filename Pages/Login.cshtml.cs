@@ -16,6 +16,8 @@ public class LoginModel : PageModel
 
     public IActionResult OnGet()
     {
+        ViewData["Title"] = "Login";
+
         // Verifica si el usuario ya está autenticado
         if (!string.IsNullOrEmpty(HttpContext.Session.GetString("AuthToken")))
         {

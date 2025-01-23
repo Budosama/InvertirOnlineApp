@@ -29,6 +29,8 @@ namespace InvertirOnlineApp.Pages
         
         public async Task OnGetAsync(string instrumento = "acciones", string pais = "argentina")
         {
+            ViewData["Title"] = "Cotizaciones";
+
             var tokenJson = HttpContext.Session.GetString("AuthToken"); 
             if (!string.IsNullOrEmpty(tokenJson))
             {

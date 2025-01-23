@@ -24,6 +24,8 @@ namespace InvertirOnlineApp.Pages
 
         public IActionResult OnGet()
         {
+            ViewData["Title"] = "Plazo Fijo Compuesto";
+
             return Page();
         }
 

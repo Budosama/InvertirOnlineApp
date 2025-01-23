@@ -23,6 +23,8 @@ namespace InvertirOnlineApp.Pages
 
         public async Task OnGetAsync()
         {
+            ViewData["Title"] = "Variables Economicas";
+
             VariablesEconomicas = await _economiaService.GetVariablesEconomicasAsync();
         }
 

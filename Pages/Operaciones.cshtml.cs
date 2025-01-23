@@ -20,6 +20,8 @@ namespace InvertirOnlineApp.Pages
 
         public async Task OnGetAsync(string? filtroEstado, string? filtroTipo, DateTime? filtroFechaDesde, DateTime? filtroFechaHasta)
         {
+            ViewData["Title"] = "Operaciones";
+
             var tokenJson = HttpContext.Session.GetString("AuthToken");
             if (!string.IsNullOrEmpty(tokenJson))
             {

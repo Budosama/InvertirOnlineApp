@@ -219,6 +219,8 @@ namespace InvertirOnlineApp.Pages
 
         public async Task OnGetAsync()
         {           
+            ViewData["Title"] = "Mi Portafolio";
+
             await OnGetCurrencyValues();
 
             var tokenJson = HttpContext.Session.GetString("AuthToken"); 

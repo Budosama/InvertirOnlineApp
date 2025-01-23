@@ -22,6 +22,8 @@ namespace InvertirOnlineApp.Pages
 
         public async Task OnGetAsync()
         {
+            ViewData["Title"] = "Tasas Plazos Fijos";
+
             Bancos = await _bancoInfoService.GetBancoInfoAsync();
         }
 

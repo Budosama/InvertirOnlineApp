@@ -8,6 +8,7 @@ namespace InvertirOnlineApp.Pages
     {
         public void OnGet()
         {
+            ViewData["Title"] = "Home";
         }
     }
 }
