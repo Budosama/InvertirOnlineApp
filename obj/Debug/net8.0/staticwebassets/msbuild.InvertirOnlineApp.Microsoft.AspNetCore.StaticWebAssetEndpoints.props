@@ -24,17 +24,17 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-EOIAqot6ldIBuSjqPdxauZudK30obK9ERvlvbgJbhWs="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"450"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022EOIAqot6ldIBuSjqPdxauZudK30obK9ERvlvbgJbhWs=\u0022"},{"Name":"Last-Modified","Value":"Sat, 16 Nov 2024 22:56:02 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/css/login.5cuol7k1tk.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\login.css'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"5cuol7k1tk"},{"Name":"integrity","Value":"sha256-ax/xIel2bivBuEW4wVRkgpwybmZNMuNAikCxpZtR5uA="},{"Name":"label","Value":"_content/InvertirOnlineApp/css/login.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1812"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022ax/xIel2bivBuEW4wVRkgpwybmZNMuNAikCxpZtR5uA=\u0022"},{"Name":"Last-Modified","Value":"Sun, 10 Nov 2024 07:15:13 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/css/login.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\login.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ax/xIel2bivBuEW4wVRkgpwybmZNMuNAikCxpZtR5uA="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1812"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022ax/xIel2bivBuEW4wVRkgpwybmZNMuNAikCxpZtR5uA=\u0022"},{"Name":"Last-Modified","Value":"Sun, 10 Nov 2024 07:15:13 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-L6USrVzIDTzhzyJArfvKwmdj6cDe\u002BoHpk2ClgdsEInM="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2056"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022L6USrVzIDTzhzyJArfvKwmdj6cDe\u002BoHpk2ClgdsEInM=\u0022"},{"Name":"Last-Modified","Value":"Thu, 23 Jan 2025 20:00:11 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/css/login.pyzjecym7i.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\login.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"pyzjecym7i"},{"Name":"integrity","Value":"sha256-L6USrVzIDTzhzyJArfvKwmdj6cDe\u002BoHpk2ClgdsEInM="},{"Name":"label","Value":"_content/InvertirOnlineApp/css/login.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2056"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022L6USrVzIDTzhzyJArfvKwmdj6cDe\u002BoHpk2ClgdsEInM=\u0022"},{"Name":"Last-Modified","Value":"Thu, 23 Jan 2025 20:00:11 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
@@ -59,6 +59,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"5430"},{"Name":"Content-Type","Value":"image/x-icon"},{"Name":"ETag","Value":"\u0022Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=\u0022"},{"Name":"Last-Modified","Value":"Fri, 01 Nov 2024 15:38:02 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/img/fondoLogin.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\fondoLogin.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-rDalPGqewU1U7HoRnt7Aam7sTEWlBTi/GZpWXIQCpw8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"490328"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022rDalPGqewU1U7HoRnt7Aam7sTEWlBTi/GZpWXIQCpw8=\u0022"},{"Name":"Last-Modified","Value":"Thu, 23 Jan 2020 18:38:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/img/fondoLogin.s4omnz3o47.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\fondoLogin.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"s4omnz3o47"},{"Name":"integrity","Value":"sha256-rDalPGqewU1U7HoRnt7Aam7sTEWlBTi/GZpWXIQCpw8="},{"Name":"label","Value":"_content/InvertirOnlineApp/img/fondoLogin.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"490328"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022rDalPGqewU1U7HoRnt7Aam7sTEWlBTi/GZpWXIQCpw8=\u0022"},{"Name":"Last-Modified","Value":"Thu, 23 Jan 2020 18:38:56 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/InvertirOnlineApp/img/png.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\png.png'))</AssetFile>
