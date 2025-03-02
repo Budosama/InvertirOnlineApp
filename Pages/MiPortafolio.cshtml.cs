@@ -112,15 +112,15 @@ namespace InvertirOnlineApp.Pages
 
         public async Task<IActionResult> OnGetCurrencyValues()
         {
-            if(!Btc.HasValue){
-                Btc = await _currencyService.GetBTCValueInUSDAsync(); 
-            }
-            if(!BtcYesterday.HasValue){
-                BtcYesterday = await _currencyService.GetBTCValueYesterdayInUSDAsync(); 
-            }
-            if(!Usd.HasValue){
-                Usd = await _currencyService.GetUSDTValueInARSAsync(); 
-            }
+            // if(!Btc.HasValue){
+            //     Btc = await _currencyService.GetBTCValueInUSDAsync(); 
+            // }
+            // if(!BtcYesterday.HasValue){
+            //     BtcYesterday = await _currencyService.GetBTCValueYesterdayInUSDAsync(); 
+            // }
+            // if(!Usd.HasValue){
+            //     Usd = await _currencyService.GetUSDTValueInARSAsync(); 
+            // }
             // if(!UsdYesterday.HasValue){
             //     UsdYesterday = await _currencyService.GetUSDTValueInARSYesterdayAsync(); 
             // }
