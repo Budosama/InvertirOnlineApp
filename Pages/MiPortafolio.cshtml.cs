@@ -201,6 +201,13 @@ namespace InvertirOnlineApp.Pages
 
             try
             {
+                var isDemo = HttpContext.Session.GetString("IsDemo") == "true";
+                    
+                if (isDemo)
+                {
+                    return new JsonResult("");
+                }
+
                 var detalle = await _iolService.GetCotizacionesDetalleAsync(mercado, simbolo, accessToken);
                 if (detalle != null)
                 {

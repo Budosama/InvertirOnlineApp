@@ -2,29 +2,34 @@
 
     // Seleccionar el interruptor
     const darkModeToggle = document.getElementById('darkModeToggle');
+    const icon = document.getElementById('modeIcon');
 
     // Elementos que necesitan modo oscuro
-    const darkModeElements = document.querySelectorAll('.modal-content, .modal-header, .table, .form-control, .btn-primary');
-
-    // Cargar preferencia desde localStorage al iniciar
-    if (localStorage.getItem('darkMode') === 'enabled') {
-        document.body.classList.add('dark-mode');
-        darkModeElements.forEach(el => el.classList.add('dark-mode'));
-        darkModeToggle.checked = true;
-    }
+    const darkModeElements = document.querySelectorAll('.dark-mode-target, .modal-content, .modal-header, .table, .form-control, .btn-primary');
 
     // Función para alternar entre modos
     const toggleDarkMode = () => {
         document.body.classList.toggle('dark-mode');
         darkModeElements.forEach(el => el.classList.toggle('dark-mode'));
-        if (document.body.classList.contains('dark-mode')) {
-            localStorage.setItem('darkMode', 'enabled');
-        } else {
-            localStorage.setItem('darkMode', 'disabled');
-        }
+
+        const isDark = document.body.classList.contains('dark-mode');
+        icon.textContent = isDark ? '🌙' : '🌞';
+
+        localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
     };
 
-    // Evento para alternar entre modos
+    // Al cargar la página, verificar el estado guardado
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedMode = localStorage.getItem('darkMode');
+        const isDark = savedMode === 'enabled';
+
+        document.body.classList.toggle('dark-mode', isDark);
+        darkModeElements.forEach(el => el.classList.toggle('dark-mode', isDark));
+        icon.textContent = isDark ? '🌙' : '🌞';
+        darkModeToggle.checked = isDark;
+    });
+
+    // Evento para alternar
     darkModeToggle.addEventListener('change', toggleDarkMode);
 
     document.querySelectorAll('.generar-png').forEach((boton) => {

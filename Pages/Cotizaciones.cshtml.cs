@@ -38,6 +38,18 @@ namespace InvertirOnlineApp.Pages
                 var accessToken = tokenObject?.AccessToken; 
                 if (!string.IsNullOrEmpty(accessToken))
                 {
+                    var isDemo = HttpContext.Session.GetString("IsDemo") == "true";
+                    
+                    if (isDemo)
+                    {
+                        //Cotizaciones = _iolService.GetCotizacionesDemo(); // Devuelve datos de prueba
+                        InstrumentoSeleccionado = instrumento;
+                        RiesgoPais = 2000; // dato ficticio
+                        InflacionMensual = (decimal)0.08;
+                        TasaReferencia = (decimal)0.6;
+                        return;
+                    }
+
                     Cotizaciones = await _iolService.GetCotizacionesAsync(instrumento, pais, accessToken);
                     InstrumentoSeleccionado = instrumento;
 
@@ -51,7 +63,7 @@ namespace InvertirOnlineApp.Pages
                         InflacionMensual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 27)?.valor;
                         TasaReferencia = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 6)?.valor;
                     }
-                }       
+                }
             }  
         }   
 

@@ -31,14 +31,14 @@ public class IolService
             {
                 var jsonResponse = response.Content;
                 var cotizacionResponse = JsonSerializer.Deserialize<CotizacionActivoResponse>(jsonResponse);
-                
+
                 cotizaciones = cotizacionResponse!.titulos;
             }
         }
 
         if (cotizaciones != null)
         {
-            cotizaciones = cotizaciones.OrderBy(b => b.variacionPorcentual).ToList(); 
+            cotizaciones = cotizaciones.OrderBy(b => b.variacionPorcentual).ToList();
         }
         else
         {
@@ -64,7 +64,7 @@ public class IolService
             {
                 var jsonResponse = response.Content;
                 var cotizacionResponse = JsonSerializer.Deserialize<TituloDetalle>(jsonResponse);
-                
+
                 cotizacionDetalle = cotizacionResponse;
             }
         }
@@ -121,6 +121,15 @@ public class IolService
             Console.WriteLine($"Error al obtener las operaciones. Código de estado: {response.StatusCode}, Mensaje: {response.ErrorMessage}, Contenido: {response.Content}");
             return new List<Operacion>();
         }
+    }
+    
+    public List<TituloV2> GetCotizacionesDemo()
+    {
+        return new List<TituloV2>
+        {
+            new TituloV2 { simbolo = "GGAL", ultimoPrecio = 950.25m },
+            new TituloV2 { simbolo = "YPFD", ultimoPrecio = 1250.10m }
+        };
     }
 
 }

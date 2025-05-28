@@ -33,6 +33,13 @@ namespace InvertirOnlineApp.Pages
 
                 if (!string.IsNullOrEmpty(accessToken))
                 {
+                    var isDemo = HttpContext.Session.GetString("IsDemo") == "true";
+                    
+                    if (isDemo)
+                    {
+                        return;
+                    }
+                    
                     // Si hay filtros, llamar a la API filtrada
                     if (!string.IsNullOrEmpty(filtroEstado) || !string.IsNullOrEmpty(filtroTipo) || filtroFechaDesde.HasValue || filtroFechaHasta.HasValue)
                     {
@@ -48,7 +55,7 @@ namespace InvertirOnlineApp.Pages
 
                         if (response.IsSuccessful)
                         {
-                            OperacionesData = response.Content; 
+                            OperacionesData = response.Content;
 
                             if (!string.IsNullOrEmpty(response.Content))
                             {

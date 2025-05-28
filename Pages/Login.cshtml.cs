@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using RestSharp;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 public class LoginModel : PageModel
 {
@@ -34,6 +35,24 @@ public class LoginModel : PageModel
             return Page();
         }
 
+        // Login por defecto para pruebas
+        if (Username == "admin" && Password == "admin")
+        {
+            var fakeToken = new TokenResponse
+            {
+                AccessToken = "admin_fake_access_token",
+                ExpiresIn = 3600,
+                TokenType = "Bearer"
+            };
+
+            var tokenJson = JsonSerializer.Serialize(fakeToken);
+            HttpContext.Session.SetString("AuthToken", tokenJson);
+            HttpContext.Session.SetString("IsDemo", "true"); // opcional
+
+            return RedirectToPage("/Home");
+        }
+
+        // Login real a la API
         var client = new RestClient("https://api.invertironline.com/token");
         var request = new RestRequest("/", Method.Post);
         request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -45,9 +64,9 @@ public class LoginModel : PageModel
 
         if (response.IsSuccessful)
         {
-            Token = response.Content; // Puedes procesar la respuesta y extraer solo el token.
-            HttpContext.Session.SetString("AuthToken", Token!); // Almacena el token en sesión.
-            return RedirectToPage("/Home"); // Redirige a la página principal.
+            Token = response.Content; // Aquí podés deserializar y obtener solo el access_token si querés
+            HttpContext.Session.SetString("AuthToken", Token!);
+            return RedirectToPage("/Home");
         }
         else
         {
@@ -55,6 +74,7 @@ public class LoginModel : PageModel
             return Page();
         }
     }
+
 
     public IActionResult OnGetLogout()
     {

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bOh7ouiLIPXOx+zrvlpv1dXJTKjgUCd3GZBym7dfSuE=",
+  "Hash": "YcEzGyqp1yE4myIxJYPUl5tMzlkYiuBwYYQ7UT4EIAM=",
   "Source": "InvertirOnlineApp",
   "BasePath": "_content/InvertirOnlineApp",
   "Mode": "Default",
@@ -136,8 +136,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "u02kp5fdsr",
-      "Integrity": "PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8=",
+      "Fingerprint": "219grigkui",
+      "Integrity": "thRzwcQqvvMwtW0a+NKPH2BLBtPD44UauWRmuAgHh64=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -325,8 +325,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "qj7l3h78y2",
-      "Integrity": "iq9Z8SGE+jaiWJ+XVWRzPxE7di/fKV6pJjijfBOX+A8=",
+      "Fingerprint": "pxt3omgj73",
+      "Integrity": "Tap2FEBHQmdNHzK1NP9QhfGMNz2n4ofbO+Szx02n+44=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
@@ -1798,6 +1798,51 @@
       ]
     },
     {
+      "Route": "css/site.219grigkui.css",
+      "AssetFile": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5118"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"thRzwcQqvvMwtW0a+NKPH2BLBtPD44UauWRmuAgHh64=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 28 May 2025 18:19:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "219grigkui"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-thRzwcQqvvMwtW0a+NKPH2BLBtPD44UauWRmuAgHh64="
+        }
+      ]
+    },
+    {
       "Route": "css/site.css",
       "AssetFile": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\css\\site.css",
       "Selectors": [],
@@ -1808,7 +1853,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5179"
+          "Value": "5118"
         },
         {
           "Name": "Content-Type",
@@ -1816,11 +1861,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8=\""
+          "Value": "\"thRzwcQqvvMwtW0a+NKPH2BLBtPD44UauWRmuAgHh64=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 15:42:47 GMT"
+          "Value": "Wed, 28 May 2025 18:19:36 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1830,52 +1875,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.u02kp5fdsr.css",
-      "AssetFile": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\css\\site.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "5179"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 22 Jan 2025 15:42:47 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "u02kp5fdsr"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-PmQn23GvI5lM4gi7RJtXFOABlzCpuB5d9IHSPDjYhT8="
+          "Value": "sha256-thRzwcQqvvMwtW0a+NKPH2BLBtPD44UauWRmuAgHh64="
         }
       ]
     },
@@ -2710,7 +2710,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2525"
+          "Value": "2776"
         },
         {
           "Name": "Content-Type",
@@ -2718,11 +2718,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"iq9Z8SGE+jaiWJ+XVWRzPxE7di/fKV6pJjijfBOX+A8=\""
+          "Value": "\"Tap2FEBHQmdNHzK1NP9QhfGMNz2n4ofbO+Szx02n+44=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 23 Jan 2025 16:04:51 GMT"
+          "Value": "Wed, 28 May 2025 18:18:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2732,12 +2732,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-iq9Z8SGE+jaiWJ+XVWRzPxE7di/fKV6pJjijfBOX+A8="
+          "Value": "sha256-Tap2FEBHQmdNHzK1NP9QhfGMNz2n4ofbO+Szx02n+44="
         }
       ]
     },
     {
-      "Route": "js/site.qj7l3h78y2.js",
+      "Route": "js/site.pxt3omgj73.js",
       "AssetFile": "c:\\Users\\Budo\\OneDrive\\Escritorio\\Agus\\Proyectos\\InvertirOnlineApp\\wwwroot\\js\\site.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2747,7 +2747,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2525"
+          "Value": "2776"
         },
         {
           "Name": "Content-Type",
@@ -2755,11 +2755,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"iq9Z8SGE+jaiWJ+XVWRzPxE7di/fKV6pJjijfBOX+A8=\""
+          "Value": "\"Tap2FEBHQmdNHzK1NP9QhfGMNz2n4ofbO+Szx02n+44=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 23 Jan 2025 16:04:51 GMT"
+          "Value": "Wed, 28 May 2025 18:18:41 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2769,7 +2769,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "qj7l3h78y2"
+          "Value": "pxt3omgj73"
         },
         {
           "Name": "label",
@@ -2777,7 +2777,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-iq9Z8SGE+jaiWJ+XVWRzPxE7di/fKV6pJjijfBOX+A8="
+          "Value": "sha256-Tap2FEBHQmdNHzK1NP9QhfGMNz2n4ofbO+Szx02n+44="
         }
       ]
     },
