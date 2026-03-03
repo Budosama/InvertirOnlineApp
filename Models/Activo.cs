@@ -30,7 +30,14 @@ namespace InvertirOnlineApp.Models
         {
             if (fechaPrimerCompra.HasValue)
             {
-                return (DateTime.Now - fechaPrimerCompra.Value).Days;
+                int rersultado = (DateTime.Now - fechaPrimerCompra.Value).Days;
+                if (rersultado >= 1)
+                {
+                    return rersultado;
+                }
+                else {
+                    return 1;
+                }
             }
             return 1;
         }
