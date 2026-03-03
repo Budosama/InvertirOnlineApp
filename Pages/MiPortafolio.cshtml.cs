@@ -228,7 +228,7 @@ namespace InvertirOnlineApp.Pages
         {           
             ViewData["Title"] = "Mi Portafolio";
 
-            await OnGetCurrencyValues();
+            //await OnGetCurrencyValues();
 
             var tokenJson = HttpContext.Session.GetString("AuthToken"); 
             if (!string.IsNullOrEmpty(tokenJson))
