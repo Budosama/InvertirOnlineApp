@@ -60,8 +60,8 @@ namespace InvertirOnlineApp.Pages
                     if(VariablesEconomicas.Count() == 0) {
                         VariablesEconomicas = await _economiaService.GetVariablesEconomicasAsync();
                     } else {
-                        InflacionMensual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 27)?.valor;
-                        TasaReferencia = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 6)?.valor;
+                        InflacionMensual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 27)?.ultValorInformado;
+                        TasaReferencia = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 6)?.ultValorInformado;
                     }
                 }
             }  

@@ -16,7 +16,7 @@ public class EconomiaService
 
     public async Task<List<VariableEconomica>> GetVariablesEconomicasAsync()
     {
-        var response = await _httpClient.GetAsync("https://api.bcra.gob.ar/estadisticas/v2.0/PrincipalesVariables");
+        var response = await _httpClient.GetAsync("https://api.bcra.gob.ar/estadisticas/v4.0/Monetarias");
         response.EnsureSuccessStatusCode();
         var jsonResponse = await response.Content.ReadAsStringAsync();
         var apiResponse = JsonSerializer.Deserialize<ApiResponse>(jsonResponse);

@@ -130,21 +130,23 @@ namespace InvertirOnlineApp.Pages
                     Tna = (decimal?)Bancos.Max(b => b.tnaClientes) * 100;        
                 }         
             }
-            if(!(VariablesEconomicas.Count > 0)){
-                VariablesEconomicas = await _economiaService.GetVariablesEconomicasAsync();    
-                InflacionMensual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 27)?.valor;
+            if (!(VariablesEconomicas.Count > 0))
+            {
+                VariablesEconomicas = await _economiaService.GetVariablesEconomicasAsync();
+                InflacionMensual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 27)?.ultValorInformado;
                 InflacionDiaria = InflacionMensual / 30;
-                InflacionAnual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 28)?.valor;
-                InflacionAnualEsperada = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 29)?.valor;
-            }            
+                InflacionAnual = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 28)?.ultValorInformado;
+                InflacionAnualEsperada = VariablesEconomicas.FirstOrDefault(ve => ve.idVariable == 29)?.ultValorInformado;
+            }
             if (Tna.HasValue && Tna.Value >= 0)
             {
                 TnaPorMesResult = Tna.Value / 12;
                 TnaPorDiaResult = TnaPorMesResult / 30;
             }
-            if(!RiesgoPais.HasValue){
-                RiesgoPais = await _economiaService.GetRiesgoPaisAsync();    
-            } 
+            if (!RiesgoPais.HasValue)
+            {
+                RiesgoPais = await _economiaService.GetRiesgoPaisAsync();
+            }
 
             return new JsonResult(new { btc = Btc, usd = Usd }); 
         }
@@ -228,7 +230,7 @@ namespace InvertirOnlineApp.Pages
         {           
             ViewData["Title"] = "Mi Portafolio";
 
-            //await OnGetCurrencyValues();
+            await OnGetCurrencyValues();
 
             var tokenJson = HttpContext.Session.GetString("AuthToken"); 
             if (!string.IsNullOrEmpty(tokenJson))
