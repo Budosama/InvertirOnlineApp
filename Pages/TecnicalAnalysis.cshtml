@@ -1,0 +1,638 @@
+﻿@page
+@model InvertirOnlineApp.Pages.TechnicalAnalysisModel
+
+@{
+    ViewData["Title"] = "Technical Analysis";
+}
+
+<link rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+
+<style>
+
+    body {
+        background: #0f172a;
+        color: #e2e8f0;
+    }
+
+    .card {
+        background: #111827;
+        border: none;
+        border-radius: 16px;
+    }
+
+    .card-header {
+        background: #1e293b;
+        border-bottom: 1px solid #334155;
+    }
+
+    .table {
+        color: #e2e8f0;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    table.dataTable thead {
+        background: #1e293b;
+    }
+
+        table.dataTable thead th {
+            color: white !important;
+            border-bottom: 1px solid #334155 !important;
+        }
+
+    table.dataTable tbody tr {
+        background: #111827;
+    }
+
+        table.dataTable tbody tr:hover {
+            background: #1e293b !important;
+        }
+
+    td, th {
+        vertical-align: middle !important;
+    }
+
+    .metric-good {
+        background: rgba(34,197,94,0.18) !important;
+        color: #86efac !important;
+        font-weight: 600;
+    }
+
+    .metric-warning {
+        background: rgba(250,204,21,0.18) !important;
+        color: #fde68a !important;
+        font-weight: 600;
+    }
+
+    .metric-bad {
+        background: rgba(239,68,68,0.18) !important;
+        color: #fca5a5 !important;
+        font-weight: 600;
+    }
+
+    .score-badge {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-weight: bold;
+    }
+
+    .score-excellent {
+        background: #22c55e;
+        color: white;
+    }
+
+    .score-good {
+        background: #eab308;
+        color: black;
+    }
+
+    .score-warning {
+        background: #f97316;
+        color: white;
+    }
+
+    .score-bad {
+        background: #ef4444;
+        color: white;
+    }
+
+    .empresa-cell {
+        min-width: 220px;
+    }
+
+    .symbol-cell {
+        font-size: 15px;
+        font-weight: bold;
+        color: #60a5fa;
+    }
+
+    .accordion-item {
+        background: #111827;
+        color: #e2e8f0;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background: #1e293b;
+        color: white;
+    }
+
+    .accordion-button:focus {
+        box-shadow: none;
+    }
+
+    .accordion-button::after {
+        filter: invert(1);
+    }
+
+</style>
+
+<div class="container-fluid mt-4">
+
+    <div class="card shadow-lg">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <div>
+                <h2 class="mb-0">
+                    📊 Technical Analysis Screener
+                </h2>
+
+                <small class="text-secondary">
+                    Momentum + Trend + Strength + Risk
+                </small>
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row mb-4">
+
+                <div class="col-md-4">
+
+                    <label class="form-label fw-bold">
+                        Empresa
+                    </label>
+
+                    <select id="companySelect"
+                            class="form-select bg-dark text-light border-secondary">
+
+                        <option value="">
+                            Todas las empresas
+                        </option>
+
+                        @foreach (var company in Model.AvailableCompanies)
+                        {
+                            <option value="@company.Symbol"
+                                    selected="@(Model.SelectedSymbol == company.Symbol)">
+
+                                @company.Name (@company.Symbol)
+
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="table-responsive">
+
+                <table id="tablaTechnical"
+                       class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+
+                            <th>Symbol</th>
+                            <th>Empresa</th>
+
+                            <th>Price</th>
+
+                            <th>RSI</th>
+
+                            <th>MACD</th>
+
+                            <th>SMA 50</th>
+                            <th>SMA 200</th>
+
+                            <th>Trend</th>
+
+                            <th>Volatility</th>
+
+                            <th>Score</th>
+
+                            <th>Signal</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var e in Model.Empresas)
+                        {
+                            <tr>
+
+                                <td class="symbol-cell">
+                                    @e.Symbol
+                                </td>
+
+                                <td class="symbol-cell">
+
+                                    <div class="fw-bold">
+                                        @e.CompanyName
+                                    </div>
+
+                                    <small class="text-secondary">
+                                        @e.Sector
+                                    </small>
+
+                                </td>
+
+                                <td class="symbol-cell">
+                                    $@e.Price?.ToString("0.00")
+                                </td>
+
+                                <td class="@Model.GetRsiClass(e.RSI)">
+
+                                    @e.RSI?.ToString("0.0")
+
+                                </td>
+
+                                <td class="@Model.GetMacdClass(e.MACD, e.MACDSignal)">
+
+                                    @e.MACD?.ToString("0.00")
+
+                                </td>
+
+                                <td class="@Model.GetMovingAverageClass(
+                                                                        e.Price,
+                                                                        e.SMA50)">
+
+                                @e.SMA50?.ToString("0.00")
+
+                                </td>
+
+                                <td class="@Model.GetMovingAverageClass(
+                                                                    e.Price,
+                                                                    e.SMA200)">
+
+                                @e.SMA200?.ToString("0.00")
+
+                                </td>
+
+                                <td class="@Model.GetTrendClass(e.Trend)">
+
+                                    @e.Trend
+
+                                </td>
+
+                                <td class="@Model.GetVolatilityClass(e.Volatility)">
+
+                                    @e.Volatility?.ToString("0.0")%
+
+                                </td>
+
+                                <td>
+
+                                    <span class="score-badge @Model.GetScoreClass(e.TechnicalScore)">
+
+                                        @e.TechnicalScore
+
+                                    </span>
+
+                                </td>
+
+                                <td class="symbol-cell">
+
+                                    <strong>
+                                        @e.Signal
+                                    </strong>
+
+                                </td>
+
+                            </tr>
+                                                }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="mt-5">
+
+                <h3 class="mb-4">
+                    📚 Guía de Métricas Técnicas
+                </h3>
+
+                <div class="accordion"
+                     id="technicalGuide">
+
+                    <!-- RSI -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#rsiInfo">
+
+                                RSI (Relative Strength Index)
+                            </button>
+
+                        </h2>
+
+                        <div id="rsiInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#technicalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    El RSI mide la fuerza y velocidad del movimiento del precio.
+                                </p>
+
+                                <ul>
+
+                                    <li>
+                                        🟢 Menor a 30 → sobreventa (potencial rebote)
+                                    </li>
+
+                                    <li>
+                                        🟡 Entre 30 y 70 → zona neutral
+                                    </li>
+
+                                    <li>
+                                        🔴 Mayor a 70 → sobrecompra
+                                    </li>
+
+                                </ul>
+
+                                <p>
+                                    Un RSI extremo no garantiza reversión inmediata,
+                                    pero ayuda a detectar excesos del mercado.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- MACD -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#macdInfo">
+
+                                MACD
+                            </button>
+
+                        </h2>
+
+                        <div id="macdInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#technicalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    El MACD identifica cambios de momentum y tendencia.
+                                </p>
+
+                                <ul>
+
+                                    <li>
+                                        🟢 MACD > Signal → momentum alcista
+                                    </li>
+
+                                    <li>
+                                        🟡 Cerca del cruce → indecisión
+                                    </li>
+
+                                    <li>
+                                        🔴 MACD < Signal → momentum bajista
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- MOVING AVERAGES -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#smaInfo">
+
+                                SMA 50 / SMA 200
+                            </button>
+
+                        </h2>
+
+                        <div id="smaInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#technicalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Las medias móviles ayudan a identificar la tendencia principal.
+                                </p>
+
+                                <ul>
+
+                                    <li>
+                                        🟢 Precio arriba de SMA50 y SMA200 → tendencia fuerte
+                                    </li>
+
+                                    <li>
+                                        🟡 Precio cerca de las medias → consolidación
+                                    </li>
+
+                                    <li>
+                                        🔴 Precio debajo de ambas → debilidad
+                                    </li>
+
+                                </ul>
+
+                                <p>
+                                    El cruce SMA50 > SMA200 se conoce como
+                                    "Golden Cross" y suele ser alcista.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- VOLATILITY -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#volatilityInfo">
+
+                                Volatility
+                            </button>
+
+                        </h2>
+
+                        <div id="volatilityInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#technicalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    La volatilidad mide cuánto fluctúa el precio.
+                                </p>
+
+                                <ul>
+
+                                    <li>
+                                        🟢 Baja → movimientos más estables
+                                    </li>
+
+                                    <li>
+                                        🟡 Media → normal en growth
+                                    </li>
+
+                                    <li>
+                                        🔴 Muy alta → riesgo elevado
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- SCORE -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#scoreInfo">
+
+                                Technical Score
+                            </button>
+
+                        </h2>
+
+                        <div id="scoreInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#technicalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    El Technical Score combina momentum, tendencia,
+                                    medias móviles, RSI y volatilidad.
+                                </p>
+
+                                <ul>
+
+                                    <li>
+                                        🟢 80+ → fuerte tendencia alcista
+                                    </li>
+
+                                    <li>
+                                        🟢 65-79 → bullish
+                                    </li>
+
+                                    <li>
+                                        🟡 50-64 → neutral
+                                    </li>
+
+                                    <li>
+                                        🟠 35-49 → debilidad
+                                    </li>
+
+                                    <li>
+                                        🔴 Menor a 35 → bearish
+                                    </li>
+
+                                </ul>
+
+                                <p>
+                                    El análisis técnico sirve principalmente
+                                    para timing de entrada y salida.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#tablaTechnical').DataTable({
+
+                pageLength: 25,
+
+                order: [[9, 'desc']],
+
+                scrollX: true,
+
+                autoWidth: false,
+
+                responsive: true,
+
+                language: {
+
+                    search: "_INPUT_",
+                    searchPlaceholder: "Buscar empresa..."
+
+                }
+
+            });
+
+            document.getElementById('companySelect')
+                .addEventListener('change', function () {
+
+                    const symbol = this.value;
+
+                    if (symbol) {
+
+                        window.location.href =
+                            `/TecnicalAnalysis?symbol=${symbol}`;
+
+                    }
+                    else {
+
+                        window.location.href =
+                            `/TecnicalAnalysis`;
+
+                    }
+
+                });
+
+        });
+
+    </script>
+}

@@ -11,7 +11,7 @@ builder.Services.AddTransient<EconomiaService>();
 builder.Services.AddTransient<BonosService>();
 builder.Services.AddTransient<IolService>();
 builder.Services.AddScoped<FundamentalAnalysisService>();
-//builder.Services.AddScoped<FundamentalScoreService>();
+builder.Services.AddScoped<TechnicalAnalysisService>();
 
 builder.Services.AddHttpClient<FundamentalAnalysisService>(client =>
 {

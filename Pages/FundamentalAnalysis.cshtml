@@ -103,6 +103,24 @@
         color: #60a5fa;
     }
 
+    .accordion-item {
+        background: #111827;
+        color: #e2e8f0;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background: #1e293b;
+        color: white;
+    }
+
+    .accordion-button:focus {
+        box-shadow: none;
+    }
+
+    .accordion-button::after {
+        filter: invert(1);
+    }
+
 </style>
 
 <div class="container-fluid mt-4">
@@ -125,6 +143,37 @@
 
         <div class="card-body">
 
+            <div class="row mb-4">
+
+                <div class="col-md-4">
+
+                    <label class="form-label fw-bold">
+                        Empresa
+                    </label>
+
+                    <select id="companySelect"
+                            class="form-select bg-dark text-light border-secondary">
+
+                        <option value="">
+                            Todas las empresas
+                        </option>
+
+                        @foreach (var company in Model.AvailableCompanies)
+                        {
+                            <option value="@company.Symbol"
+                                    selected="@(Model.SelectedSymbol == company.Symbol)">
+
+                                @company.Name (@company.Symbol)
+
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+            </div>
+
             <div class="table-responsive">
 
                 <table id="tablaFundamental"
@@ -137,6 +186,7 @@
                             <th>Empresa</th>
 
                             <th>P/E</th>
+                            <th>PEG</th>
                             <th>P/B</th>
 
                             <th>ROE</th>
@@ -180,6 +230,10 @@
 
                                 <td class="@Model.GetColorClassLow(e.PERatio, 20, 30)">
                                     @e.PERatio?.ToString("0.0")
+                                </td>
+
+                                <td class="@Model.GetColorClassLow(e.PegRatio, 1, 2)">
+                                    @e.PegRatio?.ToString("0.0")
                                 </td>
 
                                 <td class="@Model.GetColorClassLow(e.PriceToBook, 3, 6)">
@@ -237,6 +291,539 @@
 
             </div>
 
+            <div class="mt-5">
+
+                <h3 class="mb-4">
+                    📚 Guía de Métricas Fundamentales
+                </h3>
+
+                <div class="accordion"
+                     id="fundamentalGuide">
+
+                    <!-- P/E -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#peRatioInfo">
+
+                                P/E Ratio (Price / Earnings)
+                            </button>
+
+                        </h2>
+
+                        <div id="peRatioInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Indica cuántos años tardaría la empresa en generar
+                                    ganancias equivalentes al precio actual de la acción.
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        🟢 Menor a 20 → atractivo en empresas maduras
+                                    </li>
+
+                                    <li>
+                                        🟡 Entre 20 y 35 → común en tecnología
+                                    </li>
+
+                                    <li>
+                                        🔴 Mayor a 35 → Muy alto sin crecimiento → posible sobrevaluación
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    Empresas de crecimiento como NVIDIA o Amazon suelen
+                                    tener P/E altos.
+                                </p>
+
+                                <p>
+                                    El P/E debe analizarse junto al crecimiento (PEG Ratio)
+                                    y al sector de la empresa.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- PEG -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#pegInfo">
+
+                                PEG Ratio (P/E / Growth)
+                            </button>
+
+                        </h2>
+
+                        <div id="pegInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Relaciona el P/E con el crecimiento esperado de la empresa.
+                                    Es una de las métricas más útiles para evaluar empresas growth.
+                                </p>
+
+                                <ul>
+
+                                    <li>
+                                        🟢 Menor a 1 → potencialmente infravalorada
+                                    </li>
+
+                                    <li>
+                                        🟡 Entre 1 y 2 → valuación razonable
+                                    </li>
+
+                                    <li>
+                                        🔴 Mayor a 2 → posiblemente cara
+                                    </li>
+
+                                </ul>
+
+                                <p>
+                                    Una empresa con P/E alto puede seguir siendo atractiva
+                                    si su crecimiento también es alto.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- P/B -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#pbInfo">
+
+                                P/B Ratio (Price / Book)
+                            </button>
+
+                        </h2>
+
+                        <div id="pbInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Compara el precio de mercado contra el valor contable
+                                    de la empresa.
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        🟢 Menor a 3 → normalmente saludable
+                                    </li>
+
+                                    <li>
+                                        🟡 Entre 3 y 6 → aceptable
+                                    </li>
+
+                                    <li>
+                                        🔴 Muy alto → posible sobrevaluación
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- ROE -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#roeInfo">
+
+                                ROE (Return on Equity)
+                            </button>
+
+                        </h2>
+
+                        <div id="roeInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Mide qué tan eficiente es la empresa generando
+                                    ganancias con el capital de los accionistas.
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        🟢 Mayor a 15% → excelente
+                                    </li>
+
+                                    <li>
+                                        🟡 Entre 8% y 15% → bueno
+                                    </li>
+
+                                    <li>
+                                        🔴 Menor a 8% → débil
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    Un ROE muy alto puede estar inflado por exceso de deuda,
+                                    por lo que siempre debe analizarse junto al Debt To Equity.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- NET MARGIN -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#marginInfo">
+
+                                Net Margin
+                            </button>
+
+                        </h2>
+
+                        <div id="marginInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Representa cuánto dinero gana realmente la empresa
+                                    luego de todos los costos e impuestos.
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        🟢 Mayor a 15% → excelente rentabilidad
+                                    </li>
+
+                                    <li>
+                                        🟡 Entre 8% y 15% → saludable
+                                    </li>
+
+                                    <li>
+                                        🔴 Menor a 8% → márgenes bajos
+                                    </li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    </div>                    
+
+                    <!-- GROWTH -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#growthInfo">
+
+                                Revenue & EPS Growth
+                            </button>
+
+                        </h2>
+
+                        <div id="growthInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Miden el crecimiento de ventas y ganancias.
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        🟢 Mayor a 10% → fuerte crecimiento
+                                    </li>
+
+                                    <li>
+                                        🟡 Entre 5% y 10% → crecimiento moderado
+                                    </li>
+
+                                    <li>
+                                        🔴 Negativo → alerta
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    Empresas growth suelen destacarse acá.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- DEBT -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#debtInfo">
+
+                                Debt To Equity
+                            </button>
+
+                        </h2>
+
+                        <div id="debtInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Mide cuánto endeudamiento tiene la empresa respecto
+                                    a su patrimonio.
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        🟢 Menor a 1 → deuda controlada
+                                    </li>
+
+                                    <li>
+                                        🟡 Entre 1 y 2 → aceptable
+                                    </li>
+
+                                    <li>
+                                        🔴 Mayor a 2 → endeudamiento elevado
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    En bancos y empresas financieras esta métrica puede ser
+                                    naturalmente más alta y tiene menos relevancia.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- DIVIDEND -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#dividendInfo">
+
+                                Dividend Yield
+                            </button>
+
+                        </h2>
+
+                        <div id="dividendInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Indica cuánto paga la empresa en dividendos
+                                    respecto al precio actual.
+                                </p>
+
+                                <ul>
+                                    <li>
+                                        🟢 1% a 5% → generalmente saludable
+                                    </li>
+
+                                    <li>
+                                        🟡 Menor a 2% → normal en growth
+                                    </li>
+
+                                    <li>
+                                        🔴 Muy alto (>10%) → posible riesgo
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    Muchas empresas de crecimiento no pagan dividendos porque
+                                    reinvierten sus ganancias para expandirse.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- SCORE -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#scoreInfo">
+
+                                Fundamental Score
+                            </button>
+
+                        </h2>
+
+                        <div id="scoreInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    El Fundamental Score es un sistema de puntuación interno
+                                    basado en calidad financiera, crecimiento, valuación,
+                                    rentabilidad y salud financiera.
+                                </p>
+
+                                <ul>
+
+                                    <li>
+                                        🟢 85+ → empresa elite
+                                    </li>
+
+                                    <li>
+                                        🟢 75-84 → strong buy
+                                    </li>
+
+                                    <li>
+                                        🟡 60-74 → buena empresa
+                                    </li>
+
+                                    <li>
+                                        🟠 45-59 → mantener / revisar
+                                    </li>
+
+                                    <li>
+                                        🔴 Menor a 45 → empresa débil o riesgosa
+                                    </li>
+
+                                </ul>
+
+                                <p>
+                                    El score utiliza distintos pesos según el tipo de empresa
+                                    y considera factores como crecimiento, márgenes, deuda,
+                                    valuación y estabilidad.
+                                </p>
+
+                                <p>
+                                    No reemplaza un análisis financiero profesional,
+                                    pero funciona como un excelente filtro inicial.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- IMPORTANT -->
+                    <div class="accordion-item bg-dark border-secondary">
+
+                        <h2 class="accordion-header">
+
+                            <button class="accordion-button collapsed bg-dark text-light"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#importantInfo">
+
+                                ⚠️ Importante
+                            </button>
+
+                        </h2>
+
+                        <div id="importantInfo"
+                             class="accordion-collapse collapse"
+                             data-bs-parent="#fundamentalGuide">
+
+                            <div class="accordion-body text-light">
+
+                                <p>
+                                    Ninguna métrica debe analizarse de forma aislada.
+                                </p>
+
+                                <p>
+                                    Empresas tecnológicas suelen operar con valuaciones
+                                    más altas, mientras que empresas maduras tienden
+                                    a tener menor crecimiento y mayores dividendos.
+                                </p>
+
+                                <p>
+                                    El objetivo del screener es detectar empresas
+                                    interesantes para investigar más en profundidad,
+                                    no tomar decisiones automáticas de inversión.
+                                </p>
+
+                                <p>
+                                    Factores macroeconómicos, contexto del sector,
+                                    competencia, management y riesgos específicos
+                                    también son fundamentales.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
@@ -257,7 +844,7 @@
 
                 pageLength: 25,
 
-                order: [[10, 'desc']],
+                order: [[11, 'desc']],
 
                 scrollX: true,
 
@@ -274,7 +861,27 @@
 
             });
 
-        });
+            document.getElementById('companySelect')
+                .addEventListener('change', function () {
+
+                    const symbol = this.value;
+
+                    if (symbol) {
+
+                        window.location.href =
+                            `/FundamentalAnalysis?symbol=${symbol}`;
+
+                    }
+                    else {
+
+                        window.location.href =
+                            `/FundamentalAnalysis`;
+
+                    }
+
+                });
+
+            });
 
     </script>
 }

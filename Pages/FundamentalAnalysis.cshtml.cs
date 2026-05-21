@@ -1,7 +1,3 @@
-// =============================================
-// Pages/FundamentalAnalysis.cshtml.cs
-// =============================================
-
 using InvertirOnlineApp.Models;
 using InvertirOnlineApp.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -21,18 +17,50 @@ namespace InvertirOnlineApp.Pages
         public List<EmpresaFundamental> Empresas { get; set; }
             = new();
 
-        public async Task OnGetAsync()
+        public string? SelectedSymbol { get; set; }
+
+        public List<(string Symbol, string Name)> AvailableCompanies
+            => new()
+            {
+                ("AAPL", "Apple"),
+                ("MSFT", "Microsoft"),
+                ("GOOGL", "Google"),
+                ("AMZN", "Amazon"),
+                ("META", "Meta"),
+                ("NVDA", "NVIDIA"),
+                ("AMD", "AMD"),
+                ("ASML", "ASML"),
+                ("TSM", "TSMC"),
+                ("COST", "Costco"),
+                ("WMT", "Walmart"),
+                ("KO", "Coca-Cola"),
+                ("PEP", "Pepsi"),
+                ("MCD", "McDonald's"),
+                ("BRK-B", "Berkshire Hathaway"),
+                ("JPM", "JPMorgan"),
+                ("V", "Visa"),
+                ("MA", "Mastercard"),
+                ("JNJ", "Johnson & Johnson"),
+                ("LLY", "Eli Lilly"),
+                ("CAT", "Caterpillar"),
+                ("XOM", "Exxon Mobil"),
+                ("SPY", "S&P 500 ETF"),
+                ("QQQ", "Nasdaq ETF")
+            };
+
+        public async Task OnGetAsync(string? symbol = "AAPL")
         {
-            ViewData["Title"] =
-                "Fundamental Analysis";
+            ViewData["Title"] = "Fundamental Analysis";
+
+            SelectedSymbol = symbol;
 
             Empresas =
-                await _service.GetEmpresasAsync();
+                await _service.GetEmpresasAsync(symbol);
         }
 
-        // =============================================
-        // MÉTRICAS DONDE MÁS ALTO = MEJOR
-        // =============================================
+        // =========================
+        // COLORES
+        // =========================
 
         public string GetColorClassGood(
             decimal? value,
@@ -51,10 +79,6 @@ namespace InvertirOnlineApp.Pages
             return "metric-bad";
         }
 
-        // =============================================
-        // MÉTRICAS DONDE MÁS BAJO = MEJOR
-        // =============================================
-
         public string GetColorClassLow(
             decimal? value,
             decimal good,
@@ -72,102 +96,15 @@ namespace InvertirOnlineApp.Pages
             return "metric-bad";
         }
 
-        // =============================================
-        // SCORE GENERAL
-        // =============================================
-
         public string GetScoreClass(int score)
         {
-            if (score >= 8)
+            if (score >= 80)
                 return "score-excellent";
 
-            if (score >= 5)
+            if (score >= 60)
                 return "score-good";
 
             return "score-bad";
-        }
-
-        // =============================================
-        // TEXTO RECOMENDACIÓN
-        // =============================================
-
-        public string GetRecommendationClass(string? recommendation)
-        {
-            if (string.IsNullOrWhiteSpace(recommendation))
-                return "text-secondary";
-
-            recommendation =
-                recommendation.ToLower();
-
-            if (recommendation.Contains("strong buy"))
-                return "text-success fw-bold";
-
-            if (recommendation.Contains("buy"))
-                return "text-success";
-
-            if (recommendation.Contains("hold"))
-                return "text-warning fw-bold";
-
-            if (recommendation.Contains("sell"))
-                return "text-danger fw-bold";
-
-            return "text-light";
-        }
-
-        // =============================================
-        // FORMATEO MARKET CAP
-        // =============================================
-
-        public string FormatMarketCap(decimal? value)
-        {
-            if (!value.HasValue)
-                return "-";
-
-            decimal number = value.Value;
-
-            if (number >= 1_000_000_000_000)
-            {
-                return
-                    $"{number / 1_000_000_000_000:0.##}T";
-            }
-
-            if (number >= 1_000_000_000)
-            {
-                return
-                    $"{number / 1_000_000_000:0.##}B";
-            }
-
-            if (number >= 1_000_000)
-            {
-                return
-                    $"{number / 1_000_000:0.##}M";
-            }
-
-            return number.ToString("0.##");
-        }
-
-        // =============================================
-        // FORMATEO %
-        // =============================================
-
-        public string FormatPercent(decimal? value)
-        {
-            if (!value.HasValue)
-                return "-";
-
-            return $"{value:0.0}%";
-        }
-
-        // =============================================
-        // FORMATEO DECIMAL
-        // =============================================
-
-        public string FormatDecimal(decimal? value)
-        {
-            if (!value.HasValue)
-                return "-";
-
-            return value.Value.ToString("0.00");
         }
     }
 }

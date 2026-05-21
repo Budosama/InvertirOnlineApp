@@ -39,5 +39,8 @@ namespace InvertirOnlineApp.Models
         // SCORE
         public int FundamentalScore { get; set; }
         public string Recommendation { get; set; } = "";
+
+        public decimal? Beta { get; set; }
+
     }
 }
