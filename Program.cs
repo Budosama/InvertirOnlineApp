@@ -1,3 +1,5 @@
+using InvertirOnlineApp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Agregar servicios al contenedor
@@ -8,6 +10,15 @@ builder.Services.AddTransient<BancoInfoService>();
 builder.Services.AddTransient<EconomiaService>();
 builder.Services.AddTransient<BonosService>();
 builder.Services.AddTransient<IolService>();
+builder.Services.AddScoped<FundamentalAnalysisService>();
+//builder.Services.AddScoped<FundamentalScoreService>();
+
+builder.Services.AddHttpClient<FundamentalAnalysisService>(client =>
+{
+    client.DefaultRequestHeaders.Add(
+        "User-Agent",
+        "Mozilla/5.0");
+});
 
 // Configuración de sesiones
 builder.Services.AddSession(options =>
