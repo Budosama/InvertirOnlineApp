@@ -5,6 +5,9 @@
 using InvertirOnlineApp.Models;
 using InvertirOnlineApp.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RestSharp;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace InvertirOnlineApp.Pages
 {
@@ -72,7 +75,7 @@ namespace InvertirOnlineApp.Pages
         // =============================================
 
         public async Task OnGetAsync(
-            string? symbol = "AAPL")
+            string? symbol = null)
         {
             ViewData["Title"] =
                 "Technical Analysis";
@@ -97,11 +100,54 @@ namespace InvertirOnlineApp.Pages
                 return;
             }
 
-            // =============================================
-            // DEFAULT COMPANIES
-            // =============================================
+            string? accessToken = null;
+            var tokenJson = HttpContext.Session.GetString("AuthToken");
+            if (tokenJson != null)
+            {
+                var tokenObject = JsonSerializer.Deserialize<TokenResponse>(tokenJson);
+                accessToken = tokenObject?.AccessToken;
+            }
 
             var defaultSymbols =
+                new List<string>();
+
+            if (!string.IsNullOrEmpty(accessToken))
+            {
+                var client = new RestClient("https://api.invertironline.com");
+                var request = new RestRequest("/api/v2/portafolio/argentina", Method.Get);
+                request.AddHeader("Authorization", $"Bearer {accessToken}");
+
+                var response = await client.ExecuteAsync(request);
+
+                if (response.IsSuccessful)
+                {
+                    if (!string.IsNullOrEmpty(response.Content))
+                    {
+                        try
+                        {
+                            var portafolioResponse = JsonSerializer.Deserialize<PortafolioResponse>(response.Content);
+
+                            if (portafolioResponse != null)
+                            {
+                                if (portafolioResponse.activos != null && portafolioResponse.activos.Any())
+                                {
+                                    foreach (var item in portafolioResponse.activos)
+                                    {
+                                        defaultSymbols.Add(item.titulo.simbolo);
+                                    }
+                                }
+                            }
+                        }
+                        catch (JsonException ex)
+                        {
+
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                defaultSymbols =
                 new List<string>
                 {
                     "AAPL",
@@ -110,11 +156,26 @@ namespace InvertirOnlineApp.Pages
                     "AMZN",
                     "META",
                     "NVDA",
-                    "TSM",
+                    "AMD",
                     "ASML",
+                    "TSM",
+                    "COST",
+                    "WMT",
+                    "KO",
+                    "PEP",
+                    "MCD",
+                    "BRK-B",
+                    "JPM",
+                    "V",
+                    "MA",
+                    "JNJ",
+                    "LLY",
+                    "CAT",
+                    "XOM",
                     "SPY",
                     "QQQ"
                 };
+            }             
 
             foreach (var s in defaultSymbols)
             {
@@ -127,7 +188,7 @@ namespace InvertirOnlineApp.Pages
                 }
 
                 // evita rate limit
-                await Task.Delay(5000);
+                await Task.Delay(10000);
             }
 
             Empresas =
@@ -395,6 +456,12 @@ namespace InvertirOnlineApp.Pages
                 return "-";
 
             return $"${value.Value:0.00}";
+        }
+
+        public class TokenResponse
+        {
+            [JsonPropertyName("access_token")]
+            public string? AccessToken { get; set; }
         }
     }
 }

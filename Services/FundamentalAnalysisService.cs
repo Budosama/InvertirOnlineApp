@@ -2,9 +2,10 @@
 // Services/FundamentalAnalysisService.cs
 // =============================================
 
+using InvertirOnlineApp.Models;
+using RestSharp;
 using System.Globalization;
 using System.Text.Json;
-using InvertirOnlineApp.Models;
 
 namespace InvertirOnlineApp.Services
 {
@@ -24,49 +25,112 @@ namespace InvertirOnlineApp.Services
         private string ApiKey =>
             _configuration["AlphaVantage:ApiKey"]!;
 
-        public async Task<List<EmpresaFundamental>> GetEmpresasAsync(string? symbol = null)
+        // =============================================
+        // MAIN
+        // =============================================
+
+        public async Task<List<EmpresaFundamental>>
+            GetEmpresasAsync(
+                string? symbol = null,
+                string? accessToken = null)
         {
-            List<string> symbols;
+            List<string> symbols = new();
 
             if (!string.IsNullOrWhiteSpace(symbol))
             {
-                symbols = new List<string>
-                {
-                    symbol
-                };
+                symbols.Add(symbol);
             }
             else
             {
-                symbols = new List<string>
+                // =============================================
+                // PORTFOLIO
+                // =============================================
+
+                if (!string.IsNullOrEmpty(accessToken))
                 {
-                    "AAPL",
-                    "MSFT",
-                    "GOOGL",
-                    "AMZN",
-                    "META",
-                    "NVDA",
-                    "AMD",
-                    "ASML",
-                    "TSM",
-                    "COST",
-                    "WMT",
-                    "KO",
-                    "PEP",
-                    "MCD",
-                    "BRK-B",
-                    "JPM",
-                    "V",
-                    "MA",
-                    "JNJ",
-                    "LLY",
-                    "CAT",
-                    "XOM",
-                    "SPY",
-                    "QQQ"
-                };
+                    try
+                    {
+                        var client =
+                            new RestClient(
+                                "https://api.invertironline.com");
+
+                        var request =
+                            new RestRequest(
+                                "/api/v2/portafolio/argentina",
+                                Method.Get);
+
+                        request.AddHeader(
+                            "Authorization",
+                            $"Bearer {accessToken}");
+
+                        var response =
+                            await client.ExecuteAsync(request);
+
+                        if (response.IsSuccessful &&
+                            !string.IsNullOrEmpty(response.Content))
+                        {
+                            var portfolio =
+                                JsonSerializer.Deserialize
+                                    <PortafolioResponse>(
+                                        response.Content);
+
+                            if (portfolio?.activos != null)
+                            {
+                                symbols =
+                                    portfolio.activos
+                                        .Select(x =>
+                                            x.titulo.simbolo)
+                                        .Distinct()
+                                        .ToList();
+                            }
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                // =============================================
+                // DEFAULT WATCHLIST
+                // =============================================
+
+                if (!symbols.Any())
+                {
+                    symbols = new List<string>
+                    {
+                        "AAPL",
+                        "MSFT",
+                        "GOOGL",
+                        "AMZN",
+                        "META",
+                        "NVDA",
+                        "AMD",
+                        "ASML",
+                        "TSM",
+                        "PLTR",
+                        "NU",
+                        "MELI",
+                        "COST",
+                        "WMT",
+                        "KO",
+                        "PEP",
+                        "MCD",
+                        "BRK-B",
+                        "JPM",
+                        "V",
+                        "MA",
+                        "JNJ",
+                        "LLY",
+                        "CAT",
+                        "XOM",
+                        "SPY",
+                        "QQQ"
+                    };
+                }
             }
 
-            var empresas = new List<EmpresaFundamental>();
+            var empresas =
+                new List<EmpresaFundamental>();
 
             foreach (var s in symbols)
             {
@@ -84,37 +148,48 @@ namespace InvertirOnlineApp.Services
 
                     empresas.Add(empresa);
                 }
+
+                // AlphaVantage free tier
+                await Task.Delay(12000);
             }
 
             return empresas
-                .OrderByDescending(x => x.FundamentalScore)
+                .OrderByDescending(x =>
+                    x.FundamentalScore)
                 .ToList();
         }
 
-        public async Task<EmpresaFundamental?> GetEmpresaAsync(string symbol)
+        // =============================================
+        // GET COMPANY
+        // =============================================
+
+        public async Task<EmpresaFundamental?>
+            GetEmpresaAsync(string symbol)
         {
             try
             {
                 var url =
-                    $"https://www.alphavantage.co/query?function=OVERVIEW&symbol={symbol}&apikey={ApiKey}";
-
-                Console.WriteLine(url);
+                    $"https://www.alphavantage.co/query" +
+                    $"?function=OVERVIEW" +
+                    $"&symbol={symbol}" +
+                    $"&apikey={ApiKey}";
 
                 var response =
-                    await _httpClient.GetStringAsync(url);
-
-                Console.WriteLine(response);
+                    await _httpClient
+                        .GetStringAsync(url);
 
                 var data =
-                    JsonSerializer.Deserialize<AlphaVantageOverviewResponse>(
-                        response,
-                        new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
+                    JsonSerializer.Deserialize
+                        <AlphaVantageOverviewResponse>(
+                            response,
+                            new JsonSerializerOptions
+                            {
+                                PropertyNameCaseInsensitive = true
+                            });
 
                 if (data == null ||
-                    string.IsNullOrEmpty(data.Symbol))
+                    string.IsNullOrWhiteSpace(
+                        data.Symbol))
                 {
                     return null;
                 }
@@ -122,13 +197,19 @@ namespace InvertirOnlineApp.Services
                 return new EmpresaFundamental
                 {
                     Symbol = data.Symbol,
-                    CompanyName = data.Name,
 
-                    Sector = data.Sector,
-                    Industry = data.Industry,
+                    CompanyName =
+                        data.Name ?? "",
 
-                    MarketCap =
-                        ParseDecimal(data.MarketCapitalization),
+                    Sector =
+                        data.Sector ?? "",
+
+                    Industry =
+                        data.Industry ?? "",
+
+                    // =============================================
+                    // VALUATION
+                    // =============================================
 
                     PERatio =
                         ParseDecimal(data.PERatio),
@@ -137,321 +218,323 @@ namespace InvertirOnlineApp.Services
                         ParseDecimal(data.PEGRatio),
 
                     PriceToBook =
-                        ParseDecimal(data.PriceToBookRatio),
+                        ParseDecimal(
+                            data.PriceToBookRatio),
+
+                    EVToEBITDA =
+                        ParseDecimal(
+                            data.EVToEBITDA),
+
+                    // =============================================
+                    // PROFITABILITY
+                    // =============================================
 
                     ROE =
-                        ParseDecimal(data.ReturnOnEquityTTM) * 100,
+                        Percent(
+                            data.ReturnOnEquityTTM),
 
                     ROA =
-                        ParseDecimal(data.ReturnOnAssetsTTM) * 100,
+                        Percent(
+                            data.ReturnOnAssetsTTM),
 
                     NetMargin =
-                        ParseDecimal(data.ProfitMargin) * 100,
+                        Percent(
+                            data.ProfitMargin),
 
                     OperatingMargin =
-                        ParseDecimal(data.OperatingMarginTTM) * 100,
+                        Percent(
+                            data.OperatingMarginTTM),
+
+                    // =============================================
+                    // GROWTH
+                    // =============================================
 
                     RevenueGrowth =
-                        ParseDecimal(data.QuarterlyRevenueGrowthYOY) * 100,
+                        Percent(
+                            data.QuarterlyRevenueGrowthYOY),
 
                     EPSGrowth =
-                        ParseDecimal(data.QuarterlyEarningsGrowthYOY) * 100,
+                        Percent(
+                            data.QuarterlyEarningsGrowthYOY),
 
-                    DividendYield =
-                        ParseDecimal(data.DividendYield) * 100,
+                    // =============================================
+                    // FINANCIAL HEALTH
+                    // =============================================
 
                     DebtToEquity =
-                        ParseDecimal(data.DebtToEquity)
+                        ParseDecimal(
+                            data.DebtToEquity),
+
+                    CurrentRatio =
+                        ParseDecimal(
+                            data.CurrentRatio),
+
+                    QuickRatio =
+                        ParseDecimal(
+                            data.QuickRatio),
+
+                    // =============================================
+                    // DIVIDENDS
+                    // =============================================
+
+                    DividendYield =
+                        Percent(
+                            data.DividendYield),
+
+                    PayoutRatio =
+                        Percent(
+                            data.PayoutRatio),
+
+                    // =============================================
+                    // MARKET
+                    // =============================================
+
+                    MarketCap =
+                        ParseDecimal(
+                            data.MarketCapitalization),
+
+                    Price =
+                        ParseDecimal(
+                            data.AnalystTargetPrice),
+
+                    Beta =
+                        ParseDecimal(
+                            data.Beta),
+
+                    // =============================================
+                    // EXTRA
+                    // =============================================
+
+                    GrossProfitTTM =
+                        data.GrossProfitTTM,
+
+                    RevenueTTM =
+                        data.RevenueTTM,
+
+                    EBITDA =
+                        data.EBITDA,
+
+                    PriceToSalesRatioTTM =
+                        data.PriceToSalesRatioTTM,
+
+                    AnalystTargetPrice =
+                        data.AnalystTargetPrice,
+
+                    AnalystRatingStrongBuy =
+                        data.AnalystRatingStrongBuy,
+
+                    AnalystRatingBuy =
+                        data.AnalystRatingBuy,
+
+                    AnalystRatingHold =
+                        data.AnalystRatingHold,
+
+                    AnalystRatingSell =
+                        data.AnalystRatingSell,
+
+                    AnalystRatingStrongSell =
+                        data.AnalystRatingStrongSell
                 };
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
 
                 return null;
             }
         }
 
-        private decimal? ParseDecimal(string? value)
+        // =============================================
+        // SCORE ENGINE
+        // =============================================
+
+        private int CalcularScore(
+            EmpresaFundamental e)
         {
-            if (string.IsNullOrWhiteSpace(value))
-                return null;
-
-            if (value == "None")
-                return null;
-
-            if (decimal.TryParse(
-                value,
-                CultureInfo.InvariantCulture,
-                out decimal result))
-            {
-                return result;
-            }
-
-            return null;
-        }
-
-        private int CalcularScore(EmpresaFundamental e)
-        {
-            double score = 0;
-
-            // =============================================
-            // SECTOR DETECTION
-            // =============================================
+            double score = 50;
 
             bool isTech =
-                e.Sector?.Contains("Technology",
-                    StringComparison.OrdinalIgnoreCase) == true;
+                Contains(e.Sector, "Technology") ||
+                Contains(e.Industry, "Software") ||
+                Contains(e.Industry, "Semiconductor");
 
             bool isFinancial =
-                e.Sector?.Contains("Financial",
-                    StringComparison.OrdinalIgnoreCase) == true;
+                Contains(e.Sector, "Financial");
 
             bool isHealthcare =
-                e.Sector?.Contains("Healthcare",
-                    StringComparison.OrdinalIgnoreCase) == true;
-
-            bool isConsumer =
-                e.Sector?.Contains("Consumer",
-                    StringComparison.OrdinalIgnoreCase) == true;
-
-            bool isIndustrial =
-                e.Sector?.Contains("Industrial",
-                    StringComparison.OrdinalIgnoreCase) == true;
+                Contains(e.Sector, "Healthcare");
 
             bool isETF =
-                e.Industry?.Contains("ETF",
-                    StringComparison.OrdinalIgnoreCase) == true;
+                Contains(e.Industry, "ETF");
 
+            // =============================================
             // ETFs
+            // =============================================
+
             if (isETF)
-            {
                 return 75;
-            }
 
             // =============================================
-            // PROFITABILITY (25)
+            // PROFITABILITY
             // =============================================
 
-            // ROE
-            if (isFinancial)
-            {
-                if (e.ROE >= 18)
-                    score += 12;
-                else if (e.ROE >= 14)
-                    score += 8;
-                else if (e.ROE >= 10)
-                    score += 4;
-            }
-            else
-            {
-                if (e.ROE >= 20)
-                    score += 10;
-                else if (e.ROE >= 15)
-                    score += 7;
-                else if (e.ROE >= 10)
-                    score += 4;
-            }
+            if (e.ROE >= 25)
+                score += 12;
+            else if (e.ROE >= 18)
+                score += 8;
+            else if (e.ROE >= 12)
+                score += 4;
+            else if (e.ROE < 5)
+                score -= 8;
 
-            // Net Margin
-            if (isTech || isHealthcare)
-            {
-                if (e.NetMargin >= 25)
-                    score += 10;
-                else if (e.NetMargin >= 18)
-                    score += 7;
-                else if (e.NetMargin >= 10)
-                    score += 4;
-            }
-            else
-            {
-                if (e.NetMargin >= 15)
-                    score += 10;
-                else if (e.NetMargin >= 10)
-                    score += 7;
-                else if (e.NetMargin >= 5)
-                    score += 4;
-            }
+            if (e.NetMargin >= 25)
+                score += 12;
+            else if (e.NetMargin >= 15)
+                score += 8;
+            else if (e.NetMargin >= 8)
+                score += 4;
+            else if (e.NetMargin < 0)
+                score -= 15;
 
-            // Operating Margin
             if (e.OperatingMargin >= 25)
-                score += 5;
+                score += 8;
             else if (e.OperatingMargin >= 15)
-                score += 3;
+                score += 4;
+            else if (e.OperatingMargin < 5)
+                score -= 5;
 
             // =============================================
-            // GROWTH (30)
+            // GROWTH
             // =============================================
 
-            // EPS Growth
             if (isTech)
             {
-                if (e.EPSGrowth >= 30)
-                    score += 15;
-                else if (e.EPSGrowth >= 20)
-                    score += 11;
-                else if (e.EPSGrowth >= 10)
-                    score += 6;
-            }
-            else
-            {
-                if (e.EPSGrowth >= 20)
-                    score += 15;
-                else if (e.EPSGrowth >= 12)
-                    score += 10;
-                else if (e.EPSGrowth >= 5)
-                    score += 5;
-            }
-
-            // Revenue Growth
-            if (isTech)
-            {
-                if (e.RevenueGrowth >= 20)
-                    score += 15;
-                else if (e.RevenueGrowth >= 12)
-                    score += 10;
-                else if (e.RevenueGrowth >= 7)
-                    score += 5;
+                if (e.RevenueGrowth >= 25)
+                    score += 12;
+                else if (e.RevenueGrowth >= 15)
+                    score += 8;
+                else if (e.RevenueGrowth >= 8)
+                    score += 4;
             }
             else
             {
                 if (e.RevenueGrowth >= 12)
                     score += 10;
-                else if (e.RevenueGrowth >= 7)
-                    score += 7;
-                else if (e.RevenueGrowth >= 3)
-                    score += 4;
+                else if (e.RevenueGrowth >= 6)
+                    score += 5;
             }
 
+            if (e.EPSGrowth >= 30)
+                score += 15;
+            else if (e.EPSGrowth >= 15)
+                score += 10;
+            else if (e.EPSGrowth >= 5)
+                score += 5;
+            else if (e.EPSGrowth < 0)
+                score -= 10;
+
             // =============================================
-            // VALUATION (20)
+            // VALUATION
             // =============================================
 
-            // PEG Ratio (MUY importante)
             if (e.PegRatio > 0)
             {
                 if (e.PegRatio < 1)
                     score += 12;
                 else if (e.PegRatio <= 1.5m)
-                    score += 9;
-                else if (e.PegRatio <= 2)
-                    score += 6;
-                else if (e.PegRatio <= 3)
-                    score += 3;
+                    score += 8;
+                else if (e.PegRatio <= 2.5m)
+                    score += 4;
+                else if (e.PegRatio > 4)
+                    score -= 8;
             }
 
-            // P/E
             if (isTech)
             {
-                if (e.PERatio > 0 && e.PERatio < 30)
-                    score += 5;
-                else if (e.PERatio < 45)
-                    score += 3;
+                if (e.PERatio > 0 &&
+                    e.PERatio <= 35)
+                {
+                    score += 6;
+                }
+                else if (e.PERatio > 60)
+                {
+                    score -= 6;
+                }
             }
             else if (isFinancial)
             {
-                if (e.PERatio > 0 && e.PERatio < 15)
+                if (e.PERatio > 0 &&
+                    e.PERatio <= 15)
+                {
                     score += 8;
-                else if (e.PERatio < 20)
-                    score += 4;
+                }
             }
             else
             {
-                if (e.PERatio > 0 && e.PERatio < 20)
-                    score += 8;
-                else if (e.PERatio < 30)
-                    score += 4;
-            }
-
-            // P/B
-            if (isFinancial)
-            {
-                if (e.PriceToBook < 1.5m)
-                    score += 5;
-                else if (e.PriceToBook < 2.5m)
-                    score += 3;
-            }
-            else
-            {
-                if (e.PriceToBook < 3)
-                    score += 5;
-                else if (e.PriceToBook < 6)
-                    score += 2;
+                if (e.PERatio > 0 &&
+                    e.PERatio <= 22)
+                {
+                    score += 6;
+                }
             }
 
             // =============================================
-            // FINANCIAL HEALTH (15)
+            // FINANCIAL HEALTH
             // =============================================
 
             if (!isFinancial)
             {
-                // Debt
                 if (e.DebtToEquity < 0.5m)
                     score += 8;
                 else if (e.DebtToEquity < 1)
                     score += 5;
-                else if (e.DebtToEquity < 2)
-                    score += 2;
+                else if (e.DebtToEquity > 3)
+                    score -= 10;
 
-                // Liquidity
                 if (e.CurrentRatio >= 2)
-                    score += 7;
-                else if (e.CurrentRatio >= 1.5m)
-                    score += 5;
-                else if (e.CurrentRatio >= 1)
-                    score += 2;
-            }
-            else
-            {
-                // Bancos funcionan distinto
-                score += 5;
+                    score += 6;
+                else if (e.CurrentRatio >= 1.2m)
+                    score += 3;
+                else if (e.CurrentRatio < 1)
+                    score -= 5;
             }
 
             // =============================================
-            // QUALITY / STABILITY (10)
+            // STABILITY
             // =============================================
 
-            // Dividend
+            if (e.Beta <= 1.2m)
+                score += 4;
+            else if (e.Beta > 2)
+                score -= 5;
+
             if (e.DividendYield >= 1 &&
                 e.DividendYield <= 5)
             {
-                score += 2;
+                score += 3;
             }
 
-            // Beta
-            if (e.Beta <= 1.2m)
-                score += 3;
+            // =============================================
+            // MARKET CAP
+            // =============================================
 
-            // Market Cap
-            if (e.MarketCap >= 500_000_000_000)
-                score += 5;
+            if (e.MarketCap >= 1_000_000_000_000)
+                score += 8;
             else if (e.MarketCap >= 100_000_000_000)
-                score += 4;
-            else if (e.MarketCap >= 10_000_000_000)
-                score += 2;
+                score += 5;
+            else if (e.MarketCap < 2_000_000_000)
+                score -= 5;
 
             // =============================================
-            // QUALITY COMPOUNDER BONUS
+            // QUALITY COMPOUNDER
             // =============================================
 
             if (e.ROE > 20 &&
-                e.NetMargin > 20 &&
+                e.NetMargin > 15 &&
                 e.EPSGrowth > 15 &&
                 e.RevenueGrowth > 10)
             {
-                score += 7;
-            }
-
-            // =============================================
-            // MEGA CAP DOMINANCE BONUS
-            // =============================================
-
-            if (isTech &&
-                e.MarketCap > 1_000_000_000_000 &&
-                e.ROE > 20)
-            {
-                score += 3;
+                score += 10;
             }
 
             // =============================================
@@ -466,62 +549,161 @@ namespace InvertirOnlineApp.Services
                 score -= 10;
             }
 
-            // Negative growth
-            if (e.EPSGrowth < 0)
-                score -= 8;
-
-            if (e.RevenueGrowth < 0)
-                score -= 6;
-
-            // Excessive debt
-            if (!isFinancial &&
-                e.DebtToEquity > 3)
+            // Expensive no-growth
+            if (e.PERatio > 60 &&
+                e.EPSGrowth < 10)
             {
                 score -= 12;
             }
 
-            // Expensive without growth
-            if (e.PERatio > 50 &&
-                e.EPSGrowth < 10)
+            // Weak business
+            if (e.ROE < 5 &&
+                e.NetMargin < 5)
             {
                 score -= 10;
             }
 
-            // Unprofitable
-            if (e.NetMargin < 0)
+            // =============================================
+            // ANALYST CONSENSUS
+            // =============================================
+
+            int strongBuy =
+                ParseInt(
+                    e.AnalystRatingStrongBuy);
+
+            int buy =
+                ParseInt(
+                    e.AnalystRatingBuy);
+
+            int hold =
+                ParseInt(
+                    e.AnalystRatingHold);
+
+            int sell =
+                ParseInt(
+                    e.AnalystRatingSell);
+
+            int strongSell =
+                ParseInt(
+                    e.AnalystRatingStrongSell);
+
+            int total =
+                strongBuy + buy +
+                hold + sell +
+                strongSell;
+
+            if (total > 0)
             {
-                score -= 15;
+                var bullish =
+                    strongBuy + buy;
+
+                var bearish =
+                    sell + strongSell;
+
+                var ratio =
+                    (decimal)bullish / total;
+
+                if (ratio >= 0.7m)
+                    score += 5;
+                else if (ratio <= 0.3m)
+                    score -= 5;
+
+                if (bearish >= bullish)
+                    score -= 5;
             }
 
             // =============================================
-            // FINAL CAP
+            // FINAL
             // =============================================
 
             score =
-                Math.Max(0,
-                Math.Min(100, score));
+                Math.Max(
+                    0,
+                    Math.Min(100, score));
 
             return (int)Math.Round(score);
         }
 
-        private string GetRecommendation(int score)
+        // =============================================
+        // RECOMMENDATION
+        // =============================================
+
+        private string GetRecommendation(
+            int score)
         {
-            if (score >= 85)
+            if (score >= 90)
                 return "🟢 ELITE";
 
-            if (score >= 75)
+            if (score >= 80)
                 return "🟢 STRONG BUY";
 
-            if (score >= 60)
+            if (score >= 65)
                 return "🟡 BUY";
 
-            if (score >= 45)
+            if (score >= 50)
                 return "🟠 HOLD";
 
-            if (score >= 30)
+            if (score >= 35)
                 return "🔴 WEAK";
 
             return "⚫ AVOID";
+        }
+
+        // =============================================
+        // HELPERS
+        // =============================================
+
+        private decimal? ParseDecimal(
+            string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return null;
+
+            if (value == "None")
+                return null;
+
+            if (decimal.TryParse(
+                value,
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out decimal result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
+        private decimal? Percent(
+            string? value)
+        {
+            var parsed =
+                ParseDecimal(value);
+
+            if (!parsed.HasValue)
+                return null;
+
+            return parsed.Value * 100;
+        }
+
+        private bool Contains(
+            string? source,
+            string value)
+        {
+            return source?
+                .Contains(
+                    value,
+                    StringComparison.OrdinalIgnoreCase)
+                == true;
+        }
+
+        private int ParseInt(
+            string? value)
+        {
+            if (int.TryParse(value, out int r))
+                return r;
+
+            return 0;
         }
     }
 }

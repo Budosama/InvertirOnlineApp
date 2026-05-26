@@ -150,6 +150,31 @@
 
             <div class="row mb-4">
 
+                <!-- SEARCH SYMBOL -->
+                <div class="col-md-4 mb-3">
+
+                    <label class="form-label fw-bold">
+                        Buscar símbolo
+                    </label>
+
+                    <div class="input-group">
+
+                        <input type="text"
+                               id="symbolSearch"
+                               class="form-control bg-dark text-light border-secondary"
+                               placeholder="Ej: AAPL, NVDA, MELI"
+                               value="@Model.SelectedSymbol" />
+
+                        <button id="btnSearch"
+                                class="btn btn-primary">
+                            Buscar
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- SELECT -->
                 <div class="col-md-4">
 
                     <label class="form-label fw-bold">
@@ -160,7 +185,7 @@
                             class="form-select bg-dark text-light border-secondary">
 
                         <option value="">
-                            Todas las empresas
+                            Mi Portafolio
                         </option>
 
                         @foreach (var company in Model.AvailableCompanies)
@@ -631,6 +656,44 @@
                     }
 
                 });
+
+            // =============================================
+            // SEARCH SYMBOL
+            // =============================================
+
+            function buscarSimbolo() {
+
+                const symbol =
+                    $('#symbolSearch')
+                        .val()
+                        .trim()
+                        .replace(/\s/g, '')
+                        .toUpperCase();
+
+                if (!symbol)
+                    return;
+
+                window.location.href =
+                    `/TecnicalAnalysis?symbol=${symbol}`;
+            }
+
+            // botón buscar
+            $('#btnSearch').on('click', function () {
+
+                buscarSimbolo();
+
+            });
+
+            // enter
+            $('#symbolSearch').on('keypress', function (e) {
+
+                if (e.which === 13) {
+
+                    buscarSimbolo();
+
+                }
+
+            });
 
         });
 

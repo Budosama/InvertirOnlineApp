@@ -42,5 +42,25 @@ namespace InvertirOnlineApp.Models
 
         public decimal? Beta { get; set; }
 
+        public string GrossProfitTTM { get; set; }
+
+        public string RevenueTTM { get; set; }
+
+        public string EBITDA { get; set; }
+
+        public string PriceToSalesRatioTTM { get; set; }
+
+        public string AnalystTargetPrice { get; set; }
+
+        public string AnalystRatingStrongBuy { get; set; }
+
+        public string AnalystRatingBuy { get; set; }
+
+        public string AnalystRatingHold { get; set; }
+
+        public string AnalystRatingSell { get; set; }
+
+        public string AnalystRatingStrongSell { get; set; }
+
     }
 }

@@ -1,6 +1,8 @@
 using InvertirOnlineApp.Models;
 using InvertirOnlineApp.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace InvertirOnlineApp.Pages
 {
@@ -48,14 +50,22 @@ namespace InvertirOnlineApp.Pages
                 ("QQQ", "Nasdaq ETF")
             };
 
-        public async Task OnGetAsync(string? symbol = "AAPL")
+        public async Task OnGetAsync(string? symbol = null)
         {
             ViewData["Title"] = "Fundamental Analysis";
 
             SelectedSymbol = symbol;
 
+            string? accessToken = null;
+            var tokenJson = HttpContext.Session.GetString("AuthToken");
+            if (tokenJson != null)
+            {
+                var tokenObject = JsonSerializer.Deserialize<TokenResponse>(tokenJson);
+                accessToken = tokenObject?.AccessToken;
+            }           
+
             Empresas =
-                await _service.GetEmpresasAsync(symbol);
+                await _service.GetEmpresasAsync(symbol, accessToken);
         }
 
         // =========================
@@ -105,6 +115,12 @@ namespace InvertirOnlineApp.Pages
                 return "score-good";
 
             return "score-bad";
+        }
+
+        public class TokenResponse
+        {
+            [JsonPropertyName("access_token")]
+            public string? AccessToken { get; set; }
         }
     }
 }
