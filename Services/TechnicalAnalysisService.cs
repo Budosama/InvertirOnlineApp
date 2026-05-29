@@ -201,13 +201,13 @@ namespace InvertirOnlineApp.Services
             if (e.Price > e.SMA50 &&
                 e.SMA50 > e.SMA200)
             {
-                return "Bullish";
+                return "Alcista";
             }
 
             if (e.Price < e.SMA50 &&
                 e.SMA50 < e.SMA200)
             {
-                return "Bearish";
+                return "Bajista";
             }
 
             return "Neutral";
@@ -262,18 +262,18 @@ namespace InvertirOnlineApp.Services
             EmpresaTecnica e)
         {
             if (e.TechnicalScore >= 85)
-                return "Strong Buy";
+                return "Compra Fuerte";
 
             if (e.TechnicalScore >= 70)
-                return "Buy";
+                return "Compra";
 
             if (e.TechnicalScore >= 50)
-                return "Hold";
+                return "Mantener";
 
             if (e.TechnicalScore >= 35)
-                return "Weak";
+                return "Vender";
 
-            return "Sell";
+            return "Vender Fuerte";
         }
 
         // =============================================
@@ -335,6 +335,10 @@ namespace InvertirOnlineApp.Services
         {
             return symbol switch
             {
+                // =============================================
+                // BIG TECH
+                // =============================================
+
                 "AAPL" => "Apple",
                 "MSFT" => "Microsoft",
                 "GOOGL" => "Google",
@@ -342,32 +346,145 @@ namespace InvertirOnlineApp.Services
                 "META" => "Meta",
                 "NVDA" => "NVIDIA",
                 "AMD" => "AMD",
-                "ASML" => "ASML",
                 "TSM" => "TSMC",
+                "ASML" => "ASML",
+                "AVGO" => "Broadcom",
+                "ORCL" => "Oracle",
+                "CRM" => "Salesforce",
+                "ADBE" => "Adobe",
+                "INTC" => "Intel",
+                "IBM" => "IBM",
+
+                // =============================================
+                // AI / SOFTWARE
+                // =============================================
+
+                "PLTR" => "Palantir",
+                "SNOW" => "Snowflake",
+                "CRWD" => "CrowdStrike",
+                "PANW" => "Palo Alto Networks",
+                "NET" => "Cloudflare",
+                "DDOG" => "Datadog",
+                "SHOP" => "Shopify",
+
+                // =============================================
+                // FINTECH / PAYMENTS
+                // =============================================
+
+                "MELI" => "MercadoLibre",
+                "NU" => "Nu Holdings",
+                "V" => "Visa",
+                "MA" => "Mastercard",
+                "PYPL" => "PayPal",
+                "SQ" => "Block",
+                "COIN" => "Coinbase",
+
+                // =============================================
+                // CONSUMER
+                // =============================================
 
                 "COST" => "Costco",
                 "WMT" => "Walmart",
                 "KO" => "Coca-Cola",
                 "PEP" => "PepsiCo",
                 "MCD" => "McDonald's",
+                "SBUX" => "Starbucks",
+                "NKE" => "Nike",
+                "PG" => "Procter & Gamble",
+                "HD" => "Home Depot",
+
+                // =============================================
+                // FINANCIALS
+                // =============================================
 
                 "BRK-B" => "Berkshire Hathaway",
                 "JPM" => "JPMorgan Chase",
-                "V" => "Visa",
-                "MA" => "Mastercard",
+                "BAC" => "Bank of America",
+                "GS" => "Goldman Sachs",
+                "MS" => "Morgan Stanley",
+
+                // =============================================
+                // HEALTHCARE
+                // =============================================
 
                 "JNJ" => "Johnson & Johnson",
                 "LLY" => "Eli Lilly",
+                "UNH" => "UnitedHealth",
+                "ABBV" => "AbbVie",
+                "PFE" => "Pfizer",
+
+                // =============================================
+                // INDUSTRIALS
+                // =============================================
 
                 "CAT" => "Caterpillar",
-                "XOM" => "Exxon Mobil",
+                "GE" => "General Electric",
+                "RTX" => "RTX",
+                "BA" => "Boeing",
 
-                "PLTR" => "Palantir",
-                "NU" => "Nu Holdings",
-                "MELI" => "MercadoLibre",
+                // =============================================
+                // ENERGY
+                // =============================================
+
+                "XOM" => "Exxon Mobil",
+                "CVX" => "Chevron",
+                "COP" => "ConocoPhillips",
+                "SLB" => "Schlumberger",
+
+                // =============================================
+                // AUTOMOTIVE / EV
+                // =============================================
+
+                "TSLA" => "Tesla",
+                "BYDDF" => "BYD",
+                "RIVN" => "Rivian",
+
+                // =============================================
+                // ARGENTINA
+                // =============================================
+
+                "PAMP" => "Pampa Energia",
+                "YPF" => "YPF",
+                "GGAL" => "Grupo Galicia",
+                "BMA" => "Banco Macro",
+                "SUPV" => "Supervielle",
+                "EDN" => "Edenor",
+                "CEPU" => "Central Puerto",
+                "TGS" => "Transportadora Gas del Sur",
+                "MOLI" => "Molinos",
+
+                // =============================================
+                // ETFs
+                // =============================================
 
                 "SPY" => "SPDR S&P 500 ETF",
                 "QQQ" => "Invesco QQQ ETF",
+                "DIA" => "SPDR Dow Jones ETF",
+                "IWM" => "iShares Russell 2000 ETF",
+                "VTI" => "Vanguard Total Stock Market ETF",
+                "ARKK" => "ARK Innovation ETF",
+                "SOXX" => "iShares Semiconductor ETF",
+                "XLE" => "Energy Select Sector ETF",
+
+                // =============================================
+                // CRYPTO
+                // =============================================
+
+                "BTC/USD" => "Bitcoin",
+                "ETH/USD" => "Ethereum",
+                "SOL/USD" => "Solana",
+                "BNB/USD" => "BNB",
+                "XRP/USD" => "XRP",
+                "ADA/USD" => "Cardano",
+                "DOGE/USD" => "Dogecoin",
+                "AVAX/USD" => "Avalanche",
+                "LINK/USD" => "Chainlink",
+                "MATIC/USD" => "Polygon",
+                "ARB/USD" => "Arbitrum",
+                "OP/USD" => "Optimism",
+                "NEAR/USD" => "Near Protocol",
+                "ATOM/USD" => "Cosmos",
+                "DOT/USD" => "Polkadot",
 
                 _ => symbol
             };
@@ -448,6 +565,125 @@ namespace InvertirOnlineApp.Services
 
                 "SPY" => "ETF",
                 "QQQ" => "ETF",
+
+                // =============================================
+                // CRYPTO
+                // =============================================
+
+                "BTC/USD" => "Cryptocurrency",
+                "ETH/USD" => "Cryptocurrency",
+                "SOL/USD" => "Cryptocurrency",
+                "BNB/USD" => "Cryptocurrency",
+                "XRP/USD" => "Cryptocurrency",
+                "ADA/USD" => "Cryptocurrency",
+                "DOGE/USD" => "Cryptocurrency",
+                "AVAX/USD" => "Cryptocurrency",
+                "LINK/USD" => "Cryptocurrency",
+                "MATIC/USD" => "Cryptocurrency",
+
+                // =============================================
+                // EXTRA TECH
+                // =============================================
+
+                "AVGO" => "Semiconductors",
+                "ORCL" => "Technology",
+                "CRM" => "Software",
+                "ADBE" => "Software",
+                "INTC" => "Semiconductors",
+                "IBM" => "Technology",
+
+                // =============================================
+                // AI / CYBERSECURITY
+                // =============================================
+
+                "SNOW" => "Software",
+                "CRWD" => "Cybersecurity",
+                "PANW" => "Cybersecurity",
+                "NET" => "Cloud Computing",
+                "DDOG" => "Software",
+                "SHOP" => "E-Commerce",
+
+                // =============================================
+                // EXTRA FINTECH
+                // =============================================
+
+                "PYPL" => "Fintech",
+                "SQ" => "Fintech",
+                "COIN" => "Crypto Exchange",
+
+                // =============================================
+                // EXTRA CONSUMER
+                // =============================================
+
+                "SBUX" => "Consumer Defensive",
+                "NKE" => "Consumer Cyclical",
+                "PG" => "Consumer Defensive",
+                "HD" => "Consumer Cyclical",
+
+                // =============================================
+                // EXTRA FINANCIALS
+                // =============================================
+
+                "BAC" => "Financial Services",
+                "GS" => "Financial Services",
+                "MS" => "Financial Services",
+
+                // =============================================
+                // EXTRA HEALTHCARE
+                // =============================================
+
+                "UNH" => "Healthcare",
+                "ABBV" => "Healthcare",
+                "PFE" => "Healthcare",
+
+                // =============================================
+                // EXTRA INDUSTRIALS
+                // =============================================
+
+                "GE" => "Industrials",
+                "RTX" => "Industrials",
+                "BA" => "Industrials",
+
+                // =============================================
+                // EXTRA ENERGY
+                // =============================================
+
+                "CVX" => "Energy",
+                "COP" => "Energy",
+                "SLB" => "Energy",
+
+                // =============================================
+                // EV
+                // =============================================
+
+                "TSLA" => "Automotive",
+                "BYDDF" => "Automotive",
+                "RIVN" => "Automotive",
+
+                // =============================================
+                // ARGENTINA
+                // =============================================
+
+                "PAMP" => "Energy",
+                "YPF" => "Energy",
+                "GGAL" => "Financial Services",
+                "BMA" => "Financial Services",
+                "SUPV" => "Financial Services",
+                "EDN" => "Utilities",
+                "CEPU" => "Utilities",
+                "TGS" => "Energy",
+                "MOLI" => "Consumer Defensive",
+
+                // =============================================
+                // ETFs
+                // =============================================
+
+                "DIA" => "ETF",
+                "IWM" => "ETF",
+                "VTI" => "ETF",
+                "ARKK" => "ETF",
+                "SOXX" => "ETF",
+                "XLE" => "ETF",
 
                 _ => "Unknown"
             };
@@ -768,18 +1004,18 @@ namespace InvertirOnlineApp.Services
             int score)
         {
             if (score >= 85)
-                return "🟢 ELITE";
+                return "🟢 COMPRAR FUERTE";
 
             if (score >= 70)
-                return "🟢 STRONG";
+                return "🟢 COMPRAR";
 
-            if (score >= 55)
-                return "🟡 BUY";
+            if (score >= 50)
+                return "🟡 MANTENER";
 
-            if (score >= 40)
-                return "🟠 HOLD";
+            if (score >= 35)
+                return "🟠 VENDER";
 
-            return "🔴 AVOID";
+            return "🔴 VENDER FUERTE";
         }
     }
 }

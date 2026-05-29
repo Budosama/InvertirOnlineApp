@@ -174,6 +174,36 @@
 
                 </div>
 
+                <div class="col-md-4">
+
+                    <label class="form-label fw-bold">
+                        Sector
+                    </label>
+
+                    <select id="sectorSelect"
+                            class="form-select bg-dark text-light border-secondary">
+
+                        <option value="ALL">
+                            Todos los sectores
+                        </option>
+
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Software">Software</option>
+                        <option value="Pagos">Pagos</option>
+                        <option value="Consumo">Consumo</option>
+                        <option value="Finanzas">Finanzas</option>
+                        <option value="Salud">Salud</option>
+                        <option value="Industrial">Industrial</option>
+                        <option value="Energía">Energía</option>
+                        <option value="Automotor">Automotor</option>
+                        <option value="ETF">ETF</option>
+                        <option value="Crypto">Crypto</option>
+                        <option value="Argentina">Argentina</option>
+
+                    </select>
+
+                </div>
+
                 <!-- SELECT -->
                 <div class="col-md-4">
 
@@ -184,6 +214,10 @@
                     <select id="companySelect"
                             class="form-select bg-dark text-light border-secondary">
 
+                        <option value="Ninguna">
+                            -- Seleccionar Activo --
+                        </option>
+
                         <option value="">
                             Mi Portafolio
                         </option>
@@ -191,6 +225,7 @@
                         @foreach (var company in Model.AvailableCompanies)
                         {
                             <option value="@company.Symbol"
+                                    data-sector="@company.Sector"
                                     selected="@(Model.SelectedSymbol == company.Symbol)">
 
                                 @company.Name (@company.Symbol)
@@ -314,7 +349,7 @@
                                 <td class="symbol-cell">
 
                                     <strong>
-                                        @e.Signal
+                                        @e.Recommendation
                                     </strong>
 
                                 </td>
@@ -692,6 +727,46 @@
                     buscarSimbolo();
 
                 }
+
+            });
+
+            // ======================================
+            // FILTRO POR SECTOR
+            // ======================================
+
+            $('#sectorSelect').on('change', function () {
+
+                const selectedSector = $(this).val();
+
+                $('#companySelect option').each(function () {
+
+                    const sector =
+                        $(this).data('sector');
+
+                    // mantener "Mi Portafolio"
+                    if ($(this).val() === '') {
+                        $(this).show();
+                        return;
+                    }
+
+                    if (selectedSector === 'ALL') {
+
+                        $(this).show();
+
+                    } else {
+
+                        if (sector === selectedSector) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+
+                    }
+
+                });
+
+                // reset selección
+                $('#companySelect').val('Ninguna');
 
             });
 

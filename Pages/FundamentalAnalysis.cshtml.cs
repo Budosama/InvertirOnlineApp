@@ -21,34 +21,155 @@ namespace InvertirOnlineApp.Pages
 
         public string? SelectedSymbol { get; set; }
 
-        public List<(string Symbol, string Name)> AvailableCompanies
-            => new()
-            {
-                ("AAPL", "Apple"),
-                ("MSFT", "Microsoft"),
-                ("GOOGL", "Google"),
-                ("AMZN", "Amazon"),
-                ("META", "Meta"),
-                ("NVDA", "NVIDIA"),
-                ("AMD", "AMD"),
-                ("ASML", "ASML"),
-                ("TSM", "TSMC"),
-                ("COST", "Costco"),
-                ("WMT", "Walmart"),
-                ("KO", "Coca-Cola"),
-                ("PEP", "Pepsi"),
-                ("MCD", "McDonald's"),
-                ("BRK-B", "Berkshire Hathaway"),
-                ("JPM", "JPMorgan"),
-                ("V", "Visa"),
-                ("MA", "Mastercard"),
-                ("JNJ", "Johnson & Johnson"),
-                ("LLY", "Eli Lilly"),
-                ("CAT", "Caterpillar"),
-                ("XOM", "Exxon Mobil"),
-                ("SPY", "S&P 500 ETF"),
-                ("QQQ", "Nasdaq ETF")
-            };
+        public List<(string Symbol, string Name, string Sector)> AvailableCompanies
+        => new()
+        {
+            // =============================================
+            // BIG TECH
+            // =============================================
+
+            ("AAPL", "Apple", "Tecnología"),
+            ("MSFT", "Microsoft", "Tecnología"),
+            ("GOOGL", "Google", "Tecnología"),
+            ("AMZN", "Amazon", "Tecnología"),
+            ("META", "Meta", "Tecnología"),
+            ("NVDA", "NVIDIA", "Tecnología"),
+            ("AMD", "AMD", "Tecnología"),
+            ("TSM", "TSMC", "Tecnología"),
+            ("ASML", "ASML", "Tecnología"),
+            ("AVGO", "Broadcom", "Tecnología"),
+            ("ORCL", "Oracle", "Tecnología"),
+            ("CRM", "Salesforce", "Tecnología"),
+            ("ADBE", "Adobe", "Tecnología"),
+            ("INTC", "Intel", "Tecnología"),
+            ("IBM", "IBM", "Tecnología"),
+
+            // =============================================
+            // AI / SOFTWARE
+            // =============================================
+
+            ("PLTR", "Palantir", "Software"),
+            ("SNOW", "Snowflake", "Software"),
+            ("CRWD", "CrowdStrike", "Software"),
+            ("PANW", "Palo Alto Networks", "Software"),
+            ("NET", "Cloudflare", "Software"),
+            ("DDOG", "Datadog", "Software"),
+            ("SHOP", "Shopify", "Software"),
+
+            // =============================================
+            // FINTECH / PAYMENTS
+            // =============================================
+
+            ("MELI", "Mercado Libre", "Pagos"),
+            ("NU", "Nu Holdings", "Pagos"),
+            ("V", "Visa", "Pagos"),
+            ("MA", "Mastercard", "Pagos"),
+            ("PYPL", "PayPal", "Pagos"),
+            ("SQ", "Block", "Pagos"),
+            ("COIN", "Coinbase", "Pagos"),
+
+            // =============================================
+            // CONSUMER
+            // =============================================
+
+            ("COST", "Costco", "Consumo"),
+            ("WMT", "Walmart", "Consumo"),
+            ("KO", "Coca-Cola", "Consumo"),
+            ("PEP", "PepsiCo", "Consumo"),
+            ("MCD", "McDonald's", "Consumo"),
+            ("SBUX", "Starbucks", "Consumo"),
+            ("NKE", "Nike", "Consumo"),
+            ("PG", "Procter & Gamble", "Consumo"),
+            ("HD", "Home Depot", "Consumo"),
+
+            // =============================================
+            // FINANCIALS
+            // =============================================
+
+            ("BRK-B", "Berkshire Hathaway", "Finanzas"),
+            ("JPM", "JPMorgan", "Finanzas"),
+            ("BAC", "Bank of America", "Finanzas"),
+            ("GS", "Goldman Sachs", "Finanzas"),
+            ("MS", "Morgan Stanley", "Finanzas"),
+
+            // =============================================
+            // HEALTHCARE
+            // =============================================
+
+            ("JNJ", "Johnson & Johnson", "Salud"),
+            ("LLY", "Eli Lilly", "Salud"),
+            ("UNH", "UnitedHealth", "Salud"),
+            ("ABBV", "AbbVie", "Salud"),
+            ("PFE", "Pfizer", "Salud"),
+
+            // =============================================
+            // INDUSTRIALS
+            // =============================================
+
+            ("CAT", "Caterpillar", "Industrial"),
+            ("GE", "General Electric", "Industrial"),
+            ("RTX", "RTX", "Industrial"),
+            ("BA", "Boeing", "Industrial"),
+
+            // =============================================
+            // ENERGY
+            // =============================================
+
+            ("XOM", "Exxon Mobil", "Energía"),
+            ("CVX", "Chevron", "Energía"),
+            ("COP", "ConocoPhillips", "Energía"),
+            ("SLB", "Schlumberger", "Energía"),
+
+            // =============================================
+            // AUTOMOTIVE / EV
+            // =============================================
+
+            ("TSLA", "Tesla", "Automotor"),
+            ("BYDDF", "BYD", "Automotor"),
+            ("RIVN", "Rivian", "Automotor"),
+
+            // =============================================
+            // ARGENTINA
+            // =============================================
+
+            ("PAMP", "Pampa Energia", "Argentina"),
+            ("YPF", "YPF", "Argentina"),
+            ("GGAL", "Grupo Galicia", "Argentina"),
+            ("BMA", "Banco Macro", "Argentina"),
+            ("SUPV", "Supervielle", "Argentina"),
+            ("EDN", "Edenor", "Argentina"),
+            ("CEPU", "Central Puerto", "Argentina"),
+            ("TGS", "Transportadora Gas del Sur", "Argentina"),
+            ("MOLI", "Molinos", "Argentina"),
+
+            // =============================================
+            // ETFs
+            // =============================================
+
+            ("SPY", "S&P 500 ETF", "ETF"),
+            ("QQQ", "Nasdaq ETF", "ETF"),
+            ("DIA", "Dow Jones ETF", "ETF"),
+            ("IWM", "Russell 2000 ETF", "ETF"),
+            ("VTI", "Total Stock Market ETF", "ETF"),
+            ("ARKK", "ARK Innovation ETF", "ETF"),
+            ("SOXX", "Semiconductor ETF", "ETF"),
+            ("XLE", "Energy ETF", "ETF"),
+
+            // =============================================
+            // CRYPTO
+            // =============================================
+
+            ("BTC/USD", "Bitcoin", "Crypto"),
+            ("ETH/USD", "Ethereum", "Crypto"),
+            ("SOL/USD", "Solana", "Crypto"),
+            ("BNB/USD", "BNB", "Crypto"),
+            ("XRP/USD", "XRP", "Crypto"),
+            ("ADA/USD", "Cardano", "Crypto"),
+            ("DOGE/USD", "Dogecoin", "Crypto"),
+            ("AVAX/USD", "Avalanche", "Crypto"),
+            ("LINK/USD", "Chainlink", "Crypto"),
+            ("MATIC/USD", "Polygon", "Crypto")
+        };
 
         public async Task OnGetAsync(string? symbol = null)
         {
@@ -62,7 +183,17 @@ namespace InvertirOnlineApp.Pages
             {
                 var tokenObject = JsonSerializer.Deserialize<TokenResponse>(tokenJson);
                 accessToken = tokenObject?.AccessToken;
-            }           
+            }
+
+            if (!string.IsNullOrWhiteSpace(symbol))
+            {
+                if (symbol != "Ninguna")
+                {
+                    Empresas = await _service.GetEmpresasAsync(symbol, accessToken);
+                }
+
+                return;
+            }
 
             Empresas =
                 await _service.GetEmpresasAsync(symbol, accessToken);
